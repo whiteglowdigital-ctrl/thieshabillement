@@ -106,11 +106,15 @@
   </div></section>`;
 
   const intro = `
-  <section class="intro"><div class="wrap">
-    <div class="intro-side"><span class="mark" aria-hidden="true"></span><span class="caps">${esc(S.intro.kicker)}</span></div>
-    <div class="rv">
-      <p class="big">${esc(S.intro.text).replace('homme et garçon', '<em>homme et garçon</em>')}</p>
-      <p class="sig">${esc(S.brand.tagline)}</p>
+  <section class="intro on-ink" id="maison"><div class="wrap">
+    ${media(S.intro.image, 'intro-main rv-img')}
+    <div class="intro-body">
+      <div class="intro-side"><span class="mark" aria-hidden="true"></span><span class="caps">${esc(S.intro.kicker)}</span></div>
+      <div class="rv">
+        <p class="big">${esc(S.intro.text).replace('homme et garçon', '<em>homme et garçon</em>')}</p>
+        <p class="sig">${esc(S.brand.tagline)}</p>
+      </div>
+      ${S.intro.image2 ? media(S.intro.image2, 'intro-second') : ''}
     </div>
   </div></section>`;
 
@@ -169,7 +173,7 @@
 
   const W = S.whatsappBand;
   const wa = `
-  <section class="wa on-ink" id="whatsapp"><div class="wrap">
+  <section class="wa on-ink" id="whatsapp">${W.image ? media(W.image, 'wa-img') : ''}<div class="wrap">
     <div><span class="caps">${esc(W.kicker)}</span><h2 class="rv">${W.title.map((w) => `<span>${esc(w)}</span>`).join('')}</h2></div>
     <div class="wa-side">
       <p>${esc(W.text)}</p>
@@ -219,7 +223,7 @@
   const mbar = `<div class="mbar" id="mbar"><a class="btn" ${waAttrs()}>${I.chat}Commander sur WhatsApp</a><a class="btn btn--ghost" href="#boutique" aria-label="Nous trouver">${I.pin}</a></div>`;
   const chip = S.prototype ? `<button class="proto-chip" id="protoChip" type="button" aria-pressed="true"><i></i>Repères prototype</button>` : '';
 
-  root.innerHTML = topbar + header + menu + '<main>' + hero + cats + intro + selection + craft + services + lookbook + wa + shop + '</main>' + footer + mbar + chip + '<div class="toast" id="toast" role="status"></div>';
+  root.innerHTML = topbar + header + menu + '<main>' + hero + cats + selection + intro + craft + services + lookbook + wa + shop + '</main>' + footer + mbar + chip + '<div class="toast" id="toast" role="status"></div>';
   if (S.prototype) document.body.classList.add('show-todo');
 
   /* ---------- Interactions ---------- */

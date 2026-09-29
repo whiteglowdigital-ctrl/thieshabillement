@@ -94,6 +94,8 @@ window.SITE = {
   },
 
   intro: {
+    image: { src: 'images/maison-buste.jpg', alt: 'Buste de couture drapé de satin rouge, monogramme TH' },
+    image2: { src: 'images/atelier-metre.jpg', alt: 'Mètre ruban et fil noir sur un tissu noir' },
     kicker: 'La maison',
     text: 'Thies Habillement confectionne et fournit des tenues africaines pour homme et garçon, depuis sa boutique de Nguinth, à Thiès.',
     todo: false,
@@ -113,10 +115,10 @@ window.SITE = {
       { name: 'Grand boubou doré', category: 'Homme', image: { src: 'images/boubou-or.jpg', alt: 'Grand boubou doré brodé' } },
       { name: 'Ensemble blanc brodé', category: 'Homme', image: { src: 'images/ensemble-blanc.jpg', alt: 'Ensemble blanc brodé' } },
       { name: "Grand boubou vert d'eau", category: 'Homme', image: { src: 'images/boubou-vert.jpg', alt: "Grand boubou vert d'eau brodé" } },
+      { name: 'Ensemble noir brodé or', category: 'Homme', image: { src: 'images/ensemble-noir.jpg', alt: 'Ensemble noir à broderie dorée' } },
       { name: 'Ensemble taupe', category: 'Homme', image: { src: 'images/ensemble-taupe.jpg', alt: 'Ensemble taupe à pan croisé' } },
       { name: 'Tenue garçon 01', category: 'Garçon', image: { src: null, label: 'Garçon · 3:4' } },
       { name: 'Tenue garçon 02', category: 'Garçon', image: { src: null, label: 'Garçon · 3:4' } },
-      { name: 'Tenue garçon 03', category: 'Garçon', image: { src: null, label: 'Garçon · 3:4' } },
     ],
   },
 
@@ -126,8 +128,8 @@ window.SITE = {
     text: "Entreprise de confection et fournisseur de tenues africaines, Thies Habillement vous reçoit à Nguinth pour choisir ou commander votre tenue.",
     todo: true, // texte à valider avec le client (atelier, sur-mesure, délais)
     cta: { label: 'Demander une information', whatsapp: true },
-    image: { src: 'images/detail-broderie-or.jpg', alt: 'Détail du plastron brodé d’un grand boubou doré' },
-    image2: { src: 'images/detail-poche-blanc.jpg', alt: 'Broderie de poche sur un ensemble blanc' },
+    image: { src: 'images/atelier-couture.jpg', alt: 'Couture à la machine sur un tissu noir' },
+    image2: { src: 'images/detail-broderie-or.jpg', alt: 'Détail du plastron brodé d’un grand boubou doré' },
   },
 
   lookbook: {
@@ -136,6 +138,7 @@ window.SITE = {
     looks: [
       { caption: "Grand boubou vert d'eau", image: { src: 'images/boubou-vert.jpg', alt: "Grand boubou vert d'eau" } },
       { caption: 'Plastron brodé', image: { src: 'images/boubou-bleu-large.jpg', alt: 'Grand boubou bleu ciel, plastron brodé' }, wide: true },
+      { caption: 'Ensemble noir brodé or', image: { src: 'images/ensemble-noir.jpg', alt: 'Ensemble noir à broderie dorée' } },
       { caption: 'Ensemble taupe', image: { src: 'images/ensemble-taupe.jpg', alt: 'Ensemble taupe' } },
       { caption: 'Grand boubou doré', image: { src: 'images/boubou-or.jpg', alt: 'Grand boubou doré' } },
       { caption: 'Ensemble blanc', image: { src: 'images/ensemble-blanc.jpg', alt: 'Ensemble blanc brodé' } },
@@ -143,6 +146,7 @@ window.SITE = {
   },
 
   whatsappBand: {
+    image: { src: 'images/atelier-ciseaux.jpg', alt: 'Cintre monogramme TH doré et ciseaux de tailleur sur velours bordeaux' },
     kicker: 'Commande & informations',
     title: ['Une tenue', 'vous plaît ?'],
     text: 'Envoyez-nous le modèle qui vous intéresse, la boutique vous répond directement sur WhatsApp.',

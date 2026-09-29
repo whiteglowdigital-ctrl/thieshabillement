@@ -14,6 +14,7 @@
   --muted: #6d6a64;
   --line: rgba(18, 18, 18, .14);
   --accent: #a92024;
+  --gold: #c9a56a;
   --on-ink: #f4f3f0;
   --on-ink-muted: rgba(244, 243, 240, .62);
 
@@ -245,13 +246,16 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .cat .link { font-size: 11px; }
 .cat:hover .media > img { transform: scale(1.05); }
 
-/* ---------- Intro ---------- */
-.intro .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: 40px; padding-block: clamp(72px, 11vw, 150px); align-items: start; }
-.intro-side { display: grid; gap: 22px; }
-.intro-side .mark { width: 64px; aspect-ratio: 564 / 482; background: var(--accent); -webkit-mask: var(--mark) center / contain no-repeat; mask: var(--mark) center / contain no-repeat; }
-.intro p.big { margin: 0; font-family: var(--f-display); font-weight: 400; font-size: clamp(28px, 3.6vw, 54px); line-height: 1.12; letter-spacing: -.012em; text-wrap: balance; max-width: 22ch; }
-.intro p.big em { font-style: normal; color: var(--accent); }
-.intro .sig { margin: 26px 0 0; font-family: var(--f-script); font-size: clamp(28px, 3vw, 40px); color: var(--muted); line-height: 1; }
+/* ---------- Intro (La maison, sombre) ---------- */
+.intro .wrap { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(32px, 6vw, 110px); padding-block: clamp(72px, 9vw, 140px); align-items: center; }
+.intro-main { aspect-ratio: 4 / 5; }
+.intro-body { display: grid; gap: 34px; align-content: center; }
+.intro-side { display: flex; gap: 16px; align-items: center; }
+.intro-side .mark { width: 54px; aspect-ratio: 564 / 482; background: var(--accent); -webkit-mask: var(--mark) center / contain no-repeat; mask: var(--mark) center / contain no-repeat; }
+.intro p.big { margin: 0; font-family: var(--f-display); font-weight: 300; font-size: clamp(28px, 3vw, 46px); line-height: 1.16; letter-spacing: -.01em; text-wrap: balance; max-width: 20ch; }
+.intro p.big em { font-style: normal; color: var(--gold); }
+.intro .sig { margin: 24px 0 0; font-family: var(--f-script); font-size: clamp(30px, 3vw, 44px); color: var(--on-ink-muted); line-height: 1; }
+.intro-second { width: 46%; aspect-ratio: 9 / 13; justify-self: end; margin-top: 28px; }
 
 /* ---------- Section head ---------- */
 .shead { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 36px; flex-wrap: wrap; }
@@ -331,7 +335,11 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .lb-progress i { position: absolute; left: 0; top: -1px; height: 3px; background: var(--ink); width: 20%; transition: left .15s linear; }
 
 /* ---------- WhatsApp band ---------- */
-.wa .wrap { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 48px; align-items: end; padding-block: clamp(80px, 10vw, 150px); }
+.wa { position: relative; overflow: hidden; }
+.wa-img { position: absolute !important; top: 0; bottom: 0; right: 0; width: 46%; }
+.wa-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, var(--ink) 0%, rgba(18,18,18,.35) 30%, transparent 60%); }
+.wa .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr); gap: 36px; align-items: end; padding-block: clamp(90px, 11vw, 170px); }
+.wa .wrap > * { max-width: 620px; }
 .wa h2 { margin: 16px 0 0; font-family: var(--f-display); font-weight: 500; font-size: clamp(48px, 7.6vw, 124px); line-height: .92; letter-spacing: -.025em; }
 .wa h2 span { display: block; }
 .wa h2 span:last-child { color: transparent; -webkit-text-stroke: 1.2px var(--on-ink); }
@@ -456,9 +464,11 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   .cat { flex: 0 0 72%; scroll-snap-align: start; }
   .cat p { font-size: 13px; }
 
-  .intro .wrap { grid-template-columns: 1fr; gap: 26px; }
-  .intro-side { grid-auto-flow: column; justify-content: start; align-items: center; gap: 18px; }
-  .intro-side .mark { width: 44px; }
+  .intro .wrap { grid-template-columns: 1fr; gap: 36px; padding-top: 0; padding-inline: 0; }
+  .intro-main { aspect-ratio: 4 / 5; }
+  .intro-body { padding-inline: var(--gutter); gap: 26px; }
+  .intro-side .mark { width: 42px; }
+  .intro-second { width: 58%; }
 
   .shead { margin-bottom: 24px; }
   .filters { width: 100%; overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); width: auto; }
@@ -485,7 +495,9 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   .look .media { height: auto; width: 78vw; aspect-ratio: 2 / 3; }
   .look.wide .media { width: 88vw; aspect-ratio: 4 / 5; }
 
-  .wa .wrap { grid-template-columns: 1fr; gap: 30px; }
+  .wa-img { position: relative !important; width: 100%; aspect-ratio: 4 / 5; }
+  .wa-img::after { background: linear-gradient(0deg, var(--ink) 0%, transparent 45%); }
+  .wa .wrap { grid-template-columns: 1fr; gap: 30px; padding-top: 0; margin-top: -90px; }
   .wa h2 { font-size: 17vw; }
   .wa-side .btn { width: 100%; }
 
