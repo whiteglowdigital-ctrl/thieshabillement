@@ -6,6 +6,7 @@
 (function () {
   const S = window.SITE;
   const root = document.getElementById('site');
+  const slug = (v) => String(v).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-');
   const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
   /* ---------- Thème ---------- */
@@ -99,7 +100,7 @@
       <div>
         <h3>${esc(c.title)}</h3>
         <p>${esc(c.text)}</p>
-        <a class="link" href="#selection" data-filter="${esc(c.title)}">Voir ${esc(c.title.toLowerCase())} <span class="arr">→</span></a>
+        <a class="link" href="#collection-${slug(c.title)}">Voir ${esc(c.title.toLowerCase())} <span class="arr">→</span></a>
         <div style="margin-top:12px">${todo(c.todo, 'Catégorie à confirmer')}</div>
       </div>
     </article>`).join('')}
@@ -118,22 +119,45 @@
     </div>
   </div></section>`;
 
-  const cats4 = ['Tout', ...new Set(S.selection.items.map((i) => i.category))];
-  const selection = `
-  <section class="selection" id="selection"><div class="wrap">
-    <div class="shead">
-      <h2>${esc(S.selection.title)}</h2>
-      <div class="filters" role="group" aria-label="Filtrer">${cats4.map((c, i) => `<button type="button" aria-pressed="${i === 0}" data-cat="${esc(c)}">${esc(c)}</button>`).join('')}</div>
-    </div>
-    <div class="grid">
-      ${S.selection.items.map((p) => `
+  const SEL = S.selection;
+  const cardHTML = (p) => `
       <article class="card rv" data-cat="${esc(p.category)}">
         ${media(p.image, '', `<a class="card-ask" ${waAttrs(`Bonjour, je suis intéressé(e) par : ${p.name} (${p.category})`)} aria-label="Demander ${esc(p.name)} sur WhatsApp">${I.chat}</a>`)}
         <div class="card-meta"><h3>${esc(p.name)}</h3><span class="caps caps-sm">${esc(p.category)}</span></div>
         <a class="link card-cta" ${waAttrs(`Bonjour, je suis intéressé(e) par : ${p.name} (${p.category})`)}>Demander <span class="arr">→</span></a>
-      </article>`).join('')}
+      </article>`;
+  const selection = `
+  <section class="selection" id="selection"><div class="wrap">
+    <div class="shead">
+      <h2>${esc(SEL.title)}</h2>
+      <a class="link" href="#collection">${esc(SEL.moreLabel)} <span class="arr">→</span></a>
     </div>
+    <div class="grid">${SEL.items.slice(0, SEL.homeCount || 8).map(cardHTML).join('')}</div>
+    <div class="more-row"><a class="btn" href="#collection">${esc(SEL.moreLabel)} · ${SEL.items.length} pièces</a></div>
   </div></section>`;
+
+  /* ---------- Page Collection (vue séparée, route #collection) ---------- */
+  const catList = ['Tout', ...new Set(SEL.items.map((i) => i.category))];
+  const countOf = (c) => (c === 'Tout' ? SEL.items.length : SEL.items.filter((i) => i.category === c).length);
+  const collectionPage = `
+  <main class="cpage" id="cpage" hidden>
+    <section class="cpage-head"><div class="wrap">
+      <nav class="crumbs caps caps-sm" aria-label="Fil d'Ariane"><a href="#top">Accueil</a><span>/</span><span>${esc(SEL.pageTitle)}</span></nav>
+      <div class="cpage-title">
+        <h1>${esc(SEL.pageTitle)}</h1>
+        <p>${esc(SEL.pageIntro)}</p>
+      </div>
+    </div></section>
+    <div class="cbar"><div class="wrap">
+      <div class="filters" role="group" aria-label="Filtrer par catégorie">${catList.map((c, i) => `<button type="button" aria-pressed="${i === 0}" data-cat="${esc(c)}">${esc(c)} <small>${countOf(c)}</small></button>`).join('')}</div>
+      <span class="caps caps-sm cbar-count" id="ccount">${SEL.items.length} pièces</span>
+    </div></div>
+    <section class="cpage-grid"><div class="wrap"><div class="grid" id="cgrid">${SEL.items.map(cardHTML).join('')}</div></div></section>
+    <section class="cpage-cta on-ink"><div class="wrap">
+      <p>${esc(S.whatsappBand.text)}</p>
+      <a class="btn btn--accent" ${waAttrs()}>${I.chat}${esc(S.whatsappBand.cta)}</a>
+    </div></section>
+  </main>`;
 
   const C = S.craft;
   const craft = `
@@ -178,7 +202,7 @@
     <div class="wa-side">
       <p>${esc(W.text)}</p>
       <a class="btn btn--accent" ${waAttrs()}>${I.chat}${esc(W.cta)}</a>
-      <div class="wa-num">${S.contact.whatsapp ? `WhatsApp · +${esc(S.contact.whatsapp)}` : todo(true, 'Numéro WhatsApp à confirmer')}</div>
+      <div class="wa-num">${S.contact.whatsapp ? `WhatsApp · ${esc(S.contact.whatsappDisplay || '+' + S.contact.whatsapp)}` : todo(true, 'Numéro WhatsApp à confirmer')}</div>
     </div>
   </div></section>`;
 
@@ -196,7 +220,7 @@
       <dl>
         <dt class="caps caps-sm">Adresse</dt><dd>${esc(L.area)}, ${esc(L.city)}<br>${esc(L.landmark)}</dd>
         <dt class="caps caps-sm">Horaires</dt><dd>${hours}</dd>
-        <dt class="caps caps-sm">Contact</dt><dd>${S.contact.phones.length ? S.contact.phones.map(esc).join('<br>') : `WhatsApp ${todo(true, 'Numéro à confirmer')}`}</dd>
+        <dt class="caps caps-sm">Contact</dt><dd>${S.contact.whatsapp ? `<a ${waAttrs()}>WhatsApp · ${esc(S.contact.whatsappDisplay || S.contact.whatsapp)}</a>` : `WhatsApp ${todo(true, 'Numéro à confirmer')}`}${S.contact.phones.length ? '<br>' + S.contact.phones.map(esc).join('<br>') : ''}</dd>
       </dl>
       <div class="shop-btns">
         <a class="btn" href="${esc(L.mapsUrl)}" target="_blank" rel="noopener">${I.pin}Itinéraire</a>
@@ -223,7 +247,7 @@
   const mbar = `<div class="mbar" id="mbar"><a class="btn" ${waAttrs()}>${I.chat}Commander sur WhatsApp</a><a class="btn btn--ghost" href="#boutique" aria-label="Nous trouver">${I.pin}</a></div>`;
   const chip = S.prototype ? `<button class="proto-chip" id="protoChip" type="button" aria-pressed="true"><i></i>Repères prototype</button>` : '';
 
-  root.innerHTML = topbar + header + menu + '<main>' + hero + cats + selection + intro + craft + services + lookbook + wa + shop + '</main>' + footer + mbar + chip + '<div class="toast" id="toast" role="status"></div>';
+  root.innerHTML = topbar + header + menu + '<main id="home">' + hero + cats + selection + intro + craft + services + lookbook + wa + shop + '</main>' + collectionPage + footer + mbar + chip + '<div class="toast" id="toast" role="status"></div>';
   if (S.prototype) document.body.classList.add('show-todo');
 
   /* ---------- Interactions ---------- */
@@ -257,18 +281,36 @@
     header_.classList.toggle('hide', y > 500 && y > lastY + 4);
     if (y < lastY - 4) header_.classList.remove('hide');
     lastY = y;
-    mb.classList.toggle('on', y > heroEl.offsetTop + heroEl.offsetHeight * 0.7);
+    mb.classList.toggle('on', cpage.hidden ? y > heroEl.offsetTop + heroEl.offsetHeight * 0.7 : y > 200);
   }, { passive: true });
 
-  // Filtres de la sélection (+ liens des catégories)
+  // Filtres de la page Collection
   const setFilter = (cat) => {
     $$('.filters button').forEach((b) => b.setAttribute('aria-pressed', b.dataset.cat === cat));
-    $$('.card').forEach((c) => { c.hidden = !(cat === 'Tout' || c.dataset.cat === cat); });
+    $$('#cgrid .card').forEach((c) => { c.hidden = !(cat === 'Tout' || c.dataset.cat === cat); });
+    $('#ccount').textContent = `${countOf(cat)} pièce${countOf(cat) > 1 ? 's' : ''}`;
   };
   $$('.filters button').forEach((b) => b.addEventListener('click', () => setFilter(b.dataset.cat)));
-  $$('[data-filter]').forEach((a) => a.addEventListener('click', () => {
-    const c = a.dataset.filter; setFilter($$('.filters button').some((b) => b.dataset.cat === c) ? c : 'Tout');
-  }));
+
+  // Routage : #collection (et #collection-homme…) = page Collection, le reste = accueil
+  const home = $('#home'); const cpage = $('#cpage');
+  const route = () => {
+    const h = location.hash.slice(1);
+    const isC = h === 'collection' || h.startsWith('collection-');
+    const wasC = !cpage.hidden;
+    home.hidden = isC; cpage.hidden = !isC;
+    document.body.classList.toggle('on-collection', isC);
+    if (isC) {
+      const want = h.slice('collection-'.length);
+      setFilter(catList.find((c) => slug(c) === want) || 'Tout');
+      scrollTo({ top: 0, behavior: 'instant' });
+    } else if (wasC) {
+      const t = h && document.getElementById(h);
+      requestAnimationFrame(() => (t ? t.scrollIntoView() : scrollTo({ top: 0, behavior: 'instant' })));
+    }
+    upd && upd();
+  };
+  addEventListener('hashchange', route);
 
   // Lookbook : flèches, compteur, progression
   const track = $('#lbTrack'); const bar = $('#lbBar'); const count = $('#lbCount');
@@ -291,6 +333,7 @@
     count.textContent = `${String(Math.max(idx, 0) + 1).padStart(2, '0')} / ${String(looks.length).padStart(2, '0')}`;
   };
   track.addEventListener('scroll', upd, { passive: true }); addEventListener('resize', upd); upd();
+  route();
 
   // Repères prototype
   const chipEl = $('#protoChip');

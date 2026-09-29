@@ -42,9 +42,10 @@ window.SITE = {
   },
 
   contact: {
-    // ⚠ Numéro WhatsApp NON CONFIRMÉ. Format international sans espaces ni +,
-    // ex. '221776172203'. Tant que null, les boutons affichent un message.
-    whatsapp: null,
+    // Numéro WhatsApp au format international, sans espaces ni +.
+    // null = les boutons affichent un message "numéro à configurer".
+    whatsapp: '221764052386',
+    whatsappDisplay: '76 405 23 86',
     whatsappMessage: 'Bonjour Thies Habillement, je souhaite avoir des informations sur vos tenues.',
     phones: [],        // ex. ['77 000 00 00'] — n'afficher que les numéros confirmés
     email: null,
@@ -56,7 +57,7 @@ window.SITE = {
     landmark: "En face de l'École ACAPES",
     mapsUrl: 'https://share.google/21wrojRrNSgoc38of',
     hours: [],         // ex. [{ d: 'Lun – Sam', h: '9h – 20h' }] — à fournir
-    photo: { src: 'images/boutique.jpg', alt: 'Façade de la boutique Thies Habillement à Thiès' },
+    photo: { src: 'images/boutique.jpg', alt: 'Façade de la boutique Thies Habillement à Thiès, vitrine de tenues homme et garçon' },
   },
 
   socials: [
@@ -76,8 +77,8 @@ window.SITE = {
   ],
 
   nav: [
-    { label: 'Collections', href: '#collections' },
-    { label: 'Sélection', href: '#selection' },
+    { label: 'Collection', href: '#collection' },
+    { label: 'La maison', href: '#maison' },
     { label: 'Savoir-faire', href: '#savoir-faire' },
     { label: 'Lookbook', href: '#lookbook' },
     { label: 'Boutique', href: '#boutique' },
@@ -87,8 +88,8 @@ window.SITE = {
     kicker: ['Partenaire', 'des grandes', 'marques'],
     // Idéal : photo détourée (PNG transparent) d'un mannequin en pied,
     // ~1400 px de haut. Une photo classique en portrait fonctionne aussi.
-    image: { src: 'images/boubou-bleu-detoure.png', alt: 'Grand boubou bleu ciel brodé sur mannequin', cutout: true, ratio: '670 / 1036' },
-    ctaPrimary: { label: 'Découvrir', href: '#collections' },
+    image: { src: 'images/boubou-blanc-detoure.png', alt: 'Grand boubou blanc à plastron brodé sur mannequin', cutout: true, ratio: '736 / 1053' },
+    ctaPrimary: { label: 'Voir la collection', href: '#collection' },
     ctaSecondary: { label: 'Commander sur WhatsApp', whatsapp: true },
     corner: ['Confection', 'Homme & garçon', 'Thiès'],
   },
@@ -103,19 +104,25 @@ window.SITE = {
 
   // Catégories confirmées par le client : homme et enfant (garçon).
   collections: [
-    { title: 'Homme', text: 'Grands boubous, ensembles et tenues brodées.', image: { src: 'images/ensemble-blanc.jpg', alt: 'Ensemble blanc brodé' } },
+    { title: 'Homme', text: 'Grands boubous, ensembles et tenues brodées.', image: { src: 'images/boubou-vert.jpg', alt: "Grand boubou vert d'eau brodé" } },
     { title: 'Garçon', text: 'Tenues africaines pour enfant.', image: { src: null, label: 'Garçon · 4:5' }, todo: true },
   ],
 
   // Pièces : aucun prix affiché. Chaque carte ouvre WhatsApp avec le nom de la pièce.
   selection: {
     title: 'La sélection',
+    homeCount: 8,               // nombre de pièces affichées sur l'accueil
+    moreLabel: 'Voir toute la collection',
+    pageTitle: 'La collection',
+    pageIntro: 'Grands boubous, ensembles brodés et tenues pour garçon. Choisissez une pièce, la boutique vous répond sur WhatsApp.',
     items: [
-      { name: 'Grand boubou bleu ciel', category: 'Homme', image: { src: 'images/boubou-bleu.jpg', alt: 'Grand boubou bleu ciel brodé' } },
+      { name: 'Grand boubou blanc brodé', category: 'Homme', image: { src: 'images/boubou-blanc.jpg', alt: 'Grand boubou blanc à plastron brodé' } },
+      { name: 'Ensemble bleu nuit', category: 'Homme', image: { src: 'images/kaftan-marine.jpg', alt: 'Ensemble bleu nuit à bande brodée' } },
       { name: 'Grand boubou doré', category: 'Homme', image: { src: 'images/boubou-or.jpg', alt: 'Grand boubou doré brodé' } },
-      { name: 'Ensemble blanc brodé', category: 'Homme', image: { src: 'images/ensemble-blanc.jpg', alt: 'Ensemble blanc brodé' } },
+      { name: 'Ensemble blanc col officier', category: 'Homme', image: { src: 'images/kaftan-blanc.jpg', alt: 'Ensemble blanc col officier à bande brodée' } },
       { name: "Grand boubou vert d'eau", category: 'Homme', image: { src: 'images/boubou-vert.jpg', alt: "Grand boubou vert d'eau brodé" } },
-      { name: 'Ensemble noir brodé or', category: 'Homme', image: { src: 'images/ensemble-noir.jpg', alt: 'Ensemble noir à broderie dorée' } },
+      { name: 'Ensemble blanc brodé', category: 'Homme', image: { src: 'images/ensemble-blanc.jpg', alt: 'Ensemble blanc brodé' } },
+      { name: 'Grand boubou bleu ciel', category: 'Homme', image: { src: 'images/boubou-bleu.jpg', alt: 'Grand boubou bleu ciel brodé' } },
       { name: 'Ensemble taupe', category: 'Homme', image: { src: 'images/ensemble-taupe.jpg', alt: 'Ensemble taupe à pan croisé' } },
       { name: 'Tenue garçon 01', category: 'Garçon', image: { src: null, label: 'Garçon · 3:4' } },
       { name: 'Tenue garçon 02', category: 'Garçon', image: { src: null, label: 'Garçon · 3:4' } },
@@ -129,19 +136,19 @@ window.SITE = {
     todo: true, // texte à valider avec le client (atelier, sur-mesure, délais)
     cta: { label: 'Demander une information', whatsapp: true },
     image: { src: 'images/atelier-couture.jpg', alt: 'Couture à la machine sur un tissu noir' },
-    image2: { src: 'images/detail-broderie-or.jpg', alt: 'Détail du plastron brodé d’un grand boubou doré' },
+    image2: { src: 'images/detail-ensemble-noir.jpg', alt: 'Ensemble noir à broderie dorée' },
   },
 
   lookbook: {
     kicker: 'Lookbook',
     title: 'Les tenues de la maison',
     looks: [
-      { caption: "Grand boubou vert d'eau", image: { src: 'images/boubou-vert.jpg', alt: "Grand boubou vert d'eau" } },
-      { caption: 'Plastron brodé', image: { src: 'images/boubou-bleu-large.jpg', alt: 'Grand boubou bleu ciel, plastron brodé' }, wide: true },
-      { caption: 'Ensemble noir brodé or', image: { src: 'images/ensemble-noir.jpg', alt: 'Ensemble noir à broderie dorée' } },
-      { caption: 'Ensemble taupe', image: { src: 'images/ensemble-taupe.jpg', alt: 'Ensemble taupe' } },
+      { caption: 'Grand boubou blanc', image: { src: 'images/boubou-blanc.jpg', alt: 'Grand boubou blanc brodé' } },
+      { caption: 'Plastron brodé', image: { src: 'images/boubou-blanc-large.jpg', alt: 'Plastron brodé du grand boubou blanc' }, wide: true },
+      { caption: 'Ensemble bleu nuit', image: { src: 'images/kaftan-marine.jpg', alt: 'Ensemble bleu nuit' } },
       { caption: 'Grand boubou doré', image: { src: 'images/boubou-or.jpg', alt: 'Grand boubou doré' } },
-      { caption: 'Ensemble blanc', image: { src: 'images/ensemble-blanc.jpg', alt: 'Ensemble blanc brodé' } },
+      { caption: "Grand boubou vert d'eau", image: { src: 'images/boubou-vert.jpg', alt: "Grand boubou vert d'eau" } },
+      { caption: 'Ensemble blanc col officier', image: { src: 'images/kaftan-blanc.jpg', alt: 'Ensemble blanc col officier' } },
     ],
   },
 
