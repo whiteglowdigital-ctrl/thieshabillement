@@ -320,7 +320,7 @@ body:has(.header.hide) .cbar { top: env(safe-area-inset-top, 0px); }
 .craft-visual { position: relative; align-self: stretch; }
 .craft-visual .main { position: absolute; inset: 0 0 0 8%; }
 .craft-visual .main .ph { background-color: #c9c5bd; }
-.craft-visual .inset { position: absolute; left: -4%; bottom: 10%; width: 34%; aspect-ratio: 1; z-index: 2; border: 10px solid var(--paper-3); }
+.craft-visual .inset { position: absolute; left: -10%; bottom: 8%; width: 50%; aspect-ratio: 1; z-index: 2; border: 12px solid var(--paper-3); }
 .craft-label { position: absolute; right: 18px; top: 18px; z-index: 2; color: var(--on-ink); mix-blend-mode: difference; }
 
 /* ---------- Services strip ---------- */
@@ -510,8 +510,8 @@ body:has(.header.hide) .cbar { top: env(safe-area-inset-top, 0px); }
   .cpage-cta .btn { width: 100%; }
   .craft-visual { order: -1; aspect-ratio: 4 / 5; }
   .craft-visual .main { inset: 0; }
-  .craft-visual .inset { left: auto; right: var(--gutter); bottom: -34px; width: 36%; border-width: 6px; }
-  .craft-text { padding: 56px var(--gutter) 64px; }
+  .craft-visual .inset { left: auto; right: var(--gutter); bottom: -60px; width: 52%; border-width: 6px; }
+  .craft-text { padding: 84px var(--gutter) 64px; }
   .craft-text h2 { font-size: 13vw; }
 
   .services .wrap { grid-template-columns: 1fr 1fr; gap: 26px 16px; padding-block: 34px; }

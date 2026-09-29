@@ -88,7 +88,7 @@ window.SITE = {
     kicker: ['Partenaire', 'des grandes', 'marques'],
     // Idéal : photo détourée (PNG transparent) d'un mannequin en pied,
     // ~1400 px de haut. Une photo classique en portrait fonctionne aussi.
-    image: { src: 'images/hero-boubou-bleu.webp', alt: 'Grand boubou bleu ciel brodé sur mannequin', cutout: true, ratio: '666 / 1033' },
+    image: { src: 'images/hero-boubou-blanc.webp', alt: 'Grand boubou blanc à plastron brodé sur mannequin', cutout: true, ratio: '733 / 1047' },
     ctaPrimary: { label: 'Voir la collection', href: '#collection' },
     ctaSecondary: { label: 'Commander sur WhatsApp', whatsapp: true },
     corner: ['Confection', 'Homme & garçon', 'Thiès'],
@@ -137,7 +137,7 @@ window.SITE = {
     todo: true, // texte à valider avec le client (atelier, sur-mesure, délais)
     cta: { label: 'Demander une information', whatsapp: true },
     image: { src: 'images/atelier-couture.jpg', alt: 'Couture à la machine sur un tissu noir' },
-    image2: { src: 'images/craft-boubou-or.jpg', alt: 'Grand boubou doré brodé' },
+    image2: { src: 'images/craft-boubou-or.jpg', alt: 'Plastron brodé d’un grand boubou doré' },
   },
 
   lookbook: {
