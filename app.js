@@ -246,8 +246,36 @@
   const mbar = `<div class="mbar" id="mbar"><a class="btn" ${waAttrs()}>${I.chat}Commander sur WhatsApp</a><a class="btn btn--ghost" href="#boutique" aria-label="Nous trouver">${I.pin}</a></div>`;
   const chip = S.prototype ? `<button class="proto-chip" id="protoChip" type="button" aria-pressed="true"><i></i>Repères prototype</button>` : '';
 
-  root.innerHTML = topbar + header + menu + '<main id="home">' + hero + cats + selection + intro + craft + services + lookbook + wa + shop + '</main>' + collectionPage + footer + mbar + chip + '<div class="toast" id="toast" role="status"></div>';
+  const loaderOn = S.loader && S.loader.duration > 0 && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const loader = loaderOn ? `
+  <div class="loader" id="loader" role="presentation">
+    <div class="loader-inner">
+      <span class="loader-mark" aria-hidden="true"></span>
+      <p class="loader-word">${[...S.brand.wordmark].map((c, i) => `<span style="--i:${i}">${esc(c)}</span>`).join('')}</p>
+      <p class="loader-sub">${esc(S.brand.wordmarkSub)}</p>
+      <span class="loader-line" aria-hidden="true"><i></i></span>
+      <p class="loader-sig">${esc(S.brand.tagline)}</p>
+    </div>
+  </div>` : '';
+
+  root.innerHTML = loader + topbar + header + menu + '<main id="home">' + hero + cats + selection + intro + craft + services + lookbook + wa + shop + '</main>' + collectionPage + footer + mbar + chip + '<div class="toast" id="toast" role="status"></div>';
   if (S.prototype) document.body.classList.add('show-todo');
+
+  // Écran d'entrée : bloque le hero, puis s'ouvre vers le haut
+  if (loaderOn) {
+    const L_ = document.getElementById('loader');
+    document.body.classList.add('is-loading');
+    document.documentElement.style.setProperty('--load-ms', S.loader.duration + 'ms');
+    let done = false;
+    const finish = () => {
+      if (done) return; done = true;
+      L_.classList.add('out');
+      document.body.classList.remove('is-loading');
+      setTimeout(() => L_.remove(), 1100);
+    };
+    setTimeout(finish, S.loader.duration);
+    L_.addEventListener('click', finish);
+  }
 
   /* ---------- Interactions ---------- */
   const $ = (s) => document.querySelector(s);

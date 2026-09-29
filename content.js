@@ -21,6 +21,9 @@
 window.SITE = {
   prototype: false,
 
+  // Écran d'entrée : logo affiché quelques secondes avant le site (durée en ms, 0 = désactivé)
+  loader: { duration: 2600 },
+
   brand: {
     name: 'Thies Habillement',
     wordmark: 'THIÈS',                 // mot géant du hero
@@ -88,7 +91,7 @@ window.SITE = {
     kicker: ['Partenaire', 'des grandes', 'marques'],
     // Idéal : photo détourée (PNG transparent) d'un mannequin en pied,
     // ~1400 px de haut. Une photo classique en portrait fonctionne aussi.
-    image: { src: 'images/hero-boubou-blanc.webp', alt: 'Grand boubou blanc à plastron brodé sur mannequin', cutout: true, ratio: '733 / 1047' },
+    image: { src: 'images/hero-boubou-blanc.webp', alt: 'Grand boubou blanc à plastron brodé sur mannequin', cutout: true, ratio: '735 / 1059' },
     ctaPrimary: { label: 'Voir la collection', href: '#collection' },
     ctaSecondary: { label: 'Commander sur WhatsApp', whatsapp: true },
     corner: ['Confection', 'Homme & garçon', 'Thiès'],
