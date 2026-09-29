@@ -132,8 +132,7 @@
       <h2>${esc(SEL.title)}</h2>
       <a class="link" href="#collection">${esc(SEL.moreLabel)} <span class="arr">→</span></a>
     </div>
-    <div class="grid">${SEL.items.slice(0, SEL.homeCount || 8).map(cardHTML).join('')}</div>
-    <div class="more-row"><a class="btn" href="#collection">${esc(SEL.moreLabel)} · ${SEL.items.length} pièces</a></div>
+    <div class="grid">${(SEL.home ? SEL.home.map((n) => SEL.items.find((i) => i.name === n)).filter(Boolean) : SEL.items.slice(0, 8)).map(cardHTML).join('')}</div>
   </div></section>`;
 
   /* ---------- Page Collection (vue séparée, route #collection) ---------- */
@@ -208,7 +207,7 @@
 
   const hours = L.hours && L.hours.length
     ? L.hours.map((h) => `${esc(h.d)} · ${esc(h.h)}`).join('<br>')
-    : `<span style="color:var(--muted)">Sur demande</span> ${todo(true, 'Horaires à fournir')}`;
+    : `<span style="color:var(--muted)">Nous consulter</span> ${todo(true, 'Horaires à fournir')}`;
   const shop = `
   <section class="shop" id="boutique"><div class="wrap">
     <figure class="shop-photo">
@@ -229,7 +228,7 @@
     </div>
   </div></section>`;
 
-  const social = S.socials.map((s) => (s.url
+  const social = S.socials.filter((s) => s.url || S.prototype).map((s) => (s.url
     ? `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)} ↗</a></li>`
     : `<li><span class="muted-link">${esc(s.label)}</span> ${todo(s.todo, 'Lien à fournir')}</li>`)).join('');
   const footer = `

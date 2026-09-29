@@ -19,7 +19,7 @@
    ========================================================================== */
 
 window.SITE = {
-  prototype: true,
+  prototype: false,
 
   brand: {
     name: 'Thies Habillement',
@@ -72,7 +72,7 @@ window.SITE = {
     { icon: 'needle', title: 'Confection', text: 'Tenues confectionnées', show: true },
     { icon: 'hanger', title: 'Homme & garçon', text: 'Tenues africaines', show: true },
     { icon: 'chat', title: 'Commande WhatsApp', text: 'Réponse directe de la boutique', show: true },
-    { icon: 'truck', title: 'Livraison', text: 'Modalités à préciser', show: true, todo: true },
+    { icon: 'truck', title: 'Livraison', text: 'Renseignez-vous sur WhatsApp', show: true, todo: true },
     { icon: 'pin', title: 'Boutique', text: 'Nguinth, Thiès', show: false },
   ],
 
@@ -88,7 +88,7 @@ window.SITE = {
     kicker: ['Partenaire', 'des grandes', 'marques'],
     // Idéal : photo détourée (PNG transparent) d'un mannequin en pied,
     // ~1400 px de haut. Une photo classique en portrait fonctionne aussi.
-    image: { src: 'images/boubou-blanc-detoure.png', alt: 'Grand boubou blanc à plastron brodé sur mannequin', cutout: true, ratio: '736 / 1053' },
+    image: { src: 'images/boubou-bleu-detoure.png', alt: 'Grand boubou bleu ciel brodé sur mannequin', cutout: true, ratio: '666 / 1033' },
     ctaPrimary: { label: 'Voir la collection', href: '#collection' },
     ctaSecondary: { label: 'Commander sur WhatsApp', whatsapp: true },
     corner: ['Confection', 'Homme & garçon', 'Thiès'],
@@ -105,13 +105,14 @@ window.SITE = {
   // Catégories confirmées par le client : homme et enfant (garçon).
   collections: [
     { title: 'Homme', text: 'Grands boubous, ensembles et tenues brodées.', image: { src: 'images/boubou-vert.jpg', alt: "Grand boubou vert d'eau brodé" } },
-    { title: 'Garçon', text: 'Tenues africaines pour enfant.', image: { src: null, label: 'Garçon · 4:5' }, todo: true },
+    { title: 'Garçon', text: 'Ensembles brodés pour enfant.', image: { src: 'images/garcon-bleu-roi.jpg', alt: 'Ensemble garçon bleu roi brodé' } },
   ],
 
   // Pièces : aucun prix affiché. Chaque carte ouvre WhatsApp avec le nom de la pièce.
   selection: {
     title: 'La sélection',
-    homeCount: 8,               // nombre de pièces affichées sur l'accueil
+    // L'accueil affiche ces pièces (dans cet ordre) ; la page Collection les affiche toutes.
+    home: ['Grand boubou blanc brodé', 'Ensemble bleu nuit', 'Grand boubou doré', 'Ensemble blanc col officier', "Grand boubou vert d'eau", 'Grand boubou bleu ciel', 'Ensemble garçon noir', 'Ensemble garçon bleu roi'],
     moreLabel: 'Voir toute la collection',
     pageTitle: 'La collection',
     pageIntro: 'Grands boubous, ensembles brodés et tenues pour garçon. Choisissez une pièce, la boutique vous répond sur WhatsApp.',
@@ -124,31 +125,31 @@ window.SITE = {
       { name: 'Ensemble blanc brodé', category: 'Homme', image: { src: 'images/ensemble-blanc.jpg', alt: 'Ensemble blanc brodé' } },
       { name: 'Grand boubou bleu ciel', category: 'Homme', image: { src: 'images/boubou-bleu.jpg', alt: 'Grand boubou bleu ciel brodé' } },
       { name: 'Ensemble taupe', category: 'Homme', image: { src: 'images/ensemble-taupe.jpg', alt: 'Ensemble taupe à pan croisé' } },
-      { name: 'Tenue garçon 01', category: 'Garçon', image: { src: null, label: 'Garçon · 3:4' } },
-      { name: 'Tenue garçon 02', category: 'Garçon', image: { src: null, label: 'Garçon · 3:4' } },
+      { name: 'Ensemble garçon noir', category: 'Garçon', image: { src: 'images/garcon-noir.jpg', alt: 'Ensemble garçon noir à broderie dorée' } },
+      { name: 'Ensemble garçon bleu roi', category: 'Garçon', image: { src: 'images/garcon-bleu-roi.jpg', alt: 'Ensemble garçon bleu roi brodé' } },
     ],
   },
 
   craft: {
     kicker: 'Savoir-faire',
-    title: ['CONFEC', 'TION'],
+    title: ['Confection'],
     text: "Entreprise de confection et fournisseur de tenues africaines, Thies Habillement vous reçoit à Nguinth pour choisir ou commander votre tenue.",
     todo: true, // texte à valider avec le client (atelier, sur-mesure, délais)
     cta: { label: 'Demander une information', whatsapp: true },
     image: { src: 'images/atelier-couture.jpg', alt: 'Couture à la machine sur un tissu noir' },
-    image2: { src: 'images/detail-ensemble-noir.jpg', alt: 'Ensemble noir à broderie dorée' },
+    image2: { src: 'images/detail-kaftan-blanc.jpg', alt: 'Bande brodée d’un ensemble blanc col officier' },
   },
 
   lookbook: {
     kicker: 'Lookbook',
     title: 'Les tenues de la maison',
     looks: [
-      { caption: 'Grand boubou blanc', image: { src: 'images/boubou-blanc.jpg', alt: 'Grand boubou blanc brodé' } },
-      { caption: 'Plastron brodé', image: { src: 'images/boubou-blanc-large.jpg', alt: 'Plastron brodé du grand boubou blanc' }, wide: true },
-      { caption: 'Ensemble bleu nuit', image: { src: 'images/kaftan-marine.jpg', alt: 'Ensemble bleu nuit' } },
-      { caption: 'Grand boubou doré', image: { src: 'images/boubou-or.jpg', alt: 'Grand boubou doré' } },
       { caption: "Grand boubou vert d'eau", image: { src: 'images/boubou-vert.jpg', alt: "Grand boubou vert d'eau" } },
-      { caption: 'Ensemble blanc col officier', image: { src: 'images/kaftan-blanc.jpg', alt: 'Ensemble blanc col officier' } },
+      { caption: 'Plastron brodé', image: { src: 'images/boubou-bleu-large.jpg', alt: 'Grand boubou bleu ciel, plastron brodé' }, wide: true },
+      { caption: 'Ensemble noir brodé or', image: { src: 'images/ensemble-noir.jpg', alt: 'Ensemble noir à broderie dorée' } },
+      { caption: 'Ensemble taupe', image: { src: 'images/ensemble-taupe.jpg', alt: 'Ensemble taupe' } },
+      { caption: 'Grand boubou doré', image: { src: 'images/boubou-or.jpg', alt: 'Grand boubou doré' } },
+      { caption: 'Ensemble blanc', image: { src: 'images/ensemble-blanc.jpg', alt: 'Ensemble blanc brodé' } },
     ],
   },
 
@@ -161,7 +162,7 @@ window.SITE = {
   },
 
   footer: {
-    credit: 'Prototype réalisé par Jëfya',
+    credit: 'Réalisé par Jëfya',
     note: 'Photos fournies par le client ; emplacements « Visuel à venir » à compléter.',
   },
 };
