@@ -122,9 +122,9 @@
   const SEL = S.selection;
   const cardHTML = (p) => `
       <article class="card rv" data-cat="${esc(p.category)}">
-        ${media(p.image, '', `<a class="card-ask" ${waAttrs(`Bonjour, je suis intéressé(e) par : ${p.name} (${p.category})`)} aria-label="Demander ${esc(p.name)} sur WhatsApp">${I.chat}</a>`)}
+        ${media(p.image, '', `<a class="card-order" ${waAttrs(`Bonjour, je suis intéressé(e) par : ${p.name} (${p.category})`)} tabindex="-1" aria-hidden="true">${I.chat}<span>Commander sur WhatsApp</span></a>`)}
         <div class="card-meta"><h3>${esc(p.name)}</h3><span class="caps caps-sm">${esc(p.category)}</span></div>
-        <a class="link card-cta" ${waAttrs(`Bonjour, je suis intéressé(e) par : ${p.name} (${p.category})`)}>Demander <span class="arr">→</span></a>
+        <a class="card-cta" ${waAttrs(`Bonjour, je suis intéressé(e) par : ${p.name} (${p.category})`)} aria-label="Commander ${esc(p.name)} sur WhatsApp">${I.chat}<span>Commander</span><span class="arr">→</span></a>
       </article>`;
   const selection = `
   <section class="selection" id="selection"><div class="wrap">
