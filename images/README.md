@@ -12,5 +12,10 @@ Tant qu'un `src` vaut `null`, le site affiche un emplacement « Visuel à venir 
 | lookbook.looks[].image          | 5   | 2:3 (et 3:2 pour `wide: true`), ~1400 px          |
 | location.photo                  | 1   | 4:3 — actuellement : façade (capture Google fournie) |
 
-Fichiers présents : `logo-mark.png` (pictogramme cintre + TH extrait du logo, utilisé en masque et recoloré en CSS),
-`boutique.jpg` (façade, issue de la capture Google Maps — basse résolution, à remplacer par une photo originale).
+Fichiers présents :
+- `logo-mark.png` — pictogramme cintre + TH extrait du logo (masque recoloré en CSS).
+- `boutique.jpg` — façade (capture Google, basse résolution, à remplacer).
+- Photos client (mannequins sur fond velours rouge) : `boubou-bleu.jpg`, `boubou-or.jpg`, `boubou-vert.jpg`, `ensemble-blanc.jpg`, `ensemble-taupe.jpg`.
+- Détourés (fond rouge retiré automatiquement) : `boubou-bleu-detoure.png` (hero), `boubou-vert-detoure.png`, `ensemble-blanc-detoure.png`.
+- Recadrages : `detail-broderie-or.jpg`, `detail-poche-blanc.jpg`, `boubou-bleu-large.jpg`.
+- Manquent : photos garçon (catégorie + 3 pièces).

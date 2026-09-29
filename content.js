@@ -28,7 +28,7 @@ window.SITE = {
     logoMark: 'images/logo-mark.png',  // pictogramme cintre + TH (masque, recoloré en CSS)
     // Signature présente sur le logo officiel du client
     tagline: 'Partenaire des grandes marques',
-    activity: 'Confection & tenues africaines',
+    activity: 'Confection · Homme & garçon',
     city: 'Thiès, Sénégal',
   },
 
@@ -69,7 +69,7 @@ window.SITE = {
   // `show: false` masque un service tant qu'il n'est pas confirmé.
   services: [
     { icon: 'needle', title: 'Confection', text: 'Tenues confectionnées', show: true },
-    { icon: 'hanger', title: 'Tenues africaines', text: 'Fournisseur à Thiès', show: true },
+    { icon: 'hanger', title: 'Homme & garçon', text: 'Tenues africaines', show: true },
     { icon: 'chat', title: 'Commande WhatsApp', text: 'Réponse directe de la boutique', show: true },
     { icon: 'truck', title: 'Livraison', text: 'Modalités à préciser', show: true, todo: true },
     { icon: 'pin', title: 'Boutique', text: 'Nguinth, Thiès', show: false },
@@ -87,37 +87,36 @@ window.SITE = {
     kicker: ['Partenaire', 'des grandes', 'marques'],
     // Idéal : photo détourée (PNG transparent) d'un mannequin en pied,
     // ~1400 px de haut. Une photo classique en portrait fonctionne aussi.
-    image: { src: null, alt: 'Tenue Thies Habillement portée', label: 'Silhouette en pied · PNG détouré' },
+    image: { src: 'images/boubou-bleu-detoure.png', alt: 'Grand boubou bleu ciel brodé sur mannequin', cutout: true, ratio: '670 / 1036' },
     ctaPrimary: { label: 'Découvrir', href: '#collections' },
     ctaSecondary: { label: 'Commander sur WhatsApp', whatsapp: true },
-    corner: ['Confection', 'Tenues africaines', 'Thiès'],
+    corner: ['Confection', 'Homme & garçon', 'Thiès'],
   },
 
   intro: {
     kicker: 'La maison',
-    text: 'Thies Habillement confectionne et fournit des tenues africaines depuis sa boutique de Nguinth, à Thiès.',
+    text: 'Thies Habillement confectionne et fournit des tenues africaines pour homme et garçon, depuis sa boutique de Nguinth, à Thiès.',
     todo: false,
   },
 
-  // Catégories : structure proposée d'après la vitrine (homme, femme, enfant).
+  // Catégories confirmées par le client : homme et enfant (garçon).
   collections: [
-    { title: 'Homme', text: 'Tenues africaines pour homme.', image: { src: null, label: 'Homme · 4:5' }, todo: true },
-    { title: 'Femme', text: 'Tenues africaines pour femme.', image: { src: null, label: 'Femme · 4:5' }, todo: true },
-    { title: 'Enfant', text: 'Tenues africaines pour enfant.', image: { src: null, label: 'Enfant · 4:5' }, todo: true },
+    { title: 'Homme', text: 'Grands boubous, ensembles et tenues brodées.', image: { src: 'images/ensemble-blanc.jpg', alt: 'Ensemble blanc brodé' } },
+    { title: 'Garçon', text: 'Tenues africaines pour enfant.', image: { src: null, label: 'Garçon · 4:5' }, todo: true },
   ],
 
   // Pièces : aucun prix affiché. Chaque carte ouvre WhatsApp avec le nom de la pièce.
   selection: {
     title: 'La sélection',
     items: [
-      { name: 'Modèle 01', category: 'Homme', image: { src: null, label: 'Pièce · 3:4' } },
-      { name: 'Modèle 02', category: 'Homme', image: { src: null, label: 'Pièce · 3:4' } },
-      { name: 'Modèle 03', category: 'Femme', image: { src: null, label: 'Pièce · 3:4' } },
-      { name: 'Modèle 04', category: 'Enfant', image: { src: null, label: 'Pièce · 3:4' } },
-      { name: 'Modèle 05', category: 'Femme', image: { src: null, label: 'Pièce · 3:4' } },
-      { name: 'Modèle 06', category: 'Homme', image: { src: null, label: 'Pièce · 3:4' } },
-      { name: 'Modèle 07', category: 'Homme', image: { src: null, label: 'Pièce · 3:4' } },
-      { name: 'Modèle 08', category: 'Femme', image: { src: null, label: 'Pièce · 3:4' } },
+      { name: 'Grand boubou bleu ciel', category: 'Homme', image: { src: 'images/boubou-bleu.jpg', alt: 'Grand boubou bleu ciel brodé' } },
+      { name: 'Grand boubou doré', category: 'Homme', image: { src: 'images/boubou-or.jpg', alt: 'Grand boubou doré brodé' } },
+      { name: 'Ensemble blanc brodé', category: 'Homme', image: { src: 'images/ensemble-blanc.jpg', alt: 'Ensemble blanc brodé' } },
+      { name: "Grand boubou vert d'eau", category: 'Homme', image: { src: 'images/boubou-vert.jpg', alt: "Grand boubou vert d'eau brodé" } },
+      { name: 'Ensemble taupe', category: 'Homme', image: { src: 'images/ensemble-taupe.jpg', alt: 'Ensemble taupe à pan croisé' } },
+      { name: 'Tenue garçon 01', category: 'Garçon', image: { src: null, label: 'Garçon · 3:4' } },
+      { name: 'Tenue garçon 02', category: 'Garçon', image: { src: null, label: 'Garçon · 3:4' } },
+      { name: 'Tenue garçon 03', category: 'Garçon', image: { src: null, label: 'Garçon · 3:4' } },
     ],
   },
 
@@ -127,19 +126,19 @@ window.SITE = {
     text: "Entreprise de confection et fournisseur de tenues africaines, Thies Habillement vous reçoit à Nguinth pour choisir ou commander votre tenue.",
     todo: true, // texte à valider avec le client (atelier, sur-mesure, délais)
     cta: { label: 'Demander une information', whatsapp: true },
-    image: { src: null, alt: 'Détail de confection', label: 'Détail de couture · portrait 4:5' },
-    image2: { src: null, alt: 'Atelier', label: 'Atelier · 1:1' },
+    image: { src: 'images/detail-broderie-or.jpg', alt: 'Détail du plastron brodé d’un grand boubou doré' },
+    image2: { src: 'images/detail-poche-blanc.jpg', alt: 'Broderie de poche sur un ensemble blanc' },
   },
 
   lookbook: {
     kicker: 'Lookbook',
-    title: 'Portées à Thiès',
+    title: 'Les tenues de la maison',
     looks: [
-      { caption: 'Look 01', image: { src: null, label: 'Look · 2:3' } },
-      { caption: 'Look 02', image: { src: null, label: 'Look · 3:2' }, wide: true },
-      { caption: 'Look 03', image: { src: null, label: 'Look · 2:3' } },
-      { caption: 'Look 04', image: { src: null, label: 'Look · 2:3' } },
-      { caption: 'Look 05', image: { src: null, label: 'Look · 2:3' } },
+      { caption: "Grand boubou vert d'eau", image: { src: 'images/boubou-vert.jpg', alt: "Grand boubou vert d'eau" } },
+      { caption: 'Plastron brodé', image: { src: 'images/boubou-bleu-large.jpg', alt: 'Grand boubou bleu ciel, plastron brodé' }, wide: true },
+      { caption: 'Ensemble taupe', image: { src: 'images/ensemble-taupe.jpg', alt: 'Ensemble taupe' } },
+      { caption: 'Grand boubou doré', image: { src: 'images/boubou-or.jpg', alt: 'Grand boubou doré' } },
+      { caption: 'Ensemble blanc', image: { src: 'images/ensemble-blanc.jpg', alt: 'Ensemble blanc brodé' } },
     ],
   },
 
@@ -152,6 +151,6 @@ window.SITE = {
 
   footer: {
     credit: 'Prototype réalisé par Jëfya',
-    note: 'Visuels de démonstration : les emplacements photo sont à remplacer par les photos de la boutique.',
+    note: 'Photos fournies par le client ; emplacements « Visuel à venir » à compléter.',
   },
 };

@@ -75,7 +75,7 @@
   const H = S.hero;
   const word = [...S.brand.wordmark].map((c, i) => `<span class="ch" style="--i:${i}">${esc(c)}</span>`).join('');
   const heroFig = H.image.src
-    ? `<div class="hero-figure media ${H.image.cutout ? 'cutout' : ''}"><img src="${esc(H.image.src)}" alt="${esc(H.image.alt)}"></div>`
+    ? `<div class="hero-figure media ${H.image.cutout ? 'cutout' : ''}" style="--ratio:${esc(H.image.ratio || '5 / 8')}"><img src="${esc(H.image.src)}" alt="${esc(H.image.alt)}"></div>`
     : `<div class="hero-figure media"><div class="ph" role="img" aria-label="${esc(H.image.alt)}"><span>Visuel à venir · ${esc(H.image.label)}</span></div></div>`;
   const hero = `
   <section class="hero" id="top"><div class="wrap">
@@ -92,7 +92,7 @@
   </div></section>`;
 
   const cats = `
-  <section class="cats on-ink" id="collections" aria-label="Collections"><div class="wrap">
+  <section class="cats on-ink" id="collections" aria-label="Collections"><div class="wrap" style="--n:${S.collections.length}">
     ${S.collections.map((c) => `
     <article class="cat">
       ${media(c.image, 'rv-img')}
@@ -109,7 +109,7 @@
   <section class="intro"><div class="wrap">
     <div class="intro-side"><span class="mark" aria-hidden="true"></span><span class="caps">${esc(S.intro.kicker)}</span></div>
     <div class="rv">
-      <p class="big">${esc(S.intro.text).replace('tenues africaines', '<em>tenues africaines</em>')}</p>
+      <p class="big">${esc(S.intro.text).replace('homme et garçon', '<em>homme et garçon</em>')}</p>
       <p class="sig">${esc(S.brand.tagline)}</p>
     </div>
   </div></section>`;
