@@ -76,7 +76,7 @@
   const H = S.hero;
   const word = [...S.brand.wordmark].map((c, i) => `<span class="ch" style="--i:${i}">${esc(c)}</span>`).join('');
   const heroFig = H.image.src
-    ? `<div class="hero-figure media ${H.image.cutout ? 'cutout' : ''}" style="--ratio:${esc(H.image.ratio || '5 / 8')}"><img src="${esc(H.image.src)}" alt="${esc(H.image.alt)}"></div>`
+    ? `<div class="hero-figure media ${H.image.cutout ? 'cutout' : ''}" style="--ratio:${esc(H.image.ratio || '5 / 8')}"><img src="${esc(H.image.src)}" alt="${esc(H.image.alt)}" fetchpriority="high" decoding="async"></div>`
     : `<div class="hero-figure media"><div class="ph" role="img" aria-label="${esc(H.image.alt)}"><span>Visuel à venir · ${esc(H.image.label)}</span></div></div>`;
   const hero = `
   <section class="hero" id="top"><div class="wrap">
