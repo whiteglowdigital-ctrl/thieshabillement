@@ -93,7 +93,7 @@ window.SITE = {
     // ~1400 px de haut. Une photo classique en portrait fonctionne aussi.
     image: { src: 'images/hero-boubou-blanc.webp', alt: 'Grand boubou blanc à plastron brodé sur mannequin', cutout: true, ratio: '735 / 1059' },
     ctaPrimary: { label: 'Voir la collection', href: '#collection' },
-    ctaSecondary: { label: 'Commander sur WhatsApp', whatsapp: true },
+    ctaSecondary: { label: 'Trouver un modèle', href: '#recherche' },
     corner: ['Confection', 'Homme & garçon', 'Thiès'],
   },
 
@@ -118,18 +118,33 @@ window.SITE = {
     home: ['Grand boubou blanc brodé', 'Ensemble bleu nuit', 'Grand boubou doré', 'Ensemble blanc col officier', "Grand boubou vert d'eau", 'Grand boubou bleu ciel', 'Ensemble garçon noir', 'Ensemble garçon bleu roi'],
     moreLabel: 'Voir toute la collection',
     pageTitle: 'La collection',
-    pageIntro: 'Grands boubous, ensembles brodés et tenues pour garçon. Choisissez une pièce, la boutique vous répond sur WhatsApp.',
+    pageIntro: 'Grands boubous, ensembles brodés et tenues pour garçon. Choisissez un modèle, indiquez votre taille, et envoyez votre commande sur WhatsApp.',
+    // ref   = numéro du modèle (celui affiché sur TikTok / Instagram)
+    // price = prix indicatif en F CFA (PRIX D'EXEMPLE pour le prototype, à remplacer)
     items: [
-      { name: 'Grand boubou blanc brodé', category: 'Homme', image: { src: 'images/boubou-blanc.jpg', alt: 'Grand boubou blanc à plastron brodé' } },
-      { name: 'Ensemble bleu nuit', category: 'Homme', image: { src: 'images/kaftan-marine.jpg', alt: 'Ensemble bleu nuit à bande brodée' } },
-      { name: 'Grand boubou doré', category: 'Homme', image: { src: 'images/boubou-or.jpg', alt: 'Grand boubou doré brodé' } },
-      { name: 'Ensemble blanc col officier', category: 'Homme', image: { src: 'images/kaftan-blanc.jpg', alt: 'Ensemble blanc col officier à bande brodée' } },
-      { name: "Grand boubou vert d'eau", category: 'Homme', image: { src: 'images/boubou-vert.jpg', alt: "Grand boubou vert d'eau brodé" } },
-      { name: 'Ensemble blanc brodé', category: 'Homme', image: { src: 'images/ensemble-blanc.jpg', alt: 'Ensemble blanc brodé' } },
-      { name: 'Grand boubou bleu ciel', category: 'Homme', image: { src: 'images/boubou-bleu.jpg', alt: 'Grand boubou bleu ciel brodé' } },
-      { name: 'Ensemble taupe', category: 'Homme', image: { src: 'images/ensemble-taupe.jpg', alt: 'Ensemble taupe à pan croisé' } },
-      { name: 'Ensemble garçon noir', category: 'Garçon', image: { src: 'images/garcon-noir.jpg', alt: 'Ensemble garçon noir à broderie dorée' } },
-      { name: 'Ensemble garçon bleu roi', category: 'Garçon', image: { src: 'images/garcon-bleu-roi.jpg', alt: 'Ensemble garçon bleu roi brodé' } },
+      { ref: '0021', price: 65000, name: 'Grand boubou blanc brodé', category: 'Homme', image: { src: 'images/boubou-blanc.jpg', alt: 'Grand boubou blanc à plastron brodé' } },
+      { ref: '0022', price: 45000, name: 'Ensemble bleu nuit', category: 'Homme', image: { src: 'images/kaftan-marine.jpg', alt: 'Ensemble bleu nuit à bande brodée' } },
+      { ref: '0023', price: 75000, name: 'Grand boubou doré', category: 'Homme', image: { src: 'images/boubou-or.jpg', alt: 'Grand boubou doré brodé' } },
+      { ref: '0024', price: 40000, name: 'Ensemble blanc col officier', category: 'Homme', image: { src: 'images/kaftan-blanc.jpg', alt: 'Ensemble blanc col officier à bande brodée' } },
+      { ref: '0025', price: 65000, name: "Grand boubou vert d'eau", category: 'Homme', image: { src: 'images/boubou-vert.jpg', alt: "Grand boubou vert d'eau brodé" } },
+      { ref: '0026', price: 40000, name: 'Ensemble blanc brodé', category: 'Homme', image: { src: 'images/ensemble-blanc.jpg', alt: 'Ensemble blanc brodé' } },
+      { ref: '0027', price: 65000, name: 'Grand boubou bleu ciel', category: 'Homme', image: { src: 'images/boubou-bleu.jpg', alt: 'Grand boubou bleu ciel brodé' } },
+      { ref: '0028', price: 45000, name: 'Ensemble taupe', category: 'Homme', image: { src: 'images/ensemble-taupe.jpg', alt: 'Ensemble taupe à pan croisé' } },
+      { ref: '0031', price: 25000, name: 'Ensemble garçon noir', category: 'Garçon', image: { src: 'images/garcon-noir.jpg', alt: 'Ensemble garçon noir à broderie dorée' } },
+      { ref: '0032', price: 25000, name: 'Ensemble garçon bleu roi', category: 'Garçon', image: { src: 'images/garcon-bleu-roi.jpg', alt: 'Ensemble garçon bleu roi brodé' } },
+    ],
+  },
+
+  // Tunnel de commande : fiche modèle → mini-formulaire → message WhatsApp prérempli
+  order: {
+    currency: 'F CFA',
+    priceNote: "*Prix d'exemple pour le prototype",
+    searchPlaceholder: 'Entrez le numéro du modèle TikTok/Instagram (ex: 0021)...',
+    sizes: ['S', 'M', 'L', 'XL', 'Sur-mesure'],
+    delivery: [
+      { id: 'boutique', label: 'Retrait en boutique', detail: 'Gratuit - Nguinth, Thiès' },
+      { id: 'thies', label: 'Livraison à domicile', detail: 'À Thiès : à partir de 700 F CFA' },
+      { id: 'regions', label: 'Livraison dans les autres régions', detail: 'À partir de 2000 F CFA' },
     ],
   },
 

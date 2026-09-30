@@ -29,6 +29,8 @@
     hanger: '<svg viewBox="0 0 36 36" fill="none" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 9a3 3 0 1 1 3 3v3"/><path d="M18 15 4 24.5c-1 .7-.5 2 .7 2h26.6c1.2 0 1.7-1.3.7-2L18 15Z"/></svg>',
     truck: '<svg viewBox="0 0 36 36" fill="none" stroke-width="1.3" stroke-linejoin="round"><path d="M3 9h19v16H3zM22 14h6l5 5v6H22"/><circle cx="9" cy="27" r="2.6" fill="var(--paper)"/><circle cx="27" cy="27" r="2.6" fill="var(--paper)"/></svg>',
   };
+  I.search = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8"/></svg>';
+  I.close = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
   const svcIcon = (k) => I[k] || '';
 
   /* ---------- Helpers ---------- */
@@ -43,6 +45,9 @@
   const waAttrs = (text) => `href="${waHref(text)}" data-wa ${S.contact.whatsapp ? 'target="_blank" rel="noopener"' : ''}`;
   const brandHTML = () => `<a class="brand" href="#top" aria-label="${esc(S.brand.name)} — accueil"><span class="mark" aria-hidden="true"></span><span><b>${esc(S.brand.wordmark)}</b><small>${esc(S.brand.wordmarkSub)}</small></span></a>`;
   const L = S.location;
+  const O = S.order;
+  const fmtPrice = (n) => `${String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} ${O.currency}`;
+  const modelHref = (p) => `#modele-${p.ref}`;
 
   /* ---------- Sections ---------- */
   const topbar = `
@@ -58,6 +63,7 @@
     <button class="burger" aria-label="Ouvrir le menu" aria-expanded="false" id="burger"><span></span></button>
     ${brandHTML()}
     <div class="actions caps">
+      <a class="icon-link" href="#recherche" data-search-open aria-label="Rechercher un modèle">${I.search}<span>Rechercher</span></a>
       <a class="icon-link hide-md" href="#boutique">${I.pin}<span>Boutique</span></a>
       <a class="icon-link" ${waAttrs()} aria-label="Commander sur WhatsApp">${I.chat}<span>WhatsApp</span></a>
     </div>
@@ -87,9 +93,21 @@
     ${heroFig}
     <div class="hero-ctas">
       <a class="btn" href="${H.ctaPrimary.href}">${esc(H.ctaPrimary.label)}</a>
-      <a class="link" ${waAttrs()}>${esc(H.ctaSecondary.label)} <span class="arr">→</span></a>
+      <a class="link" href="${H.ctaSecondary.href}" data-search-open>${esc(H.ctaSecondary.label)} <span class="arr">→</span></a>
     </div>
     <p class="hero-corner caps">${H.corner.map((k) => `<span>${esc(k)}</span>`).join('')}<span class="rule"></span></p>
+  </div></section>`;
+
+  const search = `
+  <section class="finder" id="recherche" aria-label="Rechercher un modèle"><div class="wrap">
+    <label class="finder-label caps caps-sm" for="finderInput">Vu sur TikTok ou Instagram ?</label>
+    <form class="finder-box" id="finderForm" role="search" autocomplete="off">
+      ${I.search}
+      <input id="finderInput" type="search" inputmode="search" enterkeyhint="search" placeholder="${esc(O.searchPlaceholder)}" aria-describedby="finderHint">
+      <button type="submit" class="finder-go">Voir le modèle</button>
+    </form>
+    <div class="finder-results" id="finderResults" role="listbox" hidden></div>
+    <p class="finder-hint" id="finderHint">Le numéro est indiqué dans la légende de chaque vidéo et publication.</p>
   </div></section>`;
 
   const cats = `
@@ -122,10 +140,16 @@
   const SEL = S.selection;
   const cardHTML = (p) => `
       <article class="card rv" data-cat="${esc(p.category)}">
-        ${media(p.image, '', `<a class="card-order" ${waAttrs(`Bonjour, je suis intéressé(e) par : ${p.name} (${p.category})`)} tabindex="-1" aria-hidden="true">${I.chat}<span>Commander sur WhatsApp</span></a>`)}
-        <div class="card-meta"><h3>${esc(p.name)}</h3><span class="caps caps-sm">${esc(p.category)}</span></div>
-        <a class="card-cta" ${waAttrs(`Bonjour, je suis intéressé(e) par : ${p.name} (${p.category})`)} aria-label="Commander ${esc(p.name)} sur WhatsApp">${I.chat}<span>Commander</span><span class="arr">→</span></a>
+        <a class="card-link" href="${modelHref(p)}" aria-label="Modèle ${esc(p.ref)} — ${esc(p.name)}, ${esc(fmtPrice(p.price))}">
+          ${media(p.image, '', '<span class="card-view" aria-hidden="true">Voir le modèle</span>')}
+          <div class="card-meta">
+            <h3>Modèle ${esc(p.ref)}</h3>
+            <span class="card-price">${esc(fmtPrice(p.price))}<sup>*</sup></span>
+          </div>
+          <p class="card-name">${esc(p.name)} · ${esc(p.category)}</p>
+        </a>
       </article>`;
+  const priceFoot = `<p class="price-foot">${esc(O.priceNote)}</p>`;
   const selection = `
   <section class="selection" id="selection"><div class="wrap">
     <div class="shead">
@@ -133,6 +157,7 @@
       <a class="link" href="#collection">${esc(SEL.moreLabel)} <span class="arr">→</span></a>
     </div>
     <div class="grid">${(SEL.home ? SEL.home.map((n) => SEL.items.find((i) => i.name === n)).filter(Boolean) : SEL.items.slice(0, 8)).map(cardHTML).join('')}</div>
+    ${priceFoot}
   </div></section>`;
 
   /* ---------- Page Collection (vue séparée, route #collection) ---------- */
@@ -151,12 +176,76 @@
       <div class="filters" role="group" aria-label="Filtrer par catégorie">${catList.map((c, i) => `<button type="button" aria-pressed="${i === 0}" data-cat="${esc(c)}">${esc(c)} <small>${countOf(c)}</small></button>`).join('')}</div>
       <span class="caps caps-sm cbar-count" id="ccount">${SEL.items.length} pièces</span>
     </div></div>
-    <section class="cpage-grid"><div class="wrap"><div class="grid" id="cgrid">${SEL.items.map(cardHTML).join('')}</div></div></section>
+    <section class="cpage-grid"><div class="wrap"><div class="grid" id="cgrid">${SEL.items.map(cardHTML).join('')}</div>${priceFoot}</div></section>
     <section class="cpage-cta on-ink"><div class="wrap">
       <p>${esc(S.whatsappBand.text)}</p>
       <a class="btn btn--accent" ${waAttrs()}>${I.chat}${esc(S.whatsappBand.cta)}</a>
     </div></section>
   </main>`;
+
+  /* ---------- Fiche modèle (route #modele-0021) ---------- */
+  const modelPage = `
+  <main class="mpage" id="mpage" hidden>
+    <div class="wrap mpage-wrap">
+      <nav class="crumbs caps caps-sm" aria-label="Fil d'Ariane"><a href="#top">Accueil</a><span>/</span><a href="#collection">${esc(SEL.pageTitle)}</a><span>/</span><span id="mCrumb"></span></nav>
+      <div class="mpage-grid">
+        <div class="mpage-media media" id="mMedia"></div>
+        <div class="mpage-info">
+          <p class="caps caps-sm mpage-cat" id="mCat"></p>
+          <h1 class="mpage-title" id="mTitle"></h1>
+          <p class="mpage-name" id="mName"></p>
+          <p class="mpage-price"><span id="mPrice"></span><sup>*</sup></p>
+          <p class="mpage-note">${esc(O.priceNote)}</p>
+          <fieldset class="sizes" id="mSizes">
+            <legend class="caps caps-sm">Taille <span class="sizes-err" id="mSizeErr" hidden>Choisissez une taille</span></legend>
+            <div class="sizes-row">${O.sizes.map((z, i) => `<label class="size"><input type="radio" name="size" value="${esc(z)}" id="size-${i}"><span>${esc(z)}</span></label>`).join('')}</div>
+          </fieldset>
+          <button type="button" class="btn btn--accent mpage-cta" data-order-open>Commander ce modèle</button>
+          <ul class="mpage-points">
+            ${O.delivery.map((d) => `<li><b>${esc(d.label)}</b> — ${esc(d.detail)}</li>`).join('')}
+          </ul>
+          <a class="link mpage-back" href="#collection"><span class="arr">←</span> Voir toute la collection</a>
+        </div>
+      </div>
+    </div>
+  </main>`;
+
+  const drawer = `
+  <div class="sheet" id="sheet" hidden>
+    <div class="sheet-backdrop" data-sheet-close></div>
+    <form class="sheet-panel" id="orderForm" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" novalidate>
+      <span class="sheet-grip" aria-hidden="true"></span>
+      <div class="sheet-head">
+        <div>
+          <p class="caps caps-sm" id="sheetMeta"></p>
+          <h2 id="sheetTitle">Votre commande</h2>
+        </div>
+        <button type="button" class="sheet-x" data-sheet-close aria-label="Fermer">${I.close}</button>
+      </div>
+      <div class="field">
+        <label for="fName">Prénom & Nom</label>
+        <input id="fName" name="name" type="text" autocomplete="name" required placeholder="Ex : Moussa Ndiaye">
+        <span class="field-err">Indiquez votre nom</span>
+      </div>
+      <div class="field">
+        <label for="fCity">Ville / Quartier</label>
+        <input id="fCity" name="city" type="text" autocomplete="address-level2" required placeholder="Ex : Thiès, Nguinth">
+        <span class="field-err">Indiquez votre ville ou quartier</span>
+      </div>
+      <fieldset class="field">
+        <legend>Récupération</legend>
+        <div class="opts">
+          ${O.delivery.map((d, i) => `<label class="opt"><input type="radio" name="delivery" value="${esc(d.id)}" ${i === 0 ? 'checked' : ''}><span><b>${esc(d.label)}</b><small>${esc(d.detail)}</small></span></label>`).join('')}
+        </div>
+      </fieldset>
+      <div class="field">
+        <label for="fNote">Note / Personnalisation <small>(facultatif)</small></label>
+        <textarea id="fNote" name="note" rows="2" placeholder="Ex : même modèle en tissu bleu nuit"></textarea>
+      </div>
+      <button type="submit" class="btn btn--accent sheet-send">${I.chat}Envoyer ma commande sur WhatsApp</button>
+      <p class="sheet-foot">WhatsApp s'ouvre avec votre message déjà rédigé : il ne reste qu'à l'envoyer.</p>
+    </form>
+  </div>`;
 
   const C = S.craft;
   const craft = `
@@ -243,7 +332,7 @@
     <div class="foot-bottom caps caps-sm"><span>© ${new Date().getFullYear()} ${esc(S.brand.name)}</span><span>${esc(S.footer.credit)}</span></div>
   </div></footer>`;
 
-  const mbar = `<div class="mbar" id="mbar"><a class="btn" ${waAttrs()}>${I.chat}Commander sur WhatsApp</a><a class="btn btn--ghost" href="#boutique" aria-label="Nous trouver">${I.pin}</a></div>`;
+  const mbar = `<div class="mbar" id="mbar"><button type="button" class="btn btn--accent" data-order-open>Commander ce modèle</button></div>`;
   const chip = S.prototype ? `<button class="proto-chip" id="protoChip" type="button" aria-pressed="true"><i></i>Repères prototype</button>` : '';
 
   const loaderOn = S.loader && S.loader.duration > 0 && !matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -258,7 +347,7 @@
     </div>
   </div>` : '';
 
-  root.innerHTML = loader + topbar + header + menu + '<main id="home">' + hero + cats + selection + intro + craft + services + lookbook + wa + shop + '</main>' + collectionPage + footer + mbar + chip + '<div class="toast" id="toast" role="status"></div>';
+  root.innerHTML = loader + topbar + header + menu + '<main id="home">' + hero + search + cats + selection + intro + craft + services + lookbook + wa + shop + '</main>' + collectionPage + modelPage + footer + mbar + drawer + chip + '<div class="toast" id="toast" role="status"></div>';
   if (S.prototype) document.body.classList.add('show-todo');
 
   // Écran d'entrée : bloque le hero, puis s'ouvre vers le haut
@@ -308,7 +397,7 @@
     header_.classList.toggle('hide', y > 500 && y > lastY + 4);
     if (y < lastY - 4) header_.classList.remove('hide');
     lastY = y;
-    mb.classList.toggle('on', cpage.hidden ? y > heroEl.offsetTop + heroEl.offsetHeight * 0.7 : y > 200);
+    mb.classList.toggle('on', !mpage.hidden && y > 280);
   }, { passive: true });
 
   // Filtres de la page Collection
@@ -320,24 +409,151 @@
   $$('.filters button').forEach((b) => b.addEventListener('click', () => setFilter(b.dataset.cat)));
 
   // Routage : #collection (et #collection-homme…) = page Collection, le reste = accueil
-  const home = $('#home'); const cpage = $('#cpage');
+  const home = $('#home'); const cpage = $('#cpage'); const mpage = $('#mpage');
+  let current = null;
+  const findModel = (ref) => SEL.items.find((i) => i.ref === ref);
+  const showModel = (p) => {
+    current = p;
+    $('#mMedia').innerHTML = `<img src="${esc(p.image.src)}" alt="${esc(p.image.alt || p.name)}">`;
+    $('#mCrumb').textContent = `Modèle ${p.ref}`;
+    $('#mCat').textContent = p.category;
+    $('#mTitle').textContent = `Modèle ${p.ref}`;
+    $('#mName').textContent = p.name;
+    $('#mPrice').textContent = fmtPrice(p.price);
+    $$('#mSizes input').forEach((r) => { r.checked = false; });
+    $('#mSizeErr').hidden = true; $('#mSizes').classList.remove('err');
+    document.title = `Modèle ${p.ref} — ${S.brand.name}`;
+  };
   const route = () => {
     const h = location.hash.slice(1);
     const isC = h === 'collection' || h.startsWith('collection-');
-    const wasC = !cpage.hidden;
-    home.hidden = isC; cpage.hidden = !isC;
+    const model = h.startsWith('modele-') ? findModel(h.slice(7)) : null;
+    const wasAway = !cpage.hidden || !mpage.hidden;
+    home.hidden = isC || !!model; cpage.hidden = !isC; mpage.hidden = !model;
     document.body.classList.toggle('on-collection', isC);
-    if (isC) {
+    document.body.classList.toggle('on-model', !!model);
+    if (!model) { document.title = S.brand.name; closeSheet(); }
+    mb.classList.remove('on');
+    if (model) {
+      showModel(model);
+      scrollTo({ top: 0, behavior: 'instant' });
+    } else if (isC) {
       const want = h.slice('collection-'.length);
       setFilter(catList.find((c) => slug(c) === want) || 'Tout');
       scrollTo({ top: 0, behavior: 'instant' });
-    } else if (wasC) {
+    } else if (wasAway) {
       const t = h && document.getElementById(h);
       requestAnimationFrame(() => (t ? t.scrollIntoView() : scrollTo({ top: 0, behavior: 'instant' })));
     }
     upd && upd();
   };
   addEventListener('hashchange', route);
+
+  /* ---------- Recherche par numéro de modèle ---------- */
+  const norm = (v) => String(v).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+  const digitsOf = (v) => (String(v).match(/\d+/) || [''])[0];
+  const matchModels = (q) => {
+    const n = norm(q).replace(/^(modele|model|mod|ref|n°|no|#)\s*/, '');
+    if (!n) return [];
+    const d = digitsOf(n);
+    return SEL.items.filter((p) => {
+      if (d) return p.ref.includes(d) || String(Number(p.ref)) === String(Number(d));
+      return norm(p.name).includes(n) || norm(p.category).includes(n);
+    });
+  };
+  const exactModel = (q) => { const d = digitsOf(q); return d ? SEL.items.find((p) => Number(p.ref) === Number(d)) : null; };
+  const fInput = $('#finderInput'); const fRes = $('#finderResults');
+  const renderResults = () => {
+    const q = fInput.value;
+    if (!q.trim()) { fRes.hidden = true; fRes.innerHTML = ''; return; }
+    const list = matchModels(q);
+    fRes.hidden = false;
+    fRes.innerHTML = list.length
+      ? list.slice(0, 5).map((p) => `<a class="finder-item" role="option" href="${modelHref(p)}"><img src="${esc(p.image.src)}" alt=""><span><b>Modèle ${esc(p.ref)}</b><small>${esc(p.name)}</small></span><em>${esc(fmtPrice(p.price))}*</em></a>`).join('')
+      : `<div class="finder-empty">Aucun modèle ne correspond à « ${esc(q.trim())} ». <a ${waAttrs(`Bonjour, je cherche le modèle ${q.trim()} vu sur vos réseaux.`)}>Envoyez-nous la capture sur WhatsApp</a>.</div>`;
+  };
+  fInput.addEventListener('input', renderResults);
+  $('#finderForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const p = exactModel(fInput.value) || (matchModels(fInput.value).length === 1 ? matchModels(fInput.value)[0] : null);
+    if (p) { location.hash = modelHref(p); fInput.blur(); } else renderResults();
+  });
+  $$('[data-search-open]').forEach((a) => a.addEventListener('click', (e) => {
+    e.preventDefault();
+    const go = () => { const el = $('#recherche'); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(() => fInput.focus({ preventScroll: true }), 450); };
+    if (!home.hidden) go(); else { history.pushState(null, '', '#top'); route(); requestAnimationFrame(go); }
+  }));
+
+  /* ---------- Tiroir de commande + message WhatsApp ---------- */
+  const sheet = $('#sheet'); const form = $('#orderForm');
+  let lastFocus = null;
+  const chosenSize = () => { const r = $('#mSizes input:checked'); return r ? r.value : ''; };
+  const openSheet = () => {
+    if (!current) return;
+    const size = chosenSize();
+    if (!size) {
+      $('#mSizeErr').hidden = false; $('#mSizes').classList.add('err');
+      $('#mSizes').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    $('#sheetMeta').textContent = `Modèle ${current.ref} · Taille ${size} · ${fmtPrice(current.price)}*`;
+    lastFocus = document.activeElement;
+    sheet.hidden = false;
+    requestAnimationFrame(() => sheet.classList.add('open'));
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => $('#fName').focus({ preventScroll: true }), 350);
+  };
+  function closeSheet() {
+    if (!sheet || sheet.hidden) return;
+    sheet.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => { sheet.hidden = true; }, 380);
+    if (lastFocus) lastFocus.focus({ preventScroll: true });
+  }
+  $$('[data-order-open]').forEach((b) => b.addEventListener('click', openSheet));
+  $$('[data-sheet-close]').forEach((b) => b.addEventListener('click', closeSheet));
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSheet(); });
+  $$('#mSizes input').forEach((r) => r.addEventListener('change', () => { $('#mSizeErr').hidden = true; $('#mSizes').classList.remove('err'); }));
+
+  const buildMessage = (d) => [
+    `Bonjour ${S.brand.name.replace('Thies', 'Thiès')} ! Je souhaite commander le Modèle ${current.ref}.`,
+    '',
+    'Mes informations :',
+    `- Nom : ${d.name}`,
+    `- Taille : ${d.size}`,
+    `- Mode de récupération : ${d.delivery}`,
+    `- Ville/Adresse : ${d.city}`,
+    `- Note/Demande : ${d.note || 'Aucune'}`,
+    '',
+    'Merci de me confirmer la disponibilité et les modalités de paiement.',
+  ].join('\n');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let ok = true;
+    ['fName', 'fCity'].forEach((id) => {
+      const el = $('#' + id); const bad = !el.value.trim();
+      el.closest('.field').classList.toggle('err', bad);
+      if (bad && ok) { el.focus(); ok = false; }
+    });
+    if (!ok) return;
+    const opt = O.delivery.find((x) => x.id === form.delivery.value) || O.delivery[0];
+    const msg = buildMessage({
+      name: $('#fName').value.trim(),
+      city: $('#fCity').value.trim(),
+      size: chosenSize(),
+      delivery: `${opt.label} (${opt.detail})`,
+      note: $('#fNote').value.trim(),
+    });
+    if (!S.contact.whatsapp) { say('Numéro WhatsApp non configuré (content.js → contact.whatsapp).'); return; }
+    const url = `https://wa.me/${S.contact.whatsapp}?text=${encodeURIComponent(msg)}`;
+    // Lien réel cliqué pendant le geste de l'utilisateur : ouvre l'app WhatsApp sur mobile, un onglet sur ordinateur
+    const a = document.createElement('a');
+    a.href = url; a.target = '_blank'; a.rel = 'noopener';
+    document.body.appendChild(a); a.click(); a.remove();
+    say('WhatsApp s\'ouvre avec votre commande. Il ne reste qu\'à appuyer sur Envoyer.');
+  });
+  $$('#fName, #fCity').forEach((el) => el.addEventListener('input', () => el.closest('.field').classList.remove('err')));
 
   // Lookbook : flèches, compteur, progression
   const track = $('#lbTrack'); const bar = $('#lbBar'); const count = $('#lbCount');
