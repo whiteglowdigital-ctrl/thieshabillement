@@ -173,7 +173,7 @@
     </div></section>
     ${search}
     <div class="cbar"><div class="wrap">
-      <div class="filters" role="group" aria-label="Filtrer par catégorie">${catList.map((c, i) => `<button type="button" aria-pressed="${i === 0}" data-cat="${esc(c)}">${esc(c)} <small>${countOf(c)}</small></button>`).join('')}</div>
+      <div class="filters" role="group" aria-label="Filtrer par catégorie">${catList.map((c, i) => `<button type="button" aria-pressed="${i === 0}" data-cat="${esc(c)}">${esc(c)}</button>`).join('')}</div>
       <span class="caps caps-sm cbar-count" id="ccount">${SEL.items.length} pièces</span>
     </div></div>
     <section class="cpage-grid"><div class="wrap"><div class="grid" id="cgrid">${SEL.items.map(cardHTML).join('')}</div>${priceFoot}</div></section>

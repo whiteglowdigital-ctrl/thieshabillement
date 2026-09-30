@@ -139,7 +139,7 @@ window.SITE = {
   order: {
     currency: 'F CFA',
     priceNote: "*Prix d'exemple pour le prototype",
-    searchLabel: 'Vous cherchez un modèle précis, entrez son numéro ?',
+    searchLabel: 'Vous cherchez un modèle précis ? Entrez son numéro.',
     searchPlaceholder: 'Ex : 0021…',
     sizes: ['S', 'M', 'L', 'XL', 'Sur-mesure'],
     delivery: [
