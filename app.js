@@ -63,7 +63,7 @@
     <button class="burger" aria-label="Ouvrir le menu" aria-expanded="false" id="burger"><span></span></button>
     ${brandHTML()}
     <div class="actions caps">
-      <a class="icon-link" href="#recherche" data-search-open aria-label="Rechercher un modèle">${I.search}<span>Rechercher</span></a>
+      <a class="icon-link" href="#collection" data-search-open aria-label="Rechercher un modèle">${I.search}<span>Rechercher</span></a>
       <a class="icon-link hide-md" href="#boutique">${I.pin}<span>Boutique</span></a>
       <a class="icon-link" ${waAttrs()} aria-label="Commander sur WhatsApp">${I.chat}<span>WhatsApp</span></a>
     </div>
@@ -100,14 +100,13 @@
 
   const search = `
   <section class="finder" id="recherche" aria-label="Rechercher un modèle"><div class="wrap">
-    <label class="finder-label caps caps-sm" for="finderInput">Vu sur TikTok ou Instagram ?</label>
+    <label class="finder-label" for="finderInput">${esc(O.searchLabel)}</label>
     <form class="finder-box" id="finderForm" role="search" autocomplete="off">
       ${I.search}
-      <input id="finderInput" type="search" inputmode="search" enterkeyhint="search" placeholder="${esc(O.searchPlaceholder)}" aria-describedby="finderHint">
+      <input id="finderInput" type="search" inputmode="search" enterkeyhint="search" placeholder="${esc(O.searchPlaceholder)}">
       <button type="submit" class="finder-go">Voir le modèle</button>
     </form>
     <div class="finder-results" id="finderResults" role="listbox" hidden></div>
-    <p class="finder-hint" id="finderHint">Le numéro est indiqué dans la légende de chaque vidéo et publication.</p>
   </div></section>`;
 
   const cats = `
@@ -172,6 +171,7 @@
         <p>${esc(SEL.pageIntro)}</p>
       </div>
     </div></section>
+    ${search}
     <div class="cbar"><div class="wrap">
       <div class="filters" role="group" aria-label="Filtrer par catégorie">${catList.map((c, i) => `<button type="button" aria-pressed="${i === 0}" data-cat="${esc(c)}">${esc(c)} <small>${countOf(c)}</small></button>`).join('')}</div>
       <span class="caps caps-sm cbar-count" id="ccount">${SEL.items.length} pièces</span>
@@ -347,7 +347,7 @@
     </div>
   </div>` : '';
 
-  root.innerHTML = loader + topbar + header + menu + '<main id="home">' + hero + search + cats + selection + intro + craft + services + lookbook + wa + shop + '</main>' + collectionPage + modelPage + footer + mbar + drawer + chip + '<div class="toast" id="toast" role="status"></div>';
+  root.innerHTML = loader + topbar + header + menu + '<main id="home">' + hero + cats + selection + intro + craft + services + lookbook + wa + shop + '</main>' + collectionPage + modelPage + footer + mbar + drawer + chip + '<div class="toast" id="toast" role="status"></div>';
   if (S.prototype) document.body.classList.add('show-todo');
 
   // Écran d'entrée : bloque le hero, puis s'ouvre vers le haut
@@ -480,8 +480,10 @@
   });
   $$('[data-search-open]').forEach((a) => a.addEventListener('click', (e) => {
     e.preventDefault();
-    const go = () => { const el = $('#recherche'); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(() => fInput.focus({ preventScroll: true }), 450); };
-    if (!home.hidden) go(); else { history.pushState(null, '', '#top'); route(); requestAnimationFrame(go); }
+    // La recherche vit sur la page Collection : on y va, puis on place le curseur dans le champ
+    const go = () => { setTimeout(() => fInput.focus({ preventScroll: true }), 120); };
+    if (!cpage.hidden) { scrollTo({ top: 0, behavior: 'smooth' }); go(); }
+    else { history.pushState(null, '', '#collection'); route(); go(); }
   }));
 
   /* ---------- Tiroir de commande + message WhatsApp ---------- */

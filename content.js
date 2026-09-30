@@ -93,7 +93,7 @@ window.SITE = {
     // ~1400 px de haut. Une photo classique en portrait fonctionne aussi.
     image: { src: 'images/hero-boubou-blanc.webp', alt: 'Grand boubou blanc à plastron brodé sur mannequin', cutout: true, ratio: '735 / 1059' },
     ctaPrimary: { label: 'Voir la collection', href: '#collection' },
-    ctaSecondary: { label: 'Trouver un modèle', href: '#recherche' },
+    ctaSecondary: { label: 'Trouver un modèle', href: '#collection' },
     corner: ['Confection', 'Homme & garçon', 'Thiès'],
   },
 
@@ -139,7 +139,8 @@ window.SITE = {
   order: {
     currency: 'F CFA',
     priceNote: "*Prix d'exemple pour le prototype",
-    searchPlaceholder: 'Entrez le numéro du modèle TikTok/Instagram (ex: 0021)...',
+    searchLabel: 'Vous cherchez un modèle précis, entrez son numéro ?',
+    searchPlaceholder: 'Ex : 0021…',
     sizes: ['S', 'M', 'L', 'XL', 'Sur-mesure'],
     delivery: [
       { id: 'boutique', label: 'Retrait en boutique', detail: 'Gratuit - Nguinth, Thiès' },
