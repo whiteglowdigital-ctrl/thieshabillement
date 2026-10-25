@@ -66,10 +66,82 @@
   @keyframes slidein { from { transform: translateX(30px); opacity: .5; } }
   @keyframes rise { from { transform: translate(-50%, calc(-50% + 16px)); opacity: .5; } }
   .toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 80; }
-  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
+  /* ---- Ouverture : rideau, puis entrée du hero ---- */
+  #intro { position: fixed; inset: 0; z-index: 90; background: var(--nuit); display: grid; place-items: center; cursor: pointer; animation: curtain 1s cubic-bezier(.77,0,.18,1) 1.7s forwards; }
+  #intro .mark { width: 64px; height: 64px; object-fit: contain; animation: markIn 1.1s cubic-bezier(.2,.7,.2,1) both; }
+  #intro .word { font-family: "Cormorant Garamond", Garamond, Georgia, serif; color: var(--ivoire); font-size: clamp(2.2rem, 6vw, 3.4rem); text-transform: uppercase; animation: spread 1.6s cubic-bezier(.2,.7,.2,1) .15s both; }
+  #intro .bar { height: 1px; background: var(--or); width: 140px; transform-origin: left; animation: draw 1.2s cubic-bezier(.7,0,.2,1) .4s both; }
+  @keyframes curtain { to { transform: translateY(-100%); visibility: hidden; } }
+  @keyframes markIn { from { transform: translateY(12px) scale(.92); opacity: 0; } }
+  @keyframes spread { from { letter-spacing: .02em; opacity: 0; } to { letter-spacing: .32em; opacity: 1; } }
+  @keyframes draw { from { transform: scaleX(0); } }
+  :root { --d0: 0s; }
+  .has-intro { --d0: 1.9s; }
+  .hero-img { animation: settle 2.6s cubic-bezier(.2,.7,.2,1) var(--d0) both; transform-origin: 60% 30%; }
+  @keyframes settle { from { transform: scale(1.14); } }
+  .ln { display: block; overflow: hidden; padding-bottom: .1em; margin-bottom: -.1em; }
+  .ln > * { display: inline-block; animation: lineUp 1.3s cubic-bezier(.2,.8,.2,1) both; }
+  .ln:nth-child(1) > * { animation-delay: calc(var(--d0) + .15s); }
+  .ln:nth-child(2) > * { animation-delay: calc(var(--d0) + .3s); }
+  .ln:nth-child(3) > * { animation-delay: calc(var(--d0) + .45s); }
+  @keyframes lineUp { from { transform: translateY(105%); } }
+  .h-in { animation: fadeUp 1.2s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--d0) + var(--i, 0) * .12s + .5s); }
+  @keyframes fadeUp { from { transform: translateY(18px); opacity: 0; } }
+  .rule-grow { transform-origin: left; animation: draw 1.2s cubic-bezier(.7,0,.2,1) both; animation-delay: calc(var(--d0) + .1s); }
+
+  /* ---- Barre fixe qui apparaît après le hero ---- */
+  #bar { position: fixed; top: 0; left: 0; right: 0; z-index: 60; background: rgba(12,17,29,.86); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid rgba(185,150,91,.18); padding-top: env(safe-area-inset-top, 0px); transform: translateY(-110%); transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+  #bar.on { transform: none; }
+
+  /* ---- Défilé des grands moments ---- */
+  .mq-wrap { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+  .mq { display: flex; width: max-content; animation: mq 46s linear infinite; }
+  @keyframes mq { to { transform: translateX(-50%); } }
+
+  /* ---- Apparition au défilement (part d'un état visible) ---- */
+  .js .rv { transform: translateY(34px); opacity: .25; transition: transform 1.2s cubic-bezier(.2,.7,.2,1), opacity 1.2s; transition-delay: var(--rd, 0s); }
+  .js .rv.seen { transform: none; opacity: 1; }
+
+  /* ---- Survol des pièces ---- */
+  .veil-card { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(12,17,29,.72) 0%, rgba(12,17,29,0) 45%); opacity: 0; transition: opacity .6s; display: flex; align-items: flex-end; justify-content: space-between; padding: 1.1rem 1.2rem; color: var(--ivoire); }
+  .look button:hover .veil-card, .look button:focus-visible .veil-card { opacity: 1; }
+  .hero-par { will-change: transform; }
+
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } #intro { display: none; } .js .rv { transform: none; opacity: 1; } }
 </style>
 
 <div id="site">
+
+  <!-- Ouverture -->
+  <div id="intro" aria-hidden="true" hidden>
+    <div class="flex flex-col items-center gap-5">
+      <img class="mark" src="images/logo-mark.png" alt="">
+      <span class="word">Saadikh</span>
+      <span class="bar"></span>
+    </div>
+  </div>
+
+  <!-- Barre fixe -->
+  <div id="bar" class="text-ivoire">
+    <div class="gut">
+      <div class="wrap flex items-center justify-between py-3.5">
+        <a href="#" class="flex items-center gap-3" aria-label="Saadikh, haut de page">
+          <img src="images/logo-mark.png" alt="" class="w-7 h-7 object-contain">
+          <span class="font-serif text-[1.35rem] tracking-[0.14em] uppercase leading-none">Saadikh</span>
+        </a>
+        <nav class="hidden md:flex gap-9 text-[11px] tracking-[0.22em] uppercase">
+          <a href="#collection" class="hover:text-or transition-colors">Collection</a>
+          <a href="#savoir-faire" class="hover:text-or transition-colors">L’atelier</a>
+          <a href="#sur-mesure" class="hover:text-or transition-colors">Sur-mesure</a>
+          <a href="#" data-wa target="_blank" rel="noopener" class="hover:text-or transition-colors">Rendez-vous</a>
+        </nav>
+        <button class="openCart relative" aria-label="Ouvrir le panier">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M5 8h14l-1.2 12H6.2L5 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+          <span class="cartCount absolute -top-1.5 -right-2 min-w-[18px] h-[18px] px-1 rounded-full bg-or text-nuit text-[10px] font-medium grid place-items-center">0</span>
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- Bandeau -->
   <div class="bg-roi text-ivoire/90 gut">
@@ -95,19 +167,20 @@
         </a>
         <div class="flex justify-end items-center gap-6">
           <a href="#" data-wa target="_blank" rel="noopener" class="hidden lg:inline text-[11.5px] tracking-[0.22em] uppercase hover:text-or transition-colors">Rendez-vous</a>
-          <button id="openCart" class="relative flex items-center gap-2" aria-label="Ouvrir le panier">
+          <button id="openCart" class="openCart relative flex items-center gap-2" aria-label="Ouvrir le panier">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M5 8h14l-1.2 12H6.2L5 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-            <span id="cartCount" class="absolute -top-1.5 -right-2 min-w-[18px] h-[18px] px-1 rounded-full bg-or text-nuit text-[10px] font-medium grid place-items-center">0</span>
+            <span id="cartCount" class="cartCount absolute -top-1.5 -right-2 min-w-[18px] h-[18px] px-1 rounded-full bg-or text-nuit text-[10px] font-medium grid place-items-center">0</span>
           </button>
         </div>
       </div>
     </header>
 
-    <div class="relative lg:min-h-[680px]">
+    <div class="relative lg:min-h-[740px]">
       <!-- photo -->
-      <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-[58%] relative aspect-[4/4.6] sm:aspect-[4/3.4] lg:aspect-auto max-w-full">
-        <img class="img" src="images/hero-saadikh.webp" alt="Homme en grand boubou bleu roi à plastron brodé, sur une terrasse à Dakar" style="object-position:50% 16%">
+      <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-[58%] relative aspect-[4/4.6] sm:aspect-[4/3.4] lg:aspect-auto max-w-full overflow-hidden">
+        <img class="img hero-img hero-par" src="images/hero-saadikh.webp" alt="Homme en grand boubou bleu roi à plastron brodé, sur une terrasse à Dakar" style="object-position:50% 16%">
         <div class="absolute inset-0 fade-l hidden lg:block"></div>
+        <div class="absolute inset-x-0 top-0 h-56 hidden lg:block" style="background:linear-gradient(180deg,rgba(12,17,29,.6),rgba(12,17,29,0))"></div>
         <div class="absolute inset-0 fade-b lg:hidden"></div>
         <div class="hidden lg:flex absolute right-[max(56px,env(safe-area-inset-right,0px))] top-10 flex-col items-end gap-3 text-right">
           <span class="rule-or"></span>
@@ -120,13 +193,15 @@
       </div>
 
       <div class="relative z-10 gut -mt-8 lg:mt-0">
-        <div class="wrap lg:min-h-[680px] flex flex-col justify-center pb-14 lg:pb-32 lg:pt-6">
-          <p class="ey text-or mb-6 flex items-center gap-4"><span class="rule-or"></span>Maison de couture · Dakar</p>
-          <h1 class="font-serif font-normal text-[clamp(3rem,6.6vw,6.4rem)] leading-[0.95] max-w-[11ch]">
-            Quand c’est élégant, <em class="text-or/95">c’est Saadikh.</em>
+        <div class="wrap lg:min-h-[740px] flex flex-col justify-center pb-14 lg:pb-32 lg:pt-6">
+          <p class="ey text-or mb-6 flex items-center gap-4"><span class="rule-or rule-grow"></span><span class="h-in" style="--i:-3">Maison de couture · Dakar</span></p>
+          <h1 class="font-serif font-normal text-[clamp(3rem,6.6vw,6.6rem)] leading-[0.95]">
+            <span class="ln"><span>Quand c’est</span></span>
+            <span class="ln"><span>élégant,</span></span>
+            <span class="ln"><em class="text-or/95">c’est Saadikh.</em></span>
           </h1>
-          <p class="mt-7 text-[16.5px] leading-[1.75] text-ivoire/75 max-w-[44ch]">Grands boubous, deux pièces et trois pièces pour homme. Coupés amples, brodés à la main, portés pour les jours qui comptent.</p>
-          <div class="mt-10 flex flex-wrap gap-4">
+          <p class="h-in mt-7 text-[16.5px] leading-[1.75] text-ivoire/75 max-w-[44ch]" style="--i:1">Grands boubous, deux pièces et trois pièces pour homme. Coupés amples, brodés à la main, portés pour les jours qui comptent.</p>
+          <div class="h-in mt-10 flex flex-wrap gap-4" style="--i:2">
             <a href="#collection" class="btn bg-ivoire text-nuit hover:bg-or">Découvrir la collection <span aria-hidden="true">→</span></a>
             <a href="#" data-wa target="_blank" rel="noopener" class="btn border border-ivoire/40 hover:border-or hover:text-or">Prendre rendez-vous</a>
           </div>
@@ -134,7 +209,7 @@
       </div>
 
       <!-- garanties -->
-      <div class="relative z-10 lg:absolute lg:bottom-0 lg:inset-x-0 gut border-t border-ivoire/10 bg-nuit/70 lg:backdrop-blur-sm">
+      <div class="h-in relative z-10 lg:absolute lg:bottom-0 lg:inset-x-0 gut border-t border-ivoire/10 bg-nuit/70 lg:backdrop-blur-sm" style="--i:4">
         <ul class="wrap grid grid-cols-2 lg:grid-cols-4 gap-y-6 py-7 text-[12.5px]">
           <li class="flex items-center gap-4 pr-4">
             <svg class="shrink-0 text-or" width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1"><circle cx="9" cy="24" r="4"/><circle cx="23" cy="24" r="4"/><path d="M11.5 21 24 4M20.5 21 8 4"/></svg>
@@ -158,8 +233,14 @@
   </section>
 
   <!-- ================= COLLECTION ================= -->
-  <section id="collection" class="bg-sable gut pt-28 lg:pt-40 pb-28 lg:pb-40">
-    <div class="wrap">
+  <section id="collection" class="bg-sable pt-20 lg:pt-28 pb-28 lg:pb-40">
+    <div class="mq-wrap mb-20 lg:mb-28" aria-hidden="true">
+      <div class="mq font-serif italic text-[clamp(2.6rem,6vw,5.4rem)] leading-none text-encre/[0.13] whitespace-nowrap">
+        <span class="px-6">Korité <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span> Tabaski <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span> Mariages <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span> Baptêmes <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span> Magal <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span> Vendredi <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span></span>
+        <span class="px-6">Korité <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span> Tabaski <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span> Mariages <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span> Baptêmes <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span> Magal <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span> Vendredi <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span></span>
+      </div>
+    </div>
+    <div class="wrap gut">
       <div class="grid lg:grid-cols-12 gap-8 items-end mb-16 lg:mb-24">
         <div class="lg:col-span-7">
           <p class="ey text-pierre mb-4">Collection MMXXVI</p>
@@ -193,7 +274,7 @@
         <p class="mt-5 text-[14.5px] leading-[1.8] text-ivoire/65 max-w-[34ch]">De la pièce de tissu à la tenue livrée, rien n’est confié au hasard.</p>
       </div>
       <div class="lg:col-span-9 grid sm:grid-cols-3 gap-8">
-        <figure>
+        <figure class="rv">
           <div class="zoom aspect-[4/4.4] bg-nuit2"><img class="img" src="images/splash-metre.webp" alt="Mètre ruban, fil d’or et épingles sur un tissu noir"></div>
           <figcaption class="pt-5 border-b border-ivoire/15 pb-5">
             <span class="ey text-or">I · Choisir</span>
@@ -201,7 +282,7 @@
             <span class="block text-[13.5px] text-ivoire/60 mt-1">Choisi pour sa tenue et sa lumière.</span>
           </figcaption>
         </figure>
-        <figure>
+        <figure class="rv" style="--rd:.12s">
           <div class="zoom aspect-[4/4.4] bg-nuit2"><img class="img" src="images/detail-machine-blanche.webp" alt="Pied de biche doré cousant un lin blanc" style="object-position:50% 40%"></div>
           <figcaption class="pt-5 border-b border-ivoire/15 pb-5">
             <span class="ey text-or">II · Couper</span>
@@ -209,7 +290,7 @@
             <span class="block text-[13.5px] text-ivoire/60 mt-1">À la mesure de celui qui la portera.</span>
           </figcaption>
         </figure>
-        <figure>
+        <figure class="rv" style="--rd:.24s">
           <div class="zoom aspect-[4/4.4] bg-nuit2"><img class="img" src="images/detail-lisere.webp" alt="Tunique en lin blanc à liseré noir et or"></div>
           <figcaption class="pt-5 border-b border-ivoire/15 pb-5">
             <span class="ey text-or">III · Finir</span>
@@ -352,10 +433,11 @@
 
   // ---- Cartes produit ----
   const look = p => `
-    <article class="look" data-family="${p.family}" data-events="${p.events}">
+    <article class="look rv" data-family="${p.family}" data-events="${p.events}">
       <button class="group block w-full text-left" data-open="${p.ref}" aria-label="Voir ${p.name}">
-        <div class="zoom relative bg-sable">
+        <div class="zoom relative bg-nuit2">
           <img class="img" src="${p.img}" alt="${p.name}, ${FAM[p.family].toLowerCase()} en ${p.fabric.toLowerCase()}" style="object-position:50% 18%">
+          <span class="veil-card"><span class="font-serif italic text-[1.35rem] leading-none">${p.fabric}</span><span class="text-[10px] tracking-[0.24em] uppercase">Voir la pièce +</span></span>
         </div>
         <p class="pt-4 flex justify-between gap-3 text-[11.5px] tracking-[0.18em] uppercase text-encre/80 group-hover:text-encre transition-colors">
           <span class="min-w-0 truncate">${p.name}</span><span class="price tabular-nums shrink-0 text-pierre normal-case tracking-[0.04em]" data-xof="${p.price}">${money(p.price)}</span>
@@ -409,7 +491,7 @@
   const save = () => { try { localStorage.setItem('saadikh-cart', JSON.stringify(cart)); } catch (_) {} };
   const renderCart = () => {
     const n = cart.reduce((s, l) => s + l.qty, 0);
-    $('#cartCount').textContent = n;
+    document.querySelectorAll('.cartCount').forEach(el => el.textContent = n);
     const total = cart.reduce((s, l) => s + byRef(l.ref).price * l.qty, 0);
     $('#cartTotal').textContent = money(total);
     $('#cartFoot').hidden = !cart.length;
@@ -443,11 +525,52 @@
     l ? l.qty += qty : cart.push({ ref: cur_p.ref, size, qty });
     save(); renderCart(); close($('#pModal')); toast(`${cur_p.name}, taille ${size}, ajouté au panier`);
   });
-  $('#openCart').addEventListener('click', () => open($('#cart')));
+  document.querySelectorAll('.openCart').forEach(b => b.addEventListener('click', () => open($('#cart'))));
   renderCart();
 
   // ---- Rendez-vous, sur-mesure, liste ----
   $('#smLink').href = wa('Bonjour Saadikh, je souhaite une tenue sur mesure. Pouvez-vous me guider pour les mesures ?');
   document.querySelectorAll('[data-wa]').forEach(a => a.href = wa('Bonjour Saadikh, je souhaite convenir d’un rendez-vous avec un conseiller.'));
+
+  // ---- Ouverture (une fois par visite) ----
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let seenIntro = false;
+  try { seenIntro = sessionStorage.getItem('saadikh-intro') === '1'; sessionStorage.setItem('saadikh-intro', '1'); } catch (_) {}
+  const intro = $('#intro');
+  if (!calm && !seenIntro) {
+    document.documentElement.classList.add('has-intro');
+    intro.hidden = false;
+    const end = () => { intro.remove(); };
+    intro.addEventListener('animationend', e => { if (e.animationName === 'curtain') end(); });
+    intro.addEventListener('click', () => { intro.style.animation = 'curtain .6s cubic-bezier(.77,0,.18,1) forwards'; });
+  } else intro.remove();
+
+  // ---- Barre fixe ----
+  const hero = document.querySelector('section.bg-nuit');
+  const bar = $('#bar');
+  const onScroll = () => {
+    const y = scrollY;
+    bar.classList.toggle('on', y > hero.offsetHeight - 80);
+  };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  // ---- Parallaxe légère du hero (ordinateur) ----
+  const heroImg = document.querySelector('.hero-par');
+  if (!calm && matchMedia('(min-width: 1024px)').matches) {
+    let ticking = false;
+    addEventListener('scroll', () => {
+      if (ticking) return; ticking = true;
+      requestAnimationFrame(() => { const y = Math.min(scrollY, 900); heroImg.style.translate = `0 ${y * 0.18}px`; ticking = false; });
+    }, { passive: true });
+  }
+
+  // ---- Apparition au défilement ----
+  if (!calm && 'IntersectionObserver' in window) {
+    document.documentElement.classList.add('js');
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('seen'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+    const watch = () => document.querySelectorAll('.rv:not(.seen)').forEach((el, i) => { el.style.setProperty('--rd', el.style.getPropertyValue('--rd') || ((i % 3) * 0.1) + 's'); io.observe(el); });
+    watch();
+    document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => document.querySelectorAll('#all .rv').forEach(el => el.classList.add('seen'))));
+  }
 })();
 </script>
