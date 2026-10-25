@@ -58,14 +58,26 @@
   .tab[aria-selected="true"] { color: var(--ivoire); background: var(--encre); border-color: var(--encre); }
   .curb[aria-pressed="true"] { color: var(--encre); }
   .look { min-width: 0; }
-  .look .zoom { aspect-ratio: 3/4; }
+  .look .zoom { aspect-ratio: 3/4.1; border-radius: 999px 999px 0 0; }
+  .look .zoom::after { content: ""; position: absolute; inset: 9px; border: 1px solid rgba(244,239,231,.55); border-bottom: 0; border-radius: 999px 999px 0 0; pointer-events: none; transition: inset .7s cubic-bezier(.2,.7,.2,1); }
+  .look:hover .zoom::after { inset: 14px; }
+  .quick { position: absolute; left: 0; right: 0; bottom: 0; background: rgba(244,239,231,.96); backdrop-filter: blur(6px); padding: .7rem .6rem .75rem; transform: translateY(101%); transition: transform .45s cubic-bezier(.2,.7,.2,1); z-index: 2; }
+  .look.picking .quick { transform: none; }
+  .qs { min-width: 2.2rem; padding: .5rem .4rem; border: 1px solid rgba(22,23,27,.18); font-size: 12px; letter-spacing: .06em; transition: background .25s, color .25s, border-color .25s; }
+  .qs:hover { background: var(--encre); color: var(--ivoire); border-color: var(--encre); }
+  .addb { display: flex; width: 100%; align-items: center; justify-content: center; gap: .7rem; padding: .95rem 1rem; border: 1px solid var(--encre); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; font-weight: 500; transition: background .3s, color .3s; }
+  .addb:hover, .look.picking .addb { background: var(--encre); color: var(--ivoire); }
+  #fab { position: fixed; z-index: 55; right: calc(20px + env(safe-area-inset-right, 0px)); bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateY(140%); transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+  #fab.on { transform: none; }
+  @keyframes bump { 40% { transform: scale(1.12); } }
+  .bump { animation: bump .5s ease; }
   .drawer { position: fixed; inset: 0; z-index: 70; }
   .drawer .veil { position: absolute; inset: 0; background: rgba(12,17,29,.55); }
   .drawer .panel { position: absolute; top: 0; right: 0; bottom: 0; width: min(460px, 100%); background: var(--ivoire); display: flex; flex-direction: column; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); padding-right: env(safe-area-inset-right, 0px); animation: slidein .45s cubic-bezier(.2,.7,.2,1); }
   .modal .panel { left: 50%; top: 50%; right: auto; bottom: auto; transform: translate(-50%, -50%); width: min(980px, calc(100% - 32px)); max-height: calc(100% - 32px); overflow-y: auto; animation: rise .45s cubic-bezier(.2,.7,.2,1); }
   @keyframes slidein { from { transform: translateX(30px); opacity: .5; } }
   @keyframes rise { from { transform: translate(-50%, calc(-50% + 16px)); opacity: .5; } }
-  .toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 80; }
+  .toast { position: fixed; left: 50%; bottom: calc(96px + env(safe-area-inset-bottom, 0px)); max-width: calc(100% - 32px); text-align: center; transform: translateX(-50%); z-index: 80; }
   /* ---- Ouverture : rideau, puis entrée du hero ---- */
   #intro { position: fixed; inset: 0; z-index: 90; background: var(--nuit); display: grid; place-items: center; cursor: pointer; animation: curtain 1s cubic-bezier(.77,0,.18,1) 1.7s forwards; }
   #intro .mark { width: 64px; height: 64px; object-fit: contain; animation: markIn 1.1s cubic-bezier(.2,.7,.2,1) both; }
@@ -103,7 +115,7 @@
   .js .rv.seen { transform: none; opacity: 1; }
 
   /* ---- Survol des pièces ---- */
-  .veil-card { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(12,17,29,.72) 0%, rgba(12,17,29,0) 45%); opacity: 0; transition: opacity .6s; display: flex; align-items: flex-end; justify-content: space-between; padding: 1.1rem 1.2rem; color: var(--ivoire); }
+  .veil-card { position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(0deg, rgba(12,17,29,.72) 0%, rgba(12,17,29,0) 45%); opacity: 0; transition: opacity .6s; display: flex; align-items: flex-end; justify-content: space-between; padding: 1.1rem 1.2rem; color: var(--ivoire); }
   .look button:hover .veil-card, .look button:focus-visible .veil-card { opacity: 1; }
   .hero-par { will-change: transform; }
 
@@ -436,6 +448,14 @@
     </div>
   </div>
 
+  <button id="fab" class="openCart flex items-center gap-4 bg-nuit text-ivoire pl-5 pr-6 py-4 shadow-[0_18px_40px_-12px_rgba(12,17,29,.55)]" aria-label="Ouvrir le panier">
+    <span class="relative">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M5 8h14l-1.2 12H6.2L5 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+      <span class="cartCount absolute -top-1.5 -right-2.5 min-w-[18px] h-[18px] px-1 rounded-full bg-or text-nuit text-[10px] font-medium grid place-items-center">0</span>
+    </span>
+    <span class="text-left leading-tight"><span class="block text-[10px] tracking-[0.22em] uppercase text-ivoire/60">Votre panier</span><span id="fabTotal" class="block text-[14px] tabular-nums"></span></span>
+  </button>
+
   <div id="toast" class="toast bg-encre text-ivoire px-6 py-3.5 text-[13px] tracking-[0.06em]" hidden role="status"></div>
 </div>
 
@@ -465,17 +485,25 @@
 
   // ---- Cartes produit ----
   const look = p => `
-    <article class="look rv" data-family="${p.family}" data-events="${p.events}">
-      <button class="group block w-full text-left" data-open="${p.ref}" aria-label="Voir ${p.name}">
-        <div class="zoom relative bg-nuit2">
+    <article class="look rv relative" data-ref="${p.ref}" data-family="${p.family}" data-events="${p.events}">
+      <div class="zoom relative bg-nuit2">
+        <button class="absolute inset-0 w-full" data-open="${p.ref}" aria-label="Voir ${p.name}">
           <img class="img" src="${p.img}" alt="${p.name}, ${FAM[p.family].toLowerCase()} en ${p.fabric.toLowerCase()}" style="object-position:50% 18%">
-          <span class="veil-card"><span class="font-serif italic text-[1.35rem] leading-none">${p.fabric}</span><span class="text-[10px] tracking-[0.24em] uppercase">Voir la pièce +</span></span>
+        </button>
+        ${p.events ? '<span class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-or text-nuit text-[9.5px] tracking-[0.24em] uppercase px-3 py-1.5 pointer-events-none whitespace-nowrap">Cérémonie</span>' : ''}
+        <div class="quick" role="group" aria-label="Choisir une taille pour ${p.name}">
+          <p class="flex justify-between items-center mb-2.5 text-[10px] tracking-[0.22em] uppercase text-pierre"><span>Choisir la taille</span><button class="qclose text-[16px] leading-none text-encre px-1" aria-label="Fermer">×</button></p>
+          <div class="flex flex-wrap gap-1.5">${SIZES.map(sz => `<button class="qs" data-add="${p.ref}" data-size="${sz}">${sz === 'Sur-mesure' ? 'Sur mesure' : sz}</button>`).join('')}</div>
         </div>
-        <div class="pt-4 border-b border-encre/15 pb-4">
-          <p class="flex justify-between gap-3 text-[10px] tracking-[0.22em] uppercase"><span class="text-or">N° ${p.ref}</span><span class="text-pierre">${FAM[p.family]}</span></p>
-          <h3 class="font-serif text-[1.35rem] lg:text-[1.6rem] leading-tight mt-1.5 group-hover:text-roi transition-colors">${p.name}</h3>
-          <p class="flex justify-between items-baseline gap-3 mt-1"><span class="font-serif italic text-[1.02rem] text-pierre min-w-0 truncate">${p.fabric}</span><span class="price tabular-nums shrink-0 text-[13px] text-encre" data-xof="${p.price}">${money(p.price)}</span></p>
-        </div>
+      </div>
+      <div class="pt-5 grid gap-1">
+        <p class="flex justify-between gap-3 text-[10px] tracking-[0.2em] uppercase"><span class="text-or font-medium">N° ${p.ref}</span><span class="text-pierre hidden sm:inline">${FAM[p.family]}</span></p>
+        <button class="text-left" data-open="${p.ref}"><h3 class="font-serif font-medium text-[1.3rem] sm:text-[1.55rem] lg:text-[1.85rem] leading-[1.05] hover:text-roi transition-colors">${p.name}</h3></button>
+        <p class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-x-3 gap-y-0.5"><span class="text-[11px] sm:text-[12px] tracking-[0.14em] uppercase text-pierre min-w-0 truncate">${p.fabric}</span><span class="price tabular-nums shrink-0 text-[14px] sm:text-[15px] font-medium" data-xof="${p.price}">${money(p.price)}</span></p>
+      </div>
+      <button class="addb mt-4" data-pick="${p.ref}">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 8h14l-1.2 12H6.2L5 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+        Ajouter<span class="hidden sm:inline">&nbsp;au panier</span>
       </button>
     </article>`;
   $('#all').innerHTML = PRODUCTS.map(look).join('');
@@ -526,8 +554,10 @@
   const renderCart = () => {
     const n = cart.reduce((s, l) => s + l.qty, 0);
     document.querySelectorAll('.cartCount').forEach(el => el.textContent = n);
+    $('#fab').classList.toggle('on', n > 0);
     const total = cart.reduce((s, l) => s + byRef(l.ref).price * l.qty, 0);
     $('#cartTotal').textContent = money(total);
+    $('#fabTotal').textContent = money(total);
     $('#cartFoot').hidden = !cart.length;
     $('#cartItems').innerHTML = cart.length ? cart.map((l, i) => { const p = byRef(l.ref); return `
       <div class="flex gap-4 py-5 border-b border-encre/10">
@@ -554,10 +584,20 @@
     save(); renderCart();
   });
   $('#c-nom').addEventListener('input', renderCart); $('#c-zone').addEventListener('change', renderCart);
-  $('#addBtn').addEventListener('click', () => {
-    const l = cart.find(x => x.ref === cur_p.ref && x.size === size);
-    l ? l.qty += qty : cart.push({ ref: cur_p.ref, size, qty });
-    save(); renderCart(); close($('#pModal')); toast(`${cur_p.name}, taille ${size}, ajouté au panier`);
+  const addToCart = (ref, sz, q) => {
+    const l = cart.find(x => x.ref === ref && x.size === sz);
+    l ? l.qty += q : cart.push({ ref, size: sz, qty: q });
+    save(); renderCart();
+    document.querySelectorAll('.cartCount').forEach(el => { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); });
+    toast(`${byRef(ref).name}, taille ${sz}, ajouté au panier`);
+  };
+  $('#addBtn').addEventListener('click', () => { addToCart(cur_p.ref, size, qty); close($('#pModal')); });
+  $('#all').addEventListener('click', e => {
+    const pick = e.target.closest('[data-pick]'), add = e.target.closest('[data-add]'), x = e.target.closest('.qclose');
+    const card = e.target.closest('.look');
+    if (pick) { document.querySelectorAll('.look.picking').forEach(c => c !== card && c.classList.remove('picking')); card.classList.toggle('picking'); }
+    if (x) card.classList.remove('picking');
+    if (add) { addToCart(add.dataset.add, add.dataset.size, 1); card.classList.remove('picking'); }
   });
   document.querySelectorAll('.openCart').forEach(b => b.addEventListener('click', () => open($('#cart'))));
   renderCart();
