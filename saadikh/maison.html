@@ -94,7 +94,7 @@
           <span class="text-[8.5px] tracking-[0.42em] uppercase text-ivoire/60">STAM by Fall · Dakar</span>
         </a>
         <div class="flex justify-end items-center gap-6">
-          <a href="#rendez-vous" class="hidden lg:inline text-[11.5px] tracking-[0.22em] uppercase hover:text-or transition-colors">Rendez-vous</a>
+          <a href="#" data-wa target="_blank" rel="noopener" class="hidden lg:inline text-[11.5px] tracking-[0.22em] uppercase hover:text-or transition-colors">Rendez-vous</a>
           <button id="openCart" class="relative flex items-center gap-2" aria-label="Ouvrir le panier">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M5 8h14l-1.2 12H6.2L5 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
             <span id="cartCount" class="absolute -top-1.5 -right-2 min-w-[18px] h-[18px] px-1 rounded-full bg-or text-nuit text-[10px] font-medium grid place-items-center">0</span>
@@ -115,7 +115,7 @@
         </div>
         <div class="hidden lg:flex absolute right-[max(56px,env(safe-area-inset-right,0px))] bottom-28 flex-col items-end gap-3 text-right">
           <span class="rule-or"></span>
-          <span class="ey text-ivoire shadow-t leading-[2]">N° 006<br>Thiaya Bleu Roi</span>
+          <span class="ey text-ivoire shadow-t leading-[2]">Collection<br>MMXXVI</span>
         </div>
       </div>
 
@@ -128,7 +128,7 @@
           <p class="mt-7 text-[16.5px] leading-[1.75] text-ivoire/75 max-w-[44ch]">Grands boubous, deux pièces et trois pièces pour homme. Coupés amples, brodés à la main, portés pour les jours qui comptent.</p>
           <div class="mt-10 flex flex-wrap gap-4">
             <a href="#collection" class="btn bg-ivoire text-nuit hover:bg-or">Découvrir la collection <span aria-hidden="true">→</span></a>
-            <a href="#rendez-vous" class="btn border border-ivoire/40 hover:border-or hover:text-or">Prendre rendez-vous</a>
+            <a href="#" data-wa target="_blank" rel="noopener" class="btn border border-ivoire/40 hover:border-or hover:text-or">Prendre rendez-vous</a>
           </div>
         </div>
       </div>
@@ -179,38 +179,53 @@
           </div>
         </div>
       </div>
-      <div id="all" class="grid grid-cols-2 lg:grid-cols-3 gap-x-4 lg:gap-x-8 gap-y-12 lg:gap-y-16"></div>
+      <div id="all" class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 lg:gap-x-6 gap-y-12 lg:gap-y-16"></div>
       <p class="mt-14 text-[10.5px] tracking-[0.08em] text-pierre/60 text-center">Prix indicatifs, confirmés par la maison. € à parité fixe, $ à 600 F CFA.</p>
     </div>
   </section>
 
-  <!-- ================= LA BRODERIE ================= -->
-  <section id="savoir-faire" class="bg-ivoire gut py-20 lg:py-28 overflow-hidden">
-    <div class="wrap grid lg:grid-cols-12 gap-10 lg:gap-8 items-center">
-      <div class="lg:col-span-4 order-2 lg:order-1">
-        <p class="ey text-pierre mb-4">Le savoir-faire</p>
-        <h2 class="font-serif text-[clamp(2.6rem,4.6vw,4.2rem)] leading-[0.98]">Le détail<br><em>fait l’homme.</em></h2>
-        <p class="mt-6 text-[15.5px] leading-[1.8] text-encre/75 max-w-[40ch]">Un vêtement d’apparat se reconnaît à trois choses : la noblesse du tissu, l’ampleur de la coupe et la finesse de ce qui est cousu. Chez Saadikh, chacune prend son temps.</p>
-        <a href="#rendez-vous" class="lk mt-9">Rencontrer l’atelier <span aria-hidden="true">→</span></a>
-      </div>
-      <div class="lg:col-span-5 order-1 lg:order-2 relative">
+  <!-- ================= LE SAVOIR-FAIRE ================= -->
+  <section id="savoir-faire" class="bg-ivoire gut py-20 lg:py-28">
+    <div class="wrap grid lg:grid-cols-12 gap-12 lg:gap-14 items-start">
+      <div class="lg:col-span-5 relative">
         <div class="aspect-[4/5] max-w-full bg-sable"><img class="img" src="images/detail-broderie.webp" alt="Rosace brodée bleu et ivoire sur le plastron d’un grand boubou"></div>
-        <p class="absolute -bottom-5 left-5 bg-nuit text-ivoire px-5 py-3 ey">Plastron N° 006 · rosace brodée</p>
+        <p class="absolute -bottom-5 left-5 bg-nuit text-ivoire px-5 py-3 ey">Plastron brodé · rosace</p>
       </div>
-      <ol class="lg:col-span-3 order-3 grid gap-8 lg:pl-6">
-        <li class="grid grid-cols-[auto_1fr] gap-x-5 gap-y-1">
-          <span class="rule-or mt-3"></span><span class="ey">Le tissu</span>
-          <span></span><span class="font-serif italic text-[1.15rem] text-pierre">Bazin, lin, satin, coton fin.</span>
-        </li>
-        <li class="grid grid-cols-[auto_1fr] gap-x-5 gap-y-1">
-          <span class="rule-or mt-3"></span><span class="ey">La coupe</span>
-          <span></span><span class="font-serif italic text-[1.15rem] text-pierre">Ample, pensée pour le mouvement et la prière.</span>
-        </li>
-        <li class="grid grid-cols-[auto_1fr] gap-x-5 gap-y-1">
-          <span class="rule-or mt-3"></span><span class="ey">La broderie</span>
-          <span></span><span class="font-serif italic text-[1.15rem] text-pierre">Liserés, galons et rosaces, à la main.</span>
-        </li>
-      </ol>
+      <div class="lg:col-span-7 grid gap-12 lg:pt-6 min-w-0">
+        <div class="grid sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-8 items-end">
+          <div>
+            <p class="ey text-pierre mb-4">Le savoir-faire</p>
+            <h2 class="font-serif text-[clamp(2.6rem,4.6vw,4.2rem)] leading-[0.98]">Le détail<br><em>fait l’homme.</em></h2>
+          </div>
+          <div>
+            <p class="text-[15px] leading-[1.8] text-encre/75 max-w-[40ch]">La noblesse du tissu, l’ampleur de la coupe, la finesse de ce qui est cousu. Chez Saadikh, chacune prend son temps.</p>
+            <a href="#sur-mesure" class="lk mt-6">Le sur-mesure <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-4 lg:gap-6">
+          <figure class="min-w-0">
+            <div class="zoom aspect-[4/5] bg-sable"><img class="img" src="images/splash-metre.webp" alt="Mètre ruban, fil d’or et épingles sur un tissu noir"></div>
+            <figcaption class="pt-4">
+              <span class="flex items-center gap-3"><span class="rule-or !w-6"></span><span class="ey text-[10px]">Le tissu</span></span>
+              <span class="block font-serif italic text-[1.08rem] leading-snug text-pierre mt-2">Bazin, lin, satin, coton fin.</span>
+            </figcaption>
+          </figure>
+          <figure class="min-w-0">
+            <div class="zoom aspect-[4/5] bg-sable"><img class="img" src="images/detail-machine-blanche.webp" alt="Pied de biche doré cousant un lin blanc" style="object-position:50% 40%"></div>
+            <figcaption class="pt-4">
+              <span class="flex items-center gap-3"><span class="rule-or !w-6"></span><span class="ey text-[10px]">La coupe</span></span>
+              <span class="block font-serif italic text-[1.08rem] leading-snug text-pierre mt-2">Ample, pensée pour le mouvement.</span>
+            </figcaption>
+          </figure>
+          <figure class="min-w-0">
+            <div class="zoom aspect-[4/5] bg-sable"><img class="img" src="images/detail-lisere.webp" alt="Tunique en lin blanc à liseré noir et or"></div>
+            <figcaption class="pt-4">
+              <span class="flex items-center gap-3"><span class="rule-or !w-6"></span><span class="ey text-[10px]">La broderie</span></span>
+              <span class="block font-serif italic text-[1.08rem] leading-snug text-pierre mt-2">Liserés, galons et rosaces, à la main.</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -235,34 +250,8 @@
     </div>
   </section>
 
-  <!-- ================= L'EXPÉRIENCE DE LA MESURE ================= -->
-  <section id="rendez-vous" class="grid lg:grid-cols-2 bg-ivoire">
-    <div id="boutique" class="gut py-28 lg:py-0 lg:min-h-[860px] flex flex-col justify-between lg:pl-[max(56px,env(safe-area-inset-left,0px))] lg:pr-20">
-      <p class="ey text-pierre/70 lg:pt-16">Salon privé · Sicap Foire</p>
-      <div class="my-24 lg:my-0">
-        <h2 class="font-serif font-normal text-[clamp(2.8rem,5.4vw,5.4rem)] leading-[0.98] max-w-[12ch]">L’expérience de la mesure.<br><em class="text-pierre">Sur rendez-vous uniquement.</em></h2>
-        <a id="rdvLink" href="#" target="_blank" rel="noopener" class="inline-flex items-center gap-5 mt-14 text-[10.5px] tracking-[0.34em] uppercase text-encre group">
-          <span class="block w-12 h-px bg-encre transition-all duration-500 group-hover:w-20"></span>Solliciter un rendez-vous
-        </a>
-      </div>
-      <p class="text-[11px] tracking-[0.14em] text-pierre/70 lg:pb-16">Jardin Boussoura, Dakar · <span class="select-all">+221 78 895 25 55</span></p>
-    </div>
-    <div class="relative min-h-[560px] lg:min-h-[860px]">
-      <img class="img absolute inset-0" src="images/saadikh-mannequin.webp" alt="Tenue en satin blanc sur un buste de couture, à l’atelier Saadikh" style="object-position:50% 30%">
-    </div>
-  </section>
-
-  <!-- ================= SIGNATURE ================= -->
-  <section class="bg-noir text-ivoire gut py-36 lg:py-56">
-    <div class="wrap flex flex-col items-center text-center">
-      <span class="block w-px h-16 bg-or/70"></span>
-      <p class="font-serif font-normal text-[clamp(2.4rem,6vw,5.6rem)] leading-[1.02] mt-14 max-w-[16ch]">Quand c’est élégant, <em class="text-or">c’est Saadikh.</em></p>
-      <p class="mt-12 text-[10px] tracking-[0.42em] uppercase text-ivoire/40">STAM by Fall · Dakar</p>
-    </div>
-  </section>
-
   <!-- ================= PIED ================= -->
-  <footer class="bg-nuit text-ivoire gut pt-16 pb-10">
+  <footer id="boutique" class="bg-nuit text-ivoire gut pt-16 pb-10">
     <div class="wrap grid sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1.3fr] gap-10">
       <div>
         <img src="images/logo-mark.png" alt="" class="w-10 h-10 object-contain">
@@ -270,7 +259,7 @@
         <p class="text-[9px] tracking-[0.42em] uppercase text-ivoire/55 mt-2">STAM by Fall</p>
       </div>
       <div><p class="ey text-ivoire/50 mb-4">Collection</p><ul class="grid gap-2 text-[14px] text-ivoire/85"><li><a href="#collection" data-goto="trois" class="hover:text-or">Trois pièces</a></li><li><a href="#collection" data-goto="deux" class="hover:text-or">Deux pièces</a></li><li><a href="#collection" data-goto="events" class="hover:text-or">Grands événements</a></li></ul></div>
-      <div><p class="ey text-ivoire/50 mb-4">Services</p><ul class="grid gap-2 text-[14px] text-ivoire/85"><li><a href="#sur-mesure" class="hover:text-or">Sur-mesure à distance</a></li><li><a href="#rendez-vous" class="hover:text-or">Salon privé</a></li><li>Livraison diaspora</li></ul></div>
+      <div><p class="ey text-ivoire/50 mb-4">Services</p><ul class="grid gap-2 text-[14px] text-ivoire/85"><li><a href="#sur-mesure" class="hover:text-or">Sur-mesure à distance</a></li><li><a href="#" data-wa target="_blank" rel="noopener" class="hover:text-or">Rendez-vous</a></li><li>Livraison diaspora</li></ul></div>
       <div><p class="ey text-ivoire/50 mb-4">Boutique</p><p class="text-[14px] leading-[1.8] text-ivoire/85">Sicap Foire<br>Jardin Boussoura<br>Dakar, Sénégal</p></div>
       <div class="lg:border-l lg:border-ivoire/15 lg:pl-10">
         <p class="ey text-or mb-4">Traditionnellement vôtre</p>
@@ -349,7 +338,6 @@
 (() => {
   const WA = '221788952555';
   const PRODUCTS = [
-    { ref: '006', name: 'Thiaya Bleu Roi', family: 'trois', events: true, price: 120000, color: 'Bleu roi', hex: '#22346f', fabric: 'Bazin rayé', img: 'images/tenues/trois-pieces-thiaya-bleu-roi.webp', detail: 'Grand boubou à plastron brodé en rosace, porté sur sa thiaya assortie.' },
     { ref: '005', name: 'Blanc & Or', family: 'trois', events: true, price: 95000, color: 'Blanc', hex: '#efeae0', fabric: 'Bazin blanc', img: 'images/tenues/boubou-blanc-brode.webp', detail: 'Blanc lumineux, galon doré au col et le long de la patte, broderie aux poignets.' },
     { ref: '004', name: 'Satin Argent', family: 'trois', events: true, price: 90000, color: 'Argent', hex: '#bfc1c3', fabric: 'Satin', img: 'images/tenues/boubou-satin-argent.webp', detail: 'Satin argenté, patte brodée de fins motifs, fentes latérales.' },
     { ref: '007', name: 'Vert Bouteille', family: 'trois', events: true, price: 75000, color: 'Vert bouteille', hex: '#1e4a40', fabric: 'Tissu satiné', img: 'images/tenues/trois-pieces-vert-bouteille.webp', detail: 'Col rond passepoilé d’argent, patte brodée de petits épis.' },
@@ -467,6 +455,6 @@
 
   // ---- Rendez-vous, sur-mesure, liste ----
   $('#smLink').href = wa('Bonjour Saadikh, je souhaite une tenue sur mesure. Pouvez-vous me guider pour les mesures ?');
-  $('#rdvLink').href = wa('Bonjour Saadikh, je souhaite convenir d’un rendez-vous pour une prise de mesures.');
+  document.querySelectorAll('[data-wa]').forEach(a => a.href = wa('Bonjour Saadikh, je souhaite convenir d’un rendez-vous avec un conseiller.'));
 })();
 </script>
