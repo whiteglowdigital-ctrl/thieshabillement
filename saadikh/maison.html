@@ -8,7 +8,7 @@
   tailwind.config = {
     theme: {
       extend: {
-        colors: { nuit: '#0C111D', nuit2: '#121A2B', roi: '#1D2A5A', ivoire: '#F4EFE7', sable: '#E8DFD1', or: '#B9965B', encre: '#16171B', pierre: '#6F6A62', noir: '#07080B' },
+        colors: { nuit: '#0C111D', nuit2: '#121A2B', roi: '#1D2A5A', ivoire: '#F4EFE7', sable: '#E8DFD1', or: '#B9965B', encre: '#16171B', pierre: '#5E5953', noir: '#07080B' },
         fontFamily: {
           serif: ['"Cormorant Garamond"', '"Cormorant"', 'Garamond', 'Georgia', 'serif'],
           sans: ['Jost', 'Futura', '"Century Gothic"', 'system-ui', 'sans-serif'],
@@ -27,7 +27,7 @@
     --sable: #E8DFD1;   /* fond des visuels produits */
     --or: #B9965B;      /* filets et détails dorés */
     --encre: #16171B;
-    --pierre: #6F6A62;
+    --pierre: #5E5953;
     color-scheme: light;
   }
   [hidden] { display: none !important; }
@@ -150,6 +150,14 @@
   .look .zoom:hover .veil-card, .look [data-open]:focus-visible .veil-card { opacity: 1; }
   .hero-par { will-change: transform; }
 
+  /* ---- Étalonnage commun des photos (même séance) ---- */
+  .grade { filter: saturate(.8) contrast(1.05) brightness(.97) sepia(.07); }
+
+  /* ---- Bulle « Voir » qui suit la souris sur les photos ---- */
+  #peek { position: fixed; left: 0; top: 0; z-index: 58; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%; background: rgba(244,239,231,.92); color: var(--encre); display: grid; place-items: center; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; font-weight: 500; pointer-events: none; transform: scale(0); transition: transform .35s cubic-bezier(.2,.7,.2,1); backdrop-filter: blur(4px); }
+  #peek.on { transform: scale(1); }
+  @media (hover: hover) and (pointer: fine) { .peekable, .peekable * { cursor: none; } }
+
   /* ---- Reflet doré sur la signature du hero ---- */
   .shimmer { background: linear-gradient(100deg, var(--or) 0%, var(--or) 40%, #F6E3B4 50%, var(--or) 60%, var(--or) 100%); background-size: 250% 100%; background-position: 100% 0; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shimmer 2.4s ease-in-out calc(var(--d0) + 1.4s) both; padding-right: .06em; }
   @keyframes shimmer { to { background-position: 0% 0; } }
@@ -238,7 +246,7 @@
   </div>
 
   <!-- Bandeau -->
-  <div class="bg-roi text-ivoire/90 gut">
+  <div class="bg-[#070B16] text-ivoire/75 border-b border-or/15 gut">
     <p class="wrap py-2.5 text-center text-[10.5px] tracking-[0.24em] uppercase flex flex-wrap justify-center gap-x-6 gap-y-1">
       <span>Livraison au Sénégal et dans la diaspora</span><span class="hidden md:inline text-or">✦</span><span class="hidden md:inline">Sur-mesure à distance</span><span class="hidden md:inline text-or">✦</span><span class="hidden md:inline">Retrait en boutique, Sicap Foire</span>
     </p>
@@ -273,7 +281,7 @@
     <div class="relative lg:min-h-[740px]">
       <!-- photo -->
       <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-[58%] relative aspect-[4/4.6] sm:aspect-[4/3.4] lg:aspect-auto max-w-full overflow-hidden">
-        <img class="img hero-img hero-par" src="images/hero-saadikh.webp" alt="Homme en grand boubou bleu roi à plastron brodé, sur une terrasse à Dakar" style="object-position:50% 16%">
+        <img class="img grade hero-img hero-par" src="images/hero-saadikh.webp" alt="Homme en grand boubou bleu roi à plastron brodé, sur une terrasse à Dakar" style="object-position:50% 16%">
         <div class="absolute inset-0 fade-l hidden lg:block"></div>
         <div class="absolute inset-x-0 top-0 h-56 hidden lg:block" style="background:linear-gradient(180deg,rgba(12,17,29,.6),rgba(12,17,29,0))"></div>
         <div class="absolute inset-0 fade-b lg:hidden"></div>
@@ -290,7 +298,7 @@
       <div class="relative z-10 gut -mt-8 lg:mt-0">
         <div class="wrap lg:min-h-[740px] flex flex-col justify-center pb-14 lg:pb-32 lg:pt-6">
           <p class="ey text-or mb-6 flex items-center gap-4"><span class="rule-or rule-grow"></span><span class="h-in" style="--i:-3">Maison de couture · Dakar</span></p>
-          <h1 class="font-serif font-normal text-[clamp(3rem,6.6vw,6.6rem)] leading-[0.95]">
+          <h1 class="font-serif font-normal text-[clamp(3rem,6.6vw,6.6rem)] leading-[1.04]">
             <span class="ln"><span>Quand c’est</span></span>
             <span class="ln"><span>élégant,</span></span>
             <span class="ln"><em class="shimmer">c’est Saadikh.</em></span>
@@ -366,8 +374,8 @@
             <a href="#" data-wa="Bonjour Saadikh, je souhaite essayer le Satin Argent (N° 004) en salon." target="_blank" rel="noopener" class="lk text-ivoire/85 hover:text-or">Essayer en salon</a>
           </div>
         </div>
-        <div class="gilt zoom relative order-1 lg:order-2 min-h-[420px] sm:min-h-[520px] lg:min-h-[640px] overflow-hidden">
-          <img class="img absolute inset-0" src="images/tenues/boubou-satin-argent.webp" alt="Boubou trois pièces en satin argenté" style="object-position:50% 22%">
+        <div data-open="004" class="peekable gilt zoom relative order-1 lg:order-2 min-h-[420px] sm:min-h-[520px] lg:min-h-[640px] overflow-hidden">
+          <img class="img grade absolute inset-0" src="images/tenues/boubou-satin-argent.webp" alt="Boubou trois pièces en satin argenté" style="object-position:50% 22%">
           <div class="absolute z-10 bottom-5 left-5 w-[34%] max-w-[180px] border-4 border-nuit hidden sm:block">
             <div class="aspect-[3/4]"><img class="img" src="images/saadikh-mannequin.webp" alt="Tunique en satin sur buste de couture, à la boutique Saadikh" style="object-position:50% 40%"></div>
           </div>
@@ -468,7 +476,7 @@
       </div>
     </div>
     <div class="wrap mt-14 pt-6 border-t border-ivoire/10 flex flex-wrap justify-between gap-4 text-[12px] text-ivoire/50">
-      <span>© 2026 Saadikh · STAM by Fall</span><span>Réalisé par Jëfya</span>
+      <span>© 2026 Saadikh · STAM by Fall</span><a href="#" class="hover:text-or transition-colors">Retour en haut ↑</a><span>Réalisé par Jëfya</span>
     </div>
   </footer>
 
@@ -478,7 +486,7 @@
     <div class="panel">
       <button class="absolute top-3 right-3 z-10 w-10 h-10 grid place-items-center bg-ivoire/90 text-[20px]" data-close aria-label="Fermer">×</button>
       <div class="grid md:grid-cols-2">
-        <div class="bg-sable aspect-[3/4] md:aspect-auto md:min-h-[600px] relative"><img id="pImg" class="img md:absolute md:inset-0" src="" alt="" style="object-position:50% 18%"></div>
+        <div class="bg-sable aspect-[3/4] md:aspect-auto md:min-h-[600px] relative"><img id="pImg" class="img grade md:absolute md:inset-0" src="" alt="" style="object-position:50% 18%"></div>
         <div class="p-7 md:p-10 grid content-start gap-6 min-w-0">
           <div>
             <p id="pFam" class="ey text-pierre"></p>
@@ -502,6 +510,7 @@
             </div>
             <button id="addBtn" class="btn bg-encre text-ivoire hover:bg-roi flex-1">Ajouter au panier</button>
           </div>
+          <a id="pWa" href="#" target="_blank" rel="noopener" class="lk self-start">Commander directement sur WhatsApp <span aria-hidden="true">→</span></a>
           <p class="text-[12.5px] text-pierre">Retrait en boutique, livraison à Dakar, dans les régions et à l’étranger. Tarif confirmé sur WhatsApp.</p>
         </div>
       </div>
@@ -521,7 +530,11 @@
         <div class="grid grid-cols-2 gap-4">
           <label class="field text-encre" for="c-nom"><span class="ey text-pierre">Nom</span><input id="c-nom" autocomplete="name" placeholder="Votre nom"></label>
           <label class="field text-encre" for="c-zone"><span class="ey text-pierre">Livraison</span>
-            <select id="c-zone"><option>Retrait à Sicap Foire</option><option>Dakar</option><option>Régions du Sénégal</option><option>France</option><option>Italie</option><option>Espagne</option><option>États-Unis</option><option>Autre pays</option></select>
+            <select id="c-zone">
+              <optgroup label="Sénégal"><option>Retrait à Sicap Foire</option><option>Livraison à Dakar</option><option>Régions du Sénégal</option></optgroup>
+              <optgroup label="Diaspora"><option>France</option><option>Italie</option><option>Espagne</option><option>Belgique</option><option>Allemagne</option><option>Royaume-Uni</option><option>Suisse</option><option>États-Unis</option><option>Canada</option></optgroup>
+              <optgroup label="Afrique"><option>Côte d’Ivoire</option><option>Mali</option><option>Gambie</option><option>Mauritanie</option><option>Maroc</option><option>Autre pays</option></optgroup>
+            </select>
           </label>
         </div>
         <div class="flex justify-between items-baseline"><span class="ey text-pierre">Total indicatif</span><span id="cartTotal" class="font-serif text-[1.8rem] tabular-nums"></span></div>
@@ -538,6 +551,8 @@
     </span>
     <span class="text-left leading-tight"><span class="block text-[10px] tracking-[0.22em] uppercase text-ivoire/60">Votre panier</span><span id="fabTotal" class="block text-[14px] tabular-nums"></span></span>
   </button>
+
+  <span id="peek" aria-hidden="true">Voir</span>
 
   <div id="toast" class="toast bg-encre text-ivoire px-6 py-3.5 text-[13px] tracking-[0.06em]" hidden role="status"></div>
 </div>
@@ -570,8 +585,8 @@
   const look = p => `
     <article class="look rv relative" data-ref="${p.ref}" data-family="${p.family}" data-events="${p.events}">
       <div class="zoom relative bg-nuit2">
-        <button class="absolute inset-0 w-full" data-open="${p.ref}" aria-label="Voir ${p.name}">
-          <img class="img" src="${p.img}" alt="${p.name}, ${FAM[p.family].toLowerCase()} en ${p.fabric.toLowerCase()}" style="object-position:50% 18%">
+        <button class="peekable absolute inset-0 w-full" data-open="${p.ref}" aria-label="Voir ${p.name}">
+          <img class="img grade" src="${p.img}" alt="${p.name}, ${FAM[p.family].toLowerCase()} en ${p.fabric.toLowerCase()}" style="object-position:50% 18%">
           <span class="veil-card"><span class="font-serif italic text-[1.35rem] leading-none">${p.fabric}</span><span class="text-[10px] tracking-[0.24em] uppercase">Voir la pièce +</span></span>
         </button>
         <button class="bagb" data-pick="${p.ref}" aria-label="Ajouter ${p.name} au panier">
@@ -612,6 +627,7 @@
 
   // ---- Fiche ----
   let cur_p = null, size = 'L', qty = 1;
+  const updatePWa = () => { if (cur_p) $('#pWa').href = wa(`Bonjour Saadikh, je souhaite commander le modèle N° ${cur_p.ref} « ${cur_p.name} » (${cur_p.fabric}), taille ${size}${qty > 1 ? ', quantité ' + qty : ''}.${size === 'Sur-mesure' ? ' Je vous transmets mes mesures.' : ''}`); };
   const renderSizes = () => $('#pSizes').innerHTML = SIZES.map(s => `<button type="button" class="chip border border-encre/20 px-4 py-2.5 text-[13px] hover:border-encre" data-size="${s}" aria-pressed="${s === size}">${s}</button>`).join('');
   document.addEventListener('click', e => {
     const b = e.target.closest('[data-open]'); if (!b) return;
@@ -623,11 +639,11 @@
     $('#pDetail').textContent = cur_p.detail;
     $('#pFab').textContent = cur_p.fabric;
     $('#pCol').innerHTML = `<span class="inline-block w-3.5 h-3.5 rounded-full border border-encre/15" style="background:${cur_p.hex}"></span>${cur_p.color}`;
-    $('#qVal').textContent = qty; renderSizes(); open($('#pModal'));
+    $('#qVal').textContent = qty; renderSizes(); updatePWa(); open($('#pModal'));
   });
-  $('#pSizes').addEventListener('click', e => { const s = e.target.closest('[data-size]'); if (s) { size = s.dataset.size; renderSizes(); } });
-  $('#qMinus').addEventListener('click', () => { qty = Math.max(1, qty - 1); $('#qVal').textContent = qty; });
-  $('#qPlus').addEventListener('click', () => { qty = Math.min(9, qty + 1); $('#qVal').textContent = qty; });
+  $('#pSizes').addEventListener('click', e => { const s = e.target.closest('[data-size]'); if (s) { size = s.dataset.size; renderSizes(); updatePWa(); } });
+  $('#qMinus').addEventListener('click', () => { qty = Math.max(1, qty - 1); $('#qVal').textContent = qty; updatePWa(); });
+  $('#qPlus').addEventListener('click', () => { qty = Math.min(9, qty + 1); $('#qVal').textContent = qty; updatePWa(); });
 
   // ---- Panier ----
   let cart = [];
@@ -658,7 +674,8 @@
       </div>`;
     const lines = cart.map(l => { const p = byRef(l.ref); return `• ${l.qty} × N° ${p.ref} ${p.name}, taille ${l.size} (${money(p.price * l.qty)})`; }).join('\n');
     const nom = ($('#c-nom').value || '').trim();
-    $('#cartWa').href = wa(`Bonjour Saadikh,${nom ? ' je suis ' + nom + '.' : ''} je souhaite commander :\n${lines}\nTotal indicatif : ${money(total)}\nLivraison : ${$('#c-zone').value}`);
+    const sm = cart.some(l => l.size === 'Sur-mesure') ? '\nJe vous transmets mes mesures pour les pièces sur mesure.' : '';
+    $('#cartWa').href = wa(`Bonjour Saadikh,${nom ? ' je suis ' + nom + '.' : ''} je souhaite commander :\n${lines}\nTotal indicatif : ${money(total)}\nLivraison : ${$('#c-zone').value}${sm}`);
   };
   $('#cartItems').addEventListener('click', e => {
     const b = e.target.closest('[data-dq]'); if (!b) return;
@@ -731,6 +748,16 @@
       requestAnimationFrame(() => { const y = Math.min(scrollY, 900); heroImg.style.translate = `0 ${y * 0.18}px`; ticking = false; });
     }, { passive: true });
   }
+
+  // ---- Bulle « Voir » (souris uniquement) ----
+  const peek = $('#peek');
+  if (!calm && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    addEventListener('pointermove', e => {
+      peek.style.translate = `${e.clientX}px ${e.clientY}px`;
+      peek.classList.toggle('on', !!e.target.closest('.peekable') && !e.target.closest('.bagb, .quick'));
+    }, { passive: true });
+    document.addEventListener('pointerleave', () => peek.classList.remove('on'));
+  } else peek.remove();
 
   // ---- Apparition au défilement ----
   if (!calm && 'IntersectionObserver' in window) {
