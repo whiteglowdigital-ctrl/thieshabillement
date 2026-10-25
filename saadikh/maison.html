@@ -150,6 +150,36 @@
   .look .zoom:hover .veil-card, .look [data-open]:focus-visible .veil-card { opacity: 1; }
   .hero-par { will-change: transform; }
 
+  /* ---- Choix de la devise ---- */
+  .curseg { display: inline-flex; align-items: center; border: 1px solid rgba(22,23,27,.22); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
+  .curseg > span { padding: 0 .9rem; color: var(--pierre); }
+  .curseg .curb { padding: .6rem .85rem; border-left: 1px solid rgba(22,23,27,.15); transition: background .25s, color .25s; }
+  .curseg .curb[aria-pressed="true"] { background: var(--encre); color: var(--ivoire); }
+  .curseg.dark { border-color: rgba(244,239,231,.25); }
+  .curseg.dark > span { color: rgba(244,239,231,.55); }
+  .curseg.dark .curb { border-color: rgba(244,239,231,.15); color: rgba(244,239,231,.8); }
+  .curseg.dark .curb[aria-pressed="true"] { background: var(--ivoire); color: var(--nuit); }
+
+  /* ---- Formulaire de commande ---- */
+  .of { display: grid; gap: 1.1rem; }
+  .of label, .of legend { font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--pierre); }
+  .of .fl { display: grid; gap: .4rem; min-width: 0; }
+  .of input, .of select, .of textarea { width: 100%; background: #fff; border: 1px solid rgba(22,23,27,.18); padding: .8rem .9rem; font: inherit; font-size: 15px; color: var(--encre); border-radius: 0; }
+  .of input:focus, .of select:focus, .of textarea:focus { outline: none; border-color: var(--encre); }
+  .of .fl.err input, .of .fl.err select { border-color: #A2342B; }
+  .of .msg { display: none; font-size: 12px; color: #A2342B; letter-spacing: 0; text-transform: none; }
+  .of .fl.err .msg { display: block; }
+  .seg { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+  .seg label { cursor: pointer; }
+  .seg input { position: absolute; opacity: 0; pointer-events: none; }
+  .seg span { display: block; border: 1px solid rgba(22,23,27,.18); padding: .8rem .9rem; background: #fff; transition: border-color .25s, background .25s; }
+  .seg b { display: block; font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: 1.2rem; letter-spacing: 0; text-transform: none; color: var(--encre); }
+  .seg small { font-size: 11.5px; letter-spacing: 0; text-transform: none; color: var(--pierre); }
+  .seg input:checked + span { border-color: var(--encre); box-shadow: inset 0 0 0 1px var(--encre); }
+  .seg input:focus-visible + span { outline: 1px solid var(--or); outline-offset: 2px; }
+  .steps { display: flex; gap: 1.2rem; font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--pierre); }
+  .steps .on { color: var(--encre); border-bottom: 1px solid var(--encre); padding-bottom: 2px; }
+
   /* ---- Étalonnage commun des photos (même séance) ---- */
   .grade { filter: saturate(.8) contrast(1.05) brightness(.97) sepia(.07); }
 
@@ -188,7 +218,7 @@
       <div class="bgi"></div><div class="veil2"></div><div class="glow"></div>
       <span class="fr t"></span><span class="fr b"></span><span class="fr l"></span><span class="fr r"></span>
       <span class="corner" style="top:calc(clamp(16px,4vw,40px) + 18px + env(safe-area-inset-top,0px));left:calc(clamp(16px,4vw,40px) + 18px)">Dakar</span>
-      <span class="corner" style="top:calc(clamp(16px,4vw,40px) + 18px + env(safe-area-inset-top,0px));right:calc(clamp(16px,4vw,40px) + 18px)">MMXXVI</span>
+      <span class="corner" style="top:calc(clamp(16px,4vw,40px) + 18px + env(safe-area-inset-top,0px));right:calc(clamp(16px,4vw,40px) + 18px)">Haute couture</span>
       <span class="corner" style="bottom:calc(clamp(16px,4vw,40px) + 18px + env(safe-area-inset-bottom,0px));left:calc(clamp(16px,4vw,40px) + 18px)">Sicap Foire</span>
       <span class="corner" style="bottom:calc(clamp(16px,4vw,40px) + 18px + env(safe-area-inset-bottom,0px));right:calc(clamp(16px,4vw,40px) + 18px)">STAM by Fall</span>
       <div class="center" style="position:absolute;inset:0;justify-content:center">
@@ -205,7 +235,7 @@
   <div id="bar" class="text-ivoire"><span id="prog"></span>
     <div class="gut">
       <div class="wrap flex items-center justify-between py-3.5">
-        <a href="#" class="flex items-center gap-3" aria-label="Saadikh, haut de page">
+        <a href="#accueil" class="flex items-center gap-3" aria-label="Saadikh, accueil">
           <img src="images/logo-mark.png" alt="" class="w-7 h-7 object-contain">
           <span class="font-serif text-[1.35rem] tracking-[0.14em] uppercase leading-none">Saadikh</span>
         </a>
@@ -214,7 +244,7 @@
           <a href="#savoir-faire" class="hover:text-or transition-colors">L’atelier</a>
           <a href="#sur-mesure" class="hover:text-or transition-colors">Sur-mesure</a>
           <a href="#boutique" class="hover:text-or transition-colors">La boutique</a>
-          <a href="#" data-wa target="_blank" rel="noopener" class="text-or hover:text-ivoire transition-colors">Rendez-vous</a>
+          <a href="#" data-wa target="_blank" rel="noopener" class="text-or hover:text-ivoire transition-colors">Commander</a>
         </nav>
         <div class="flex items-center gap-6">
         <button class="openMenu md:hidden text-[11px] tracking-[0.22em] uppercase" aria-label="Ouvrir le menu">Menu</button>
@@ -234,21 +264,22 @@
       <button class="closeMenu w-10 h-10 grid place-items-center text-[26px]" aria-label="Fermer le menu">×</button>
     </div>
     <nav class="mt-12">
-      <a href="#collection" style="--k:0"><em>I</em>La collection</a>
+      <a href="#tout" style="--k:0"><em>I</em>La collection</a>
       <a href="#savoir-faire" style="--k:1"><em>II</em>L’atelier</a>
       <a href="#sur-mesure" style="--k:2"><em>III</em>Sur-mesure</a>
       <a href="#boutique" style="--k:3"><em>IV</em>La boutique</a>
     </nav>
     <div class="mt-auto grid gap-4">
-      <a href="#" data-wa target="_blank" rel="noopener" class="btn bg-ivoire text-nuit">Prendre rendez-vous</a>
+      <a href="#" data-wa target="_blank" rel="noopener" class="btn bg-ivoire text-nuit">Commander sur WhatsApp</a>
       <p class="text-[12px] tracking-[0.16em] uppercase text-ivoire/50 text-center">Sicap Foire · Dakar · <span class="select-all">78 895 25 55</span></p>
     </div>
   </div>
 
+  <div id="accueil">
   <!-- Bandeau -->
   <div class="bg-[#070B16] text-ivoire/75 border-b border-or/15 gut">
     <p class="wrap py-2.5 text-center text-[10.5px] tracking-[0.24em] uppercase flex flex-wrap justify-center gap-x-6 gap-y-1">
-      <span>Livraison au Sénégal et dans la diaspora</span><span class="hidden md:inline text-or">✦</span><span class="hidden md:inline">Sur-mesure à distance</span><span class="hidden md:inline text-or">✦</span><span class="hidden md:inline">Retrait en boutique, Sicap Foire</span>
+      <span>Livraison au Sénégal et dans la diaspora</span><span class="hidden md:inline text-or">✦</span><span class="hidden md:inline">Tailles S à XXL ou sur mesure</span><span class="hidden md:inline text-or">✦</span><span class="hidden md:inline">Retrait en boutique, Sicap Foire</span>
     </p>
   </div>
 
@@ -269,7 +300,7 @@
           <span class="text-[8.5px] tracking-[0.42em] uppercase text-ivoire/60">STAM by Fall · Dakar</span>
         </a>
         <div class="flex justify-end items-center gap-6">
-          <a href="#" data-wa target="_blank" rel="noopener" class="hidden lg:inline text-[11.5px] tracking-[0.22em] uppercase hover:text-or transition-colors">Rendez-vous</a>
+          <a href="#" data-wa target="_blank" rel="noopener" class="hidden lg:inline text-[11.5px] tracking-[0.22em] uppercase text-or hover:text-ivoire transition-colors">Commander</a>
           <button id="openCart" class="openCart relative flex items-center gap-2" aria-label="Ouvrir le panier">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M5 8h14l-1.2 12H6.2L5 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
             <span id="cartCount" class="cartCount absolute -top-1.5 -right-2 min-w-[18px] h-[18px] px-1 rounded-full bg-or text-nuit text-[10px] font-medium grid place-items-center">0</span>
@@ -305,8 +336,8 @@
           </h1>
           <p class="h-in mt-7 text-[16.5px] leading-[1.75] text-ivoire/75 max-w-[44ch]" style="--i:1">Grands boubous, deux pièces et trois pièces pour homme. Coupés amples, brodés à la main, portés pour les jours qui comptent.</p>
           <div class="h-in mt-10 flex flex-wrap gap-4" style="--i:2">
-            <a href="#collection" class="btn bg-ivoire text-nuit hover:bg-or">Découvrir la collection <span aria-hidden="true">→</span></a>
-            <a href="#" data-wa target="_blank" rel="noopener" class="btn border border-ivoire/40 hover:border-or hover:text-or">Prendre rendez-vous</a>
+            <a href="#tout" class="btn bg-ivoire text-nuit hover:bg-or">Découvrir la collection <span aria-hidden="true">→</span></a>
+            <a href="#" data-wa target="_blank" rel="noopener" class="btn border border-ivoire/40 hover:border-or hover:text-or">Commander sur WhatsApp</a>
           </div>
         </div>
       </div>
@@ -320,7 +351,7 @@
           </li>
           <li class="flex items-center gap-4 pr-4">
             <svg class="shrink-0 text-or" width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="11" width="26" height="10"/><path d="M8 11v4M13 11v6M18 11v4M23 11v6"/></svg>
-            <span><span class="block tracking-[0.16em] uppercase text-[11px]">Sur-mesure</span><span class="text-ivoire/55">Mesures prises à distance</span></span>
+            <span><span class="block tracking-[0.16em] uppercase text-[11px]">Sur-mesure</span><span class="text-ivoire/55">Ou tailles S à XXL</span></span>
           </li>
           <li class="flex items-center gap-4 pr-4">
             <svg class="shrink-0 text-or" width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1"><circle cx="16" cy="16" r="12"/><path d="M4 16h24M16 4c4 4 4 20 0 24M16 4c-4 4-4 20 0 24"/></svg>
@@ -345,15 +376,18 @@
     </div>
   </div>
 
-  <!-- ================= COLLECTION ================= -->
+  <!-- ================= COLLECTION (accueil) ================= -->
   <section id="collection" class="bg-sable pt-20 lg:pt-28 pb-24 lg:pb-32">
     <div class="wrap gut">
       <div class="grid lg:grid-cols-12 gap-8 items-end mb-12 lg:mb-14">
         <div class="lg:col-span-6">
-          <p class="ey text-pierre mb-4">Collection MMXXVI</p>
+          <p class="ey text-pierre mb-4">Nouvelle collection</p>
           <h2 class="rv font-serif text-[clamp(3rem,6.4vw,6rem)] leading-[0.92]">La <em>Collection</em></h2>
         </div>
-        <p class="lg:col-span-6 text-[15.5px] leading-[1.8] text-encre/75 max-w-[46ch] lg:justify-self-end">Neuf pièces taillées à Dakar, du deux pièces du vendredi au grand boubou de cérémonie. Chacune existe aussi sur mesure.</p>
+        <div class="lg:col-span-6 lg:justify-self-end grid gap-5 lg:justify-items-end">
+          <p class="text-[15.5px] leading-[1.8] text-encre/75 max-w-[46ch] lg:text-right">Du deux pièces du vendredi au grand boubou de cérémonie. Chaque modèle existe aussi sur mesure.</p>
+          <div class="curseg" role="group" aria-label="Devise des prix"><span>Prix en</span><button class="curb" data-cur="XOF" aria-pressed="true">F CFA</button><button class="curb" data-cur="EUR" aria-pressed="false">€ Euro</button><button class="curb" data-cur="USD" aria-pressed="false">$ Dollar</button></div>
+        </div>
       </div>
 
       <!-- pièce signature -->
@@ -364,14 +398,13 @@
             <h3 class="font-serif font-normal text-[clamp(3rem,5.6vw,5.4rem)] leading-[0.92]">Satin <em class="text-or">Argent</em></h3>
             <p class="font-serif italic text-[1.35rem] text-ivoire/70 mt-4 max-w-[30ch]">Un satin qui capte la lumière, une patte brodée de fins motifs. Pour les soirs de fête.</p>
           </div>
-          <dl class="grid grid-cols-3 gap-4 border-y border-ivoire/15 py-5 max-w-[460px] text-[13px]">
-            <div><dt class="ey text-ivoire/45 text-[9.5px]">N°</dt><dd class="mt-1.5">004</dd></div>
+          <dl class="grid grid-cols-3 gap-4 border-y border-ivoire/15 py-5 max-w-[480px] text-[13px]">
+            <div><dt class="ey text-ivoire/45 text-[9.5px]">Modèle</dt><dd class="mt-1.5">N° 004</dd></div>
             <div><dt class="ey text-ivoire/45 text-[9.5px]">Ensemble</dt><dd class="mt-1.5">Trois pièces</dd></div>
-            <div><dt class="ey text-ivoire/45 text-[9.5px]">Prix</dt><dd class="mt-1.5 price tabular-nums" data-xof="90000">90 000 F CFA</dd></div>
+            <div><dt class="ey text-ivoire/45 text-[9.5px]">Prix</dt><dd class="mt-1.5"><span class="price block text-[17px] font-medium text-ivoire tabular-nums" data-xof="90000">90 000 F CFA</span><span class="block text-[11px] text-ivoire/50 tabular-nums" data-alt="90000"></span></dd></div>
           </dl>
           <div class="flex flex-wrap items-center gap-x-8 gap-y-4">
             <button class="btn bg-ivoire text-nuit hover:bg-or" data-open="004">Voir la pièce <span aria-hidden="true">→</span></button>
-            <a href="#" data-wa="Bonjour Saadikh, je souhaite essayer le Satin Argent (N° 004) en salon." target="_blank" rel="noopener" class="lk text-ivoire/85 hover:text-or">Essayer en salon</a>
           </div>
         </div>
         <div data-open="004" class="peekable gilt zoom relative order-1 lg:order-2 min-h-[420px] sm:min-h-[520px] lg:min-h-[640px] overflow-hidden">
@@ -382,21 +415,11 @@
         </div>
       </article>
 
-      <div class="flex flex-wrap items-center justify-between gap-5 mb-10">
-        <div class="flex flex-wrap gap-2" role="tablist" aria-label="Filtrer la collection">
-          <button class="tab text-[11px] tracking-[0.2em] uppercase text-encre/70 border border-encre/20 px-4 py-2.5 hover:border-encre" role="tab" data-f="all" aria-selected="true">Toute la collection</button>
-          <button class="tab text-[11px] tracking-[0.2em] uppercase text-encre/70 border border-encre/20 px-4 py-2.5 hover:border-encre" role="tab" data-f="trois" aria-selected="false">Trois pièces</button>
-          <button class="tab text-[11px] tracking-[0.2em] uppercase text-encre/70 border border-encre/20 px-4 py-2.5 hover:border-encre" role="tab" data-f="deux" aria-selected="false">Deux pièces</button>
-          <button class="tab text-[11px] tracking-[0.2em] uppercase text-encre/70 border border-encre/20 px-4 py-2.5 hover:border-encre" role="tab" data-f="events" aria-selected="false">Cérémonie</button>
-        </div>
-        <div class="flex gap-3 text-[11px] tracking-[0.2em] uppercase text-pierre" role="group" aria-label="Devise">
-          <button class="curb hover:text-encre" data-cur="XOF" aria-pressed="true">F CFA</button><span aria-hidden="true">/</span>
-          <button class="curb hover:text-encre" data-cur="EUR" aria-pressed="false">€</button><span aria-hidden="true">/</span>
-          <button class="curb hover:text-encre" data-cur="USD" aria-pressed="false">$</button>
-        </div>
+      <div id="homeGrid" class="grid grid-cols-2 lg:grid-cols-3 gap-x-4 sm:gap-x-6 lg:gap-x-10 gap-y-12 lg:gap-y-16"></div>
+      <div class="mt-16 flex flex-col items-center gap-4">
+        <a href="#tout" class="btn bg-encre text-ivoire hover:bg-roi">Voir toute la collection <span aria-hidden="true">→</span></a>
+        <p class="text-[12px] text-pierre">9 modèles · Trois pièces, deux pièces et cérémonie</p>
       </div>
-      <div id="all" class="grid grid-cols-2 lg:grid-cols-3 gap-x-4 sm:gap-x-6 lg:gap-x-10 gap-y-12 lg:gap-y-16"></div>
-      <p class="mt-12 text-[11px] tracking-[0.06em] text-pierre text-center">Prix indicatifs, confirmés par la maison. € à parité fixe, $ à 600 F CFA.</p>
     </div>
   </section>
 
@@ -437,26 +460,57 @@
     </div>
   </section>
 
-  <!-- ================= SUR-MESURE (diaspora) ================= -->
+  <!-- ================= COMMANDER DE PARTOUT ================= -->
   <section id="sur-mesure" class="bg-sable">
     <div class="grid lg:grid-cols-2">
-      <div class="gilt zoom relative min-h-[420px] lg:min-h-[640px] overflow-hidden">
-        <img class="img absolute inset-0" src="images/saadikh-atelier-or.webp" alt="Logo Saadikh doré avec ciseaux et mètre ruban de tailleur">
+      <div class="gilt zoom relative aspect-[922/1152] lg:aspect-auto lg:min-h-[680px] overflow-hidden max-w-full">
+        <img class="img absolute inset-0" src="images/saadikh-atelier-or.webp" alt="Logo Saadikh doré avec ciseaux et mètre ruban de tailleur" style="object-position:30% 30%">
       </div>
       <div class="gut py-20 lg:py-24 lg:pl-20 flex flex-col justify-center">
-        <p class="ey text-pierre mb-4">Sur-mesure à distance</p>
-        <h2 class="rv font-serif text-[clamp(2.5rem,4.4vw,4rem)] leading-[0.98] max-w-[13ch]">À Paris ou à New York, <em>à vos mesures.</em></h2>
-        <p class="mt-6 text-[15.5px] leading-[1.8] text-encre/75 max-w-[44ch]">La maison confectionne votre tenue sans que vous ayez à passer en boutique. Tout se fait par WhatsApp, avec un simple mètre ruban.</p>
+        <p class="ey text-pierre mb-4">Commander de partout</p>
+        <h2 class="rv font-serif text-[clamp(2.5rem,4.4vw,4rem)] leading-[0.98] max-w-[14ch]">Où que vous soyez, <em>à votre taille.</em></h2>
+        <p class="mt-6 text-[15.5px] leading-[1.8] text-encre/75 max-w-[44ch]">Au Sénégal ou à l’étranger, choisissez votre tenue en ligne et recevez-la chez vous. En taille standard, de S à XXL, ou sur mesure si vous le souhaitez.</p>
         <ol class="mt-10 grid sm:grid-cols-2 gap-x-10 gap-y-7 max-w-[560px]">
-          <li class="border-t border-encre/15 pt-4"><span class="font-serif text-[#8C6D3A] text-[1.6rem]">1</span><span class="block ey mt-1">Vous choisissez</span><span class="block text-[13.5px] text-pierre mt-1.5">Un modèle, ou votre idée : tissu, couleur, broderie.</span></li>
-          <li class="border-t border-encre/15 pt-4"><span class="font-serif text-[#8C6D3A] text-[1.6rem]">2</span><span class="block ey mt-1">Vous envoyez vos mesures</span><span class="block text-[13.5px] text-pierre mt-1.5">Votre conseiller vous guide, mesure par mesure.</span></li>
-          <li class="border-t border-encre/15 pt-4"><span class="font-serif text-[#8C6D3A] text-[1.6rem]">3</span><span class="block ey mt-1">L’atelier confectionne</span><span class="block text-[13.5px] text-pierre mt-1.5">Vous suivez l’avancée de votre tenue.</span></li>
+          <li class="border-t border-encre/15 pt-4"><span class="font-serif text-[#8C6D3A] text-[1.6rem]">1</span><span class="block ey mt-1">Vous choisissez</span><span class="block text-[13.5px] text-pierre mt-1.5">Un modèle de la collection, ou votre idée : tissu, couleur, broderie.</span></li>
+          <li class="border-t border-encre/15 pt-4"><span class="font-serif text-[#8C6D3A] text-[1.6rem]">2</span><span class="block ey mt-1">Votre taille</span><span class="block text-[13.5px] text-pierre mt-1.5">De S à XXL. Ou vos mesures, pour une pièce sur mesure.</span></li>
+          <li class="border-t border-encre/15 pt-4"><span class="font-serif text-[#8C6D3A] text-[1.6rem]">3</span><span class="block ey mt-1">Vous commandez</span><span class="block text-[13.5px] text-pierre mt-1.5">Vos coordonnées, puis la commande part sur WhatsApp.</span></li>
           <li class="border-t border-encre/15 pt-4"><span class="font-serif text-[#8C6D3A] text-[1.6rem]">4</span><span class="block ey mt-1">Vous recevez</span><span class="block text-[13.5px] text-pierre mt-1.5">À Dakar, dans les régions et à l’étranger.</span></li>
         </ol>
-        <div class="mt-11"><a id="smLink" href="#" target="_blank" rel="noopener" class="btn bg-encre text-ivoire hover:bg-roi">Demander un sur-mesure <span aria-hidden="true">→</span></a></div>
+        <div class="mt-11 flex flex-wrap items-center gap-x-8 gap-y-4">
+          <a href="#tout" class="btn bg-encre text-ivoire hover:bg-roi">Voir la collection <span aria-hidden="true">→</span></a>
+          <a href="#" data-wa="Bonjour Saadikh, j’ai une question sur une commande." target="_blank" rel="noopener" class="lk">Une question ? WhatsApp</a>
+        </div>
       </div>
     </div>
   </section>
+  </div><!-- /accueil -->
+
+  <!-- ================= PAGE : TOUTE LA COLLECTION ================= -->
+  <main id="page-tout" hidden class="bg-sable">
+    <section class="gut pt-28 lg:pt-36 pb-24 lg:pb-32">
+      <div class="wrap">
+        <a href="#accueil" class="lk text-pierre hover:text-encre">← Retour à l’accueil</a>
+        <div class="grid lg:grid-cols-12 gap-8 items-end mt-10 mb-10">
+          <div class="lg:col-span-7">
+            <p class="ey text-pierre mb-4">Saadikh · STAM by Fall</p>
+            <h1 class="font-serif font-normal text-[clamp(3rem,6.4vw,6rem)] leading-[0.92]">Toute la <em>collection</em></h1>
+          </div>
+          <p class="lg:col-span-5 text-[15.5px] leading-[1.8] text-encre/75 max-w-[44ch] lg:justify-self-end">Du deux pièces du vendredi au grand boubou de cérémonie. Chaque modèle existe en S à XXL, ou sur mesure.</p>
+        </div>
+        <div class="flex flex-wrap items-center justify-between gap-5 border-y border-encre/15 py-4 mb-12">
+          <div class="flex flex-wrap gap-2" role="tablist" aria-label="Filtrer la collection">
+            <button class="tab text-[11px] tracking-[0.2em] uppercase text-encre/70 border border-encre/20 px-4 py-2.5 hover:border-encre" role="tab" data-f="all" aria-selected="true">Tout</button>
+            <button class="tab text-[11px] tracking-[0.2em] uppercase text-encre/70 border border-encre/20 px-4 py-2.5 hover:border-encre" role="tab" data-f="trois" aria-selected="false">Trois pièces</button>
+            <button class="tab text-[11px] tracking-[0.2em] uppercase text-encre/70 border border-encre/20 px-4 py-2.5 hover:border-encre" role="tab" data-f="deux" aria-selected="false">Deux pièces</button>
+            <button class="tab text-[11px] tracking-[0.2em] uppercase text-encre/70 border border-encre/20 px-4 py-2.5 hover:border-encre" role="tab" data-f="events" aria-selected="false">Cérémonie</button>
+          </div>
+          <div class="curseg" role="group" aria-label="Devise des prix"><span>Prix en</span><button class="curb" data-cur="XOF" aria-pressed="true">F CFA</button><button class="curb" data-cur="EUR" aria-pressed="false">€ Euro</button><button class="curb" data-cur="USD" aria-pressed="false">$ Dollar</button></div>
+        </div>
+        <div id="all" class="grid grid-cols-2 lg:grid-cols-3 gap-x-4 sm:gap-x-6 lg:gap-x-10 gap-y-12 lg:gap-y-16"></div>
+        <p class="mt-14 text-[12px] text-pierre text-center">Prix indicatifs, hors livraison. L’euro suit la parité fixe du franc CFA, le dollar un taux de 600 F CFA.</p>
+      </div>
+    </section>
+  </main>
 
   <!-- ================= PIED ================= -->
   <footer id="boutique" class="bg-nuit text-ivoire gut pt-16 pb-10">
@@ -466,8 +520,8 @@
         <p class="font-serif text-[1.9rem] tracking-[0.12em] uppercase mt-3 leading-none">Saadikh</p>
         <p class="text-[9px] tracking-[0.42em] uppercase text-ivoire/55 mt-2">STAM by Fall</p>
       </div>
-      <div><p class="ey text-ivoire/50 mb-4">Collection</p><ul class="grid gap-2 text-[14px] text-ivoire/85"><li><a href="#collection" data-goto="trois" class="hover:text-or">Trois pièces</a></li><li><a href="#collection" data-goto="deux" class="hover:text-or">Deux pièces</a></li><li><a href="#collection" data-goto="events" class="hover:text-or">Cérémonie</a></li></ul></div>
-      <div><p class="ey text-ivoire/50 mb-4">Services</p><ul class="grid gap-2 text-[14px] text-ivoire/85"><li><a href="#sur-mesure" class="hover:text-or">Sur-mesure à distance</a></li><li><a href="#" data-wa target="_blank" rel="noopener" class="hover:text-or">Rendez-vous</a></li><li>Livraison diaspora</li></ul></div>
+      <div><p class="ey text-ivoire/50 mb-4">Collection</p><ul class="grid gap-2 text-[14px] text-ivoire/85"><li><a href="#tout" data-goto="trois" class="hover:text-or">Trois pièces</a></li><li><a href="#tout" data-goto="deux" class="hover:text-or">Deux pièces</a></li><li><a href="#tout" data-goto="events" class="hover:text-or">Cérémonie</a></li><li><a href="#tout" data-goto="all" class="hover:text-or">Toute la collection</a></li></ul></div>
+      <div><p class="ey text-ivoire/50 mb-4">Services</p><ul class="grid gap-2 text-[14px] text-ivoire/85"><li><a href="#sur-mesure" class="hover:text-or">Commander de partout</a></li><li><a href="#" data-wa target="_blank" rel="noopener" class="hover:text-or">Commander sur WhatsApp</a></li><li>Livraison au Sénégal et à l’étranger</li></ul></div>
       <div><p class="ey text-ivoire/50 mb-4">Boutique</p><p class="text-[14px] leading-[1.8] text-ivoire/85">Sicap Foire<br>Jardin Boussoura<br>Dakar, Sénégal</p></div>
       <div class="lg:border-l lg:border-ivoire/15 lg:pl-10">
         <p class="ey text-or mb-4">Traditionnellement vôtre</p>
@@ -489,9 +543,10 @@
         <div class="bg-sable aspect-[3/4] md:aspect-auto md:min-h-[600px] relative"><img id="pImg" class="img grade md:absolute md:inset-0" src="" alt="" style="object-position:50% 18%"></div>
         <div class="p-7 md:p-10 grid content-start gap-6 min-w-0">
           <div>
-            <p id="pFam" class="ey text-pierre"></p>
-            <h3 id="pName" class="font-serif text-[2.6rem] leading-[1] mt-2"></h3>
-            <p id="pPrice" class="text-[18px] mt-3 tabular-nums"></p>
+            <p class="flex flex-wrap items-center gap-3"><span id="pRef" class="text-[11px] tracking-[0.2em] uppercase bg-encre text-ivoire px-2.5 py-1"></span><span id="pFam" class="ey text-pierre"></span></p>
+            <h3 id="pName" class="font-serif text-[2.6rem] leading-[1] mt-3"></h3>
+            <p class="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1"><span id="pPrice" class="price text-[24px] font-medium tabular-nums"></span><span id="pAlt" class="text-[13px] text-pierre tabular-nums"></span></p>
+            <div class="curseg mt-3" role="group" aria-label="Devise des prix"><span>Prix en</span><button class="curb" data-cur="XOF" aria-pressed="true">F CFA</button><button class="curb" data-cur="EUR" aria-pressed="false">€</button><button class="curb" data-cur="USD" aria-pressed="false">$</button></div>
           </div>
           <p id="pDetail" class="text-[15px] leading-[1.8] text-encre/75"></p>
           <dl class="grid grid-cols-2 gap-4 border-y border-encre/10 py-4 text-[13.5px]">
@@ -521,26 +576,15 @@
   <div id="cart" class="drawer" hidden role="dialog" aria-modal="true" aria-labelledby="cartTitle">
     <div class="veil" data-close></div>
     <div class="panel">
-      <div class="flex items-center justify-between px-6 py-5 border-b border-encre/10">
-        <h3 id="cartTitle" class="font-serif text-[1.9rem]">Votre panier</h3>
-        <button class="w-10 h-10 grid place-items-center text-[22px]" data-close aria-label="Fermer le panier">×</button>
-      </div>
-      <div id="cartItems" class="flex-1 overflow-y-auto px-6"></div>
-      <div id="cartFoot" class="border-t border-encre/10 px-6 py-6 grid gap-5">
-        <div class="grid grid-cols-2 gap-4">
-          <label class="field text-encre" for="c-nom"><span class="ey text-pierre">Nom</span><input id="c-nom" autocomplete="name" placeholder="Votre nom"></label>
-          <label class="field text-encre" for="c-zone"><span class="ey text-pierre">Livraison</span>
-            <select id="c-zone">
-              <optgroup label="Sénégal"><option>Retrait à Sicap Foire</option><option>Livraison à Dakar</option><option>Régions du Sénégal</option></optgroup>
-              <optgroup label="Diaspora"><option>France</option><option>Italie</option><option>Espagne</option><option>Belgique</option><option>Allemagne</option><option>Royaume-Uni</option><option>Suisse</option><option>États-Unis</option><option>Canada</option></optgroup>
-              <optgroup label="Afrique"><option>Côte d’Ivoire</option><option>Mali</option><option>Gambie</option><option>Mauritanie</option><option>Maroc</option><option>Autre pays</option></optgroup>
-            </select>
-          </label>
+      <div class="px-6 pt-5 pb-4 border-b border-encre/10">
+        <div class="flex items-center justify-between">
+          <h3 id="cartTitle" class="font-serif text-[1.9rem]">Votre panier</h3>
+          <button class="w-10 h-10 grid place-items-center text-[22px]" data-close aria-label="Fermer le panier">×</button>
         </div>
-        <div class="flex justify-between items-baseline"><span class="ey text-pierre">Total indicatif</span><span id="cartTotal" class="font-serif text-[1.8rem] tabular-nums"></span></div>
-        <a id="cartWa" href="#" target="_blank" rel="noopener" class="btn bg-encre text-ivoire hover:bg-roi w-full">Commander sur WhatsApp</a>
-        <p class="text-[12px] text-pierre text-center">La commande part rédigée. La maison confirme disponibilité, livraison et paiement.</p>
+        <p class="steps mt-1"><span id="st1" class="on">1 · Panier</span><span id="st2">2 · Coordonnées</span></p>
       </div>
+      <div id="cartBody" class="flex-1 overflow-y-auto px-6 py-2"></div>
+      <div id="cartFoot" class="border-t border-encre/10 px-6 py-5 grid gap-4"></div>
     </div>
   </div>
 
@@ -581,6 +625,24 @@
   const wa = t => `https://wa.me/${WA}?text=${encodeURIComponent(t)}`;
   const toast = msg => { const t = $('#toast'); t.textContent = msg; t.hidden = false; clearTimeout(toast.h); toast.h = setTimeout(() => t.hidden = true, 2600); };
 
+  // ---- Devise ----
+  try { const c = localStorage.getItem('saadikh-cur'); if (CUR[c]) cur = c; } catch (_) {}
+  const fmt = (xof, code) => { const c = CUR[code]; const v = code === 'XOF' ? xof : Math.round(xof / c.per); return c.f(v).replace(/ | /g, ' '); };
+  const alt = xof => cur === 'XOF' ? '≈ ' + fmt(xof, 'EUR') : 'soit ' + fmt(xof, 'XOF');
+  const paintPrices = () => {
+    document.querySelectorAll('.price[data-xof]').forEach(el => el.textContent = money(+el.dataset.xof));
+    document.querySelectorAll('[data-alt]').forEach(el => el.textContent = alt(+el.dataset.alt));
+    document.querySelectorAll('.curb').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.cur === cur)));
+    if (cur_p) { $('#pPrice').textContent = money(cur_p.price); $('#pAlt').textContent = alt(cur_p.price); }
+  };
+  document.addEventListener('click', e => {
+    const b = e.target.closest('.curb'); if (!b) return;
+    cur = b.dataset.cur;
+    try { localStorage.setItem('saadikh-cur', cur); } catch (_) {}
+    paintPrices();
+    if (step === 2 && !$('#cart').hidden) foot2(); else renderCart();
+  });
+
   // ---- Cartes produit ----
   const look = p => `
     <article class="look rv relative" data-ref="${p.ref}" data-family="${p.family}" data-events="${p.events}">
@@ -598,11 +660,16 @@
         </div>
       </div>
       <button class="group block w-full text-left pt-4 border-b border-encre/15 pb-4" data-open="${p.ref}">
-        <p class="flex justify-between gap-3 text-[10px] tracking-[0.22em] uppercase"><span class="text-[#8C6D3A] font-medium">N° ${p.ref}</span><span class="text-pierre">${FAM[p.family]}</span></p>
+        <p class="flex justify-between gap-3 text-[10px] tracking-[0.22em] uppercase"><span class="text-[#8C6D3A] font-medium">Modèle N° ${p.ref}</span><span class="text-pierre hidden sm:inline">${FAM[p.family]}</span></p>
         <h3 class="font-serif text-[1.35rem] lg:text-[1.6rem] leading-tight mt-1.5 group-hover:text-roi transition-colors">${p.name}</h3>
-        <p class="flex justify-between items-baseline gap-3 mt-1"><span class="font-serif italic text-[1.02rem] text-pierre min-w-0 truncate">${p.fabric}</span><span class="price tabular-nums shrink-0 text-[13px] text-encre" data-xof="${p.price}">${money(p.price)}</span></p>
+        <p class="flex justify-between items-end gap-3 mt-1.5">
+          <span class="font-serif italic text-[1.02rem] text-pierre min-w-0 truncate">${p.fabric}</span>
+          <span class="text-right shrink-0"><span class="price block tabular-nums text-[15.5px] lg:text-[17px] font-medium text-encre" data-xof="${p.price}">${money(p.price)}</span><span class="block tabular-nums text-[11px] text-pierre" data-alt="${p.price}"></span></span>
+        </p>
       </button>
     </article>`;
+  const HOME = ['006', '005', '007', '003', '008', '009'];
+  $('#homeGrid').innerHTML = HOME.map(r => look(byRef(r))).join('');
   $('#all').innerHTML = PRODUCTS.map(look).join('');
 
   const filter = f => {
@@ -611,12 +678,25 @@
   };
   document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => filter(t.dataset.f)));
   document.querySelectorAll('[data-goto]').forEach(a => a.addEventListener('click', () => filter(a.dataset.goto)));
-  document.querySelectorAll('.curb').forEach(b => b.addEventListener('click', () => {
-    cur = b.dataset.cur;
-    document.querySelectorAll('.curb').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
-    document.querySelectorAll('.price').forEach(el => el.textContent = money(+el.dataset.xof));
-    renderCart();
-  }));
+
+  // ---- Deux vues : l'accueil et la page Collection ----
+  const home = $('#accueil'), page = $('#page-tout');
+  let view = 'accueil';
+  const route = () => {
+    const h = location.hash.slice(1);
+    const next = h === 'tout' ? 'tout' : 'accueil';
+    if (next !== view) {
+      view = next;
+      home.hidden = view === 'tout'; page.hidden = view !== 'tout';
+      if (view === 'tout') { scrollTo(0, 0); page.querySelectorAll('.rv').forEach(el => el.classList.add('seen')); }
+    }
+    if (view === 'accueil') {
+      const t = h && h !== 'accueil' ? document.getElementById(h) : null;
+      if (t) requestAnimationFrame(() => t.scrollIntoView()); else if (h === 'accueil') scrollTo(0, 0);
+    }
+    if (typeof onScroll === 'function') onScroll();
+  };
+  addEventListener('hashchange', route);
 
   // ---- Fenêtres ----
   let lastFocus = null;
@@ -633,77 +713,152 @@
     const b = e.target.closest('[data-open]'); if (!b) return;
     cur_p = byRef(b.dataset.open); size = 'L'; qty = 1;
     $('#pImg').src = cur_p.img; $('#pImg').alt = cur_p.name;
-    $('#pFam').textContent = `N° ${cur_p.ref} · ${FAM[cur_p.family]}`;
+    $('#pRef').textContent = `Modèle N° ${cur_p.ref}`;
+    $('#pFam').textContent = FAM[cur_p.family] + (cur_p.events ? ' · Cérémonie' : '');
     $('#pName').textContent = cur_p.name;
-    $('#pPrice').textContent = money(cur_p.price);
+    $('#pPrice').textContent = money(cur_p.price); $('#pAlt').textContent = alt(cur_p.price);
     $('#pDetail').textContent = cur_p.detail;
     $('#pFab').textContent = cur_p.fabric;
     $('#pCol').innerHTML = `<span class="inline-block w-3.5 h-3.5 rounded-full border border-encre/15" style="background:${cur_p.hex}"></span>${cur_p.color}`;
-    $('#qVal').textContent = qty; renderSizes(); updatePWa(); open($('#pModal'));
+    $('#qVal').textContent = qty; renderSizes(); updatePWa(); paintPrices(); open($('#pModal'));
   });
   $('#pSizes').addEventListener('click', e => { const s = e.target.closest('[data-size]'); if (s) { size = s.dataset.size; renderSizes(); updatePWa(); } });
   $('#qMinus').addEventListener('click', () => { qty = Math.max(1, qty - 1); $('#qVal').textContent = qty; updatePWa(); });
   $('#qPlus').addEventListener('click', () => { qty = Math.min(9, qty + 1); $('#qVal').textContent = qty; updatePWa(); });
 
-  // ---- Panier ----
-  let cart = [];
-  try { cart = JSON.parse(localStorage.getItem('saadikh-cart') || '[]').filter(l => byRef(l.ref)); } catch (_) { cart = []; }
-  const save = () => { try { localStorage.setItem('saadikh-cart', JSON.stringify(cart)); } catch (_) {} };
-  const renderCart = () => {
-    const n = cart.reduce((s, l) => s + l.qty, 0);
+  // ---- Panier : 1. articles, 2. coordonnées (Sénégal ou étranger) ----
+  const REGIONS = ['Dakar', 'Diourbel', 'Fatick', 'Kaffrine', 'Kaolack', 'Kédougou', 'Kolda', 'Louga', 'Matam', 'Saint-Louis', 'Sédhiou', 'Tambacounda', 'Thiès', 'Ziguinchor'];
+  const COUNTRIES = ['France', 'Italie', 'Espagne', 'Belgique', 'Allemagne', 'Royaume-Uni', 'Suisse', 'États-Unis', 'Canada', 'Côte d’Ivoire', 'Mali', 'Gambie', 'Mauritanie', 'Maroc', 'Autre pays'];
+  const esc = t => String(t ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const store = { get: (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (_) { return d; } }, set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (_) {} } };
+  let cart = store.get('saadikh-cart', []).filter(l => byRef(l.ref));
+  let step = 1;
+  const save = () => store.set('saadikh-cart', cart);
+  const count = () => cart.reduce((n, l) => n + l.qty, 0);
+  const total = () => cart.reduce((n, l) => n + byRef(l.ref).price * l.qty, 0);
+  const curMini = () => `<div class="flex items-center justify-between gap-3"><span class="ey text-pierre">Devise</span><div class="curseg" role="group" aria-label="Devise des prix"><button class="curb" data-cur="XOF" aria-pressed="${cur === 'XOF'}">F CFA</button><button class="curb" data-cur="EUR" aria-pressed="${cur === 'EUR'}">€</button><button class="curb" data-cur="USD" aria-pressed="${cur === 'USD'}">$</button></div></div>`;
+  const totalRow = () => `<div class="flex justify-between items-baseline gap-4"><span class="ey text-pierre">Total · ${count()} article${count() > 1 ? 's' : ''}</span><span class="text-right"><span class="block font-serif text-[1.9rem] leading-none tabular-nums">${money(total())}</span><span class="block text-[12px] text-pierre tabular-nums mt-1">${alt(total())}</span></span></div>`;
+  const recap = () => cart.map(l => { const p = byRef(l.ref); return `<div class="flex justify-between gap-3"><span>${l.qty} × N° ${p.ref} ${esc(p.name)} (${esc(l.size)})</span><span class="tabular-nums shrink-0">${money(p.price * l.qty)}</span></div>`; }).join('');
+  function renderCart() {
+    const n = count();
     document.querySelectorAll('.cartCount').forEach(el => el.textContent = n);
     $('#fab').classList.toggle('on', n > 0);
-    const total = cart.reduce((s, l) => s + byRef(l.ref).price * l.qty, 0);
-    $('#cartTotal').textContent = money(total);
-    $('#fabTotal').textContent = money(total);
-    $('#cartFoot').hidden = !cart.length;
-    $('#cartItems').innerHTML = cart.length ? cart.map((l, i) => { const p = byRef(l.ref); return `
-      <div class="flex gap-4 py-5 border-b border-encre/10">
-        <div class="w-20 shrink-0 aspect-[3/4] bg-sable"><img class="img" src="${p.img}" alt="" style="object-position:50% 18%"></div>
-        <div class="flex-1 min-w-0 grid content-between">
-          <div><p class="text-[11px] tracking-[0.2em] uppercase">${p.name}</p><p class="text-[13px] text-pierre">Taille ${l.size} · N° ${p.ref}</p></div>
-          <div class="flex items-center justify-between gap-3">
-            <div class="flex items-center border border-encre/15 text-[14px]"><button class="w-8 h-8" data-dq="${i}" data-d="-1" aria-label="Retirer un">−</button><span class="w-6 text-center tabular-nums">${l.qty}</span><button class="w-8 h-8" data-dq="${i}" data-d="1" aria-label="Ajouter un">+</button></div>
-            <span class="tabular-nums text-[14px]">${money(p.price * l.qty)}</span>
+    $('#fabTotal').textContent = money(total());
+    const body = $('#cartBody'), foot = $('#cartFoot');
+    if (!cart.length) step = 1;
+    $('#st1').classList.toggle('on', step === 1); $('#st2').classList.toggle('on', step === 2);
+    $('#cartTitle').textContent = step === 1 ? 'Votre panier' : 'Vos coordonnées';
+    if (step === 1) {
+      if (!cart.length) {
+        body.innerHTML = `<div class="py-16 text-center"><p class="font-serif italic text-[1.5rem] text-pierre">Votre panier est vide.</p><a href="#tout" class="btn bg-encre text-ivoire mt-6" data-gocoll>Voir la collection</a></div>`;
+        foot.innerHTML = ''; foot.hidden = true; return;
+      }
+      foot.hidden = false;
+      body.innerHTML = cart.map((l, i) => { const p = byRef(l.ref); return `
+        <div class="flex gap-4 py-5 border-b border-encre/10">
+          <div class="w-20 shrink-0 aspect-[3/4] bg-sable"><img class="img grade" src="${p.img}" alt="" style="object-position:50% 18%"></div>
+          <div class="flex-1 min-w-0 grid content-between gap-3">
+            <div class="flex justify-between gap-3"><div><p class="text-[10px] tracking-[0.2em] uppercase text-[#8C6D3A]">Modèle N° ${p.ref}</p><p class="font-serif text-[1.25rem] leading-tight">${esc(p.name)}</p><p class="text-[12.5px] text-pierre">Taille ${esc(l.size)}</p></div><button class="text-[11px] tracking-[0.14em] uppercase text-pierre hover:text-encre self-start" data-rm="${i}">Retirer</button></div>
+            <div class="flex items-center justify-between gap-3">
+              <div class="flex items-center border border-encre/15 text-[14px]"><button class="w-8 h-8" data-dq="${i}" data-d="-1" aria-label="Retirer un">−</button><span class="w-6 text-center tabular-nums">${l.qty}</span><button class="w-8 h-8" data-dq="${i}" data-d="1" aria-label="Ajouter un">+</button></div>
+              <span class="tabular-nums text-[15px] font-medium">${money(p.price * l.qty)}</span>
+            </div>
           </div>
-        </div>
-      </div>`; }).join('') : `
-      <div class="py-16 text-center">
-        <p class="font-serif italic text-[1.5rem] text-pierre">Votre panier est vide.</p>
-        <button class="lk mt-6" data-close>Voir la collection</button>
-      </div>`;
-    const lines = cart.map(l => { const p = byRef(l.ref); return `• ${l.qty} × N° ${p.ref} ${p.name}, taille ${l.size} (${money(p.price * l.qty)})`; }).join('\n');
-    const nom = ($('#c-nom').value || '').trim();
-    const sm = cart.some(l => l.size === 'Sur-mesure') ? '\nJe vous transmets mes mesures pour les pièces sur mesure.' : '';
-    $('#cartWa').href = wa(`Bonjour Saadikh,${nom ? ' je suis ' + nom + '.' : ''} je souhaite commander :\n${lines}\nTotal indicatif : ${money(total)}\nLivraison : ${$('#c-zone').value}${sm}`);
-  };
-  $('#cartItems').addEventListener('click', e => {
-    const b = e.target.closest('[data-dq]'); if (!b) return;
-    const l = cart[+b.dataset.dq]; l.qty += +b.dataset.d; if (l.qty < 1) cart.splice(+b.dataset.dq, 1);
-    save(); renderCart();
+        </div>`; }).join('');
+      foot.innerHTML = `${curMini()}${totalRow()}<p class="text-[12px] text-pierre">Hors frais de livraison, confirmés sur WhatsApp.</p><button class="btn bg-encre text-ivoire hover:bg-roi w-full" id="goStep2">Commander</button>`;
+      $('#goStep2').onclick = () => { step = 2; renderCart(); $('#cartBody').scrollTop = 0; setTimeout(() => $('#oName')?.focus({ preventScroll: true }), 200); };
+    } else {
+      const c = store.get('saadikh-client', {});
+      body.innerHTML = `
+        <form class="of py-4" id="orderForm" novalidate>
+          <button type="button" class="lk self-start justify-self-start text-pierre" id="back1">← Retour au panier</button>
+          <div class="fl"><label for="oName">Prénom et nom</label><input id="oName" autocomplete="name" value="${esc(c.name)}" placeholder="Ex : Moussa Diop"><span class="msg">Indiquez votre nom.</span></div>
+          <div class="fl"><label for="oTel">Numéro WhatsApp</label><input id="oTel" type="tel" inputmode="tel" autocomplete="tel" value="${esc(c.tel)}" placeholder="Ex : +221 77 000 00 00"><span class="msg">Indiquez un numéro pour vous joindre.</span></div>
+          <fieldset class="fl"><legend class="mb-2">Où êtes-vous ?</legend>
+            <div class="seg">
+              <label><input type="radio" name="where" value="sn" ${c.where !== 'abroad' ? 'checked' : ''}><span><b>Au Sénégal</b><small>Dakar et régions</small></span></label>
+              <label><input type="radio" name="where" value="abroad" ${c.where === 'abroad' ? 'checked' : ''}><span><b>À l’étranger</b><small>Diaspora</small></span></label>
+            </div>
+          </fieldset>
+          <div id="zoneSn" class="of">
+            <div class="fl"><label for="oRegion">Région</label><select id="oRegion"><option value="">Choisir la région</option>${REGIONS.map(r => `<option ${c.region === r ? 'selected' : ''}>${r}</option>`).join('')}</select><span class="msg">Choisissez votre région.</span></div>
+            <div class="fl"><label for="oQuartier">Quartier et adresse</label><input id="oQuartier" autocomplete="street-address" value="${esc(c.quartier)}" placeholder="Ex : Sacré-Cœur 3, villa 12"><span class="msg">Indiquez votre quartier.</span></div>
+            <label class="flex items-center gap-3 normal-case tracking-normal text-[13.5px] text-encre"><input type="checkbox" id="oRetrait" class="w-4 h-4" style="width:1rem;padding:0" ${c.retrait ? 'checked' : ''}> Je viens retirer en boutique, à Sicap Foire</label>
+          </div>
+          <div id="zoneAb" class="of">
+            <div class="grid grid-cols-2 gap-3">
+              <div class="fl"><label for="oCountry">Pays</label><select id="oCountry"><option value="">Choisir</option>${COUNTRIES.map(x => `<option ${c.country === x ? 'selected' : ''}>${x}</option>`).join('')}</select><span class="msg">Choisissez votre pays.</span></div>
+              <div class="fl"><label for="oCity">Ville</label><input id="oCity" autocomplete="address-level2" value="${esc(c.city)}" placeholder="Ex : Paris"><span class="msg">Indiquez votre ville.</span></div>
+            </div>
+            <div class="fl"><label for="oAddr">Adresse <span class="normal-case tracking-normal">(facultatif)</span></label><input id="oAddr" autocomplete="street-address" value="${esc(c.addr)}" placeholder="Rue, code postal"></div>
+          </div>
+          <div class="fl"><label for="oNote">Note <span class="normal-case tracking-normal">(facultatif)</span></label><textarea id="oNote" rows="2" placeholder="Ex : mesures pour le sur-mesure, date souhaitée…"></textarea></div>
+          <div id="recap" class="grid gap-1.5 border-t border-encre/10 pt-4 text-[13px]">${recap()}</div>
+        </form>`;
+      foot.hidden = false;
+      foot2();
+      const sync = () => {
+        const ab = $('input[name="where"]:checked').value === 'abroad';
+        $('#zoneSn').hidden = ab; $('#zoneAb').hidden = !ab;
+        const r = $('#oRetrait').checked; $('#oQuartier').closest('.fl').hidden = !ab && r;
+      };
+      document.querySelectorAll('input[name="where"]').forEach(r => r.addEventListener('change', sync));
+      $('#oRetrait').addEventListener('change', sync); sync();
+      document.querySelectorAll('#orderForm input, #orderForm select').forEach(el => el.addEventListener('input', () => el.closest('.fl')?.classList.remove('err')));
+      $('#back1').onclick = () => { step = 1; renderCart(); };
+    }
+  }
+  // Pied de l'étape 2 : redessiné seul quand la devise change, sans toucher au formulaire
+  function foot2() {
+    $('#cartFoot').innerHTML = `${curMini()}${totalRow()}<button class="btn bg-encre text-ivoire hover:bg-roi w-full" id="sendOrder">Envoyer ma commande sur WhatsApp</button><p class="text-[12px] text-pierre text-center">WhatsApp s’ouvre avec votre commande déjà rédigée : il ne reste qu’à l’envoyer.</p>`;
+    $('#sendOrder').onclick = sendOrder;
+    const r = $('#recap'); if (r) r.innerHTML = recap();
+    $('#fabTotal').textContent = money(total());
+  }
+  function sendOrder() {
+    const v = id => ($('#' + id)?.value || '').trim();
+    const abroad = $('input[name="where"]:checked').value === 'abroad';
+    const retrait = !abroad && $('#oRetrait').checked;
+    const need = ['oName', 'oTel', ...(abroad ? ['oCountry', 'oCity'] : ['oRegion', ...(retrait ? [] : ['oQuartier'])])];
+    let first = null;
+    need.forEach(id => { const bad = !v(id); $('#' + id).closest('.fl').classList.toggle('err', bad); if (bad && !first) first = $('#' + id); });
+    if (first) { first.focus(); return; }
+    const c = { name: v('oName'), tel: v('oTel'), where: abroad ? 'abroad' : 'sn', region: v('oRegion'), quartier: v('oQuartier'), retrait, country: v('oCountry'), city: v('oCity'), addr: v('oAddr') };
+    store.set('saadikh-client', c);
+    const lines = cart.map((l, i) => { const p = byRef(l.ref); return `${i + 1}. Modèle N° ${p.ref} — ${p.name} — Taille ${l.size} — Qté ${l.qty} — ${money(p.price * l.qty)}`; });
+    const tot = cur === 'XOF' ? money(total()) : `${money(total())} (soit ${fmt(total(), 'XOF')})`;
+    const where = abroad ? `Étranger — ${c.country}, ${c.city}${c.addr ? ', ' + c.addr : ''}` : retrait ? `Sénégal — Retrait en boutique à Sicap Foire (région de ${c.region})` : `Sénégal — Région de ${c.region}, ${c.quartier}`;
+    const sm = cart.some(l => l.size === 'Sur-mesure') ? ['', 'Pour les pièces sur mesure, je vous envoie mes mesures.'] : [];
+    const msg = ['Bonjour Saadikh ! Je souhaite passer commande :', '', ...lines, '', `Total : ${tot}`, '', 'Mes informations :', `- Nom : ${c.name}`, `- Téléphone : ${c.tel}`, `- Livraison : ${where}`, `- Note : ${v('oNote') || 'Aucune'}`, ...sm, '', 'Merci de me confirmer la disponibilité, les frais de livraison et le paiement.'].join('\n');
+    const a = document.createElement('a'); a.href = wa(msg); a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove();
+    toast('WhatsApp s’ouvre avec votre commande : appuyez sur Envoyer.');
+  }
+  $('#cartBody').addEventListener('click', e => {
+    const rm = e.target.closest('[data-rm]'), dq = e.target.closest('[data-dq]');
+    if (rm) { cart.splice(+rm.dataset.rm, 1); save(); renderCart(); }
+    if (dq) { const l = cart[+dq.dataset.dq]; l.qty = Math.max(1, Math.min(20, l.qty + +dq.dataset.d)); save(); renderCart(); }
+    if (e.target.closest('[data-gocoll]')) close($('#cart'));
   });
-  $('#c-nom').addEventListener('input', renderCart); $('#c-zone').addEventListener('change', renderCart);
   const addToCart = (ref, sz, q) => {
     const l = cart.find(x => x.ref === ref && x.size === sz);
     l ? l.qty += q : cart.push({ ref, size: sz, qty: q });
-    save(); renderCart();
+    save(); step = 1; renderCart();
     document.querySelectorAll('.cartCount').forEach(el => { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); });
     toast(`${byRef(ref).name}, taille ${sz}, ajouté au panier`);
   };
   $('#addBtn').addEventListener('click', () => { addToCart(cur_p.ref, size, qty); close($('#pModal')); });
-  $('#all').addEventListener('click', e => {
+  document.addEventListener('click', e => {
     const pick = e.target.closest('[data-pick]'), add = e.target.closest('[data-add]'), x = e.target.closest('.qclose');
-    const card = e.target.closest('.look');
+    const card = e.target.closest('.look'); if (!card) return;
     if (pick) { document.querySelectorAll('.look.picking').forEach(c => c !== card && c.classList.remove('picking')); card.classList.toggle('picking'); }
     if (x) card.classList.remove('picking');
     if (add) { addToCart(add.dataset.add, add.dataset.size, 1); card.classList.remove('picking'); }
   });
-  document.querySelectorAll('.openCart').forEach(b => b.addEventListener('click', () => open($('#cart'))));
-  renderCart();
+  document.querySelectorAll('.openCart').forEach(b => b.addEventListener('click', () => { step = 1; renderCart(); open($('#cart')); }));
+  renderCart(); paintPrices();
 
   // ---- Rendez-vous, sur-mesure, liste ----
-  $('#smLink').href = wa('Bonjour Saadikh, je souhaite une tenue sur mesure. Pouvez-vous me guider pour les mesures ?');
-  document.querySelectorAll('[data-wa]').forEach(a => a.href = wa(a.dataset.wa || 'Bonjour Saadikh, je souhaite convenir d’un rendez-vous avec un conseiller.'));
+  document.querySelectorAll('[data-wa]').forEach(a => a.href = wa(a.dataset.wa || 'Bonjour Saadikh, je souhaite passer une commande.'));
 
   // ---- Menu mobile ----
   const menu = $('#menu');
@@ -713,8 +868,6 @@
   menu.querySelectorAll('nav a').forEach(a => a.addEventListener('click', closeMenu));
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !menu.hidden) closeMenu(); });
 
-  // ---- Panier vide : retour à la collection ----
-  $('#cartItems').addEventListener('click', e => { if (e.target.closest('[data-close]')) { close($('#cart')); $('#collection').scrollIntoView(); } });
 
   // ---- Ouverture (une fois par visite) ----
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -731,13 +884,13 @@
   // ---- Barre fixe ----
   const hero = document.querySelector('section.bg-nuit');
   const bar = $('#bar');
-  const onScroll = () => {
+  function onScroll() {
     const y = scrollY;
-    bar.classList.toggle('on', y > hero.offsetHeight - 80);
+    bar.classList.toggle('on', view === 'tout' || y > hero.offsetHeight - 80);
     const max = document.documentElement.scrollHeight - innerHeight;
     $('#prog').style.transform = `scaleX(${max > 0 ? Math.min(1, y / max) : 0})`;
-  };
-  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  }
+  addEventListener('scroll', onScroll, { passive: true }); route(); onScroll();
 
   // ---- Parallaxe légère du hero (ordinateur) ----
   const heroImg = document.querySelector('.hero-par');
