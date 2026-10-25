@@ -1,0 +1,616 @@
+<title>Saadikh Maison</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: { nuit: '#0C111D', nuit2: '#121A2B', roi: '#1D2A5A', ivoire: '#F4EFE7', sable: '#E8DFD1', or: '#B9965B', encre: '#16171B', pierre: '#6F6A62' },
+        fontFamily: {
+          serif: ['"Cormorant Garamond"', '"Cormorant"', 'Garamond', 'Georgia', 'serif'],
+          sans: ['Jost', 'Futura', '"Century Gothic"', 'system-ui', 'sans-serif'],
+        },
+      },
+    },
+  };
+</script>
+<style>
+  /* Bandes alternées nuit / ivoire, photo plein cadre, titres serif avec italique, or en filet. */
+  :root {
+    --nuit: #0C111D;    /* bleu-noir de la nuit, fond des bandes sombres */
+    --nuit2: #121A2B;
+    --roi: #1D2A5A;     /* bleu roi du bazin, bandes d'accent */
+    --ivoire: #F4EFE7;  /* fond clair */
+    --sable: #E8DFD1;   /* fond des visuels produits */
+    --or: #B9965B;      /* filets et détails dorés */
+    --encre: #16171B;
+    --pierre: #6F6A62;
+    color-scheme: light;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--ivoire); color: var(--encre); font-family: Jost, Futura, system-ui, sans-serif; font-weight: 300; -webkit-font-smoothing: antialiased; }
+  #site { overflow-x: clip; }
+  .gut { padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+  @media (min-width: 1024px) { .gut { padding-left: max(56px, env(safe-area-inset-left, 0px)); padding-right: max(56px, env(safe-area-inset-right, 0px)); } }
+  .wrap { max-width: 1320px; margin-inline: auto; }
+  h1, h2, h3 { text-wrap: balance; }
+  .ey { font-size: 11px; letter-spacing: .28em; text-transform: uppercase; font-weight: 400; }
+  .lk { display: inline-flex; align-items: center; gap: .8rem; font-size: 11.5px; letter-spacing: .24em; text-transform: uppercase; font-weight: 500; padding-bottom: .45rem; border-bottom: 1px solid currentColor; transition: gap .4s; }
+  .lk:hover { gap: 1.2rem; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: .8rem; font-size: 11.5px; letter-spacing: .24em; text-transform: uppercase; font-weight: 500; padding: 1.05rem 1.9rem; transition: background .3s, color .3s, border-color .3s; }
+  .img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .zoom { overflow: hidden; }
+  .zoom img { transition: transform 1.4s cubic-bezier(.2,.7,.2,1); }
+  .zoom:hover img, a:hover .zoom img, button:hover .zoom img { transform: scale(1.045); }
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 1px solid var(--or); outline-offset: 3px; }
+  .shadow-t { text-shadow: 0 1px 12px rgba(12,17,29,.9), 0 0 2px rgba(12,17,29,.8); }
+  .rule-or { width: 44px; height: 1px; background: var(--or); }
+  .fade-l { background: linear-gradient(90deg, var(--nuit) 0%, rgba(12,17,29,.92) 28%, rgba(12,17,29,.35) 62%, rgba(12,17,29,0) 100%); }
+  .fade-b { background: linear-gradient(0deg, var(--nuit) 0%, rgba(12,17,29,.6) 35%, rgba(12,17,29,0) 70%); }
+  .field { display: grid; gap: .4rem; min-width: 0; }
+  .field input, .field select { width: 100%; background: transparent; border: 0; border-bottom: 1px solid currentColor; padding: .6rem 0; font-size: 15px; border-radius: 0; color: inherit; }
+  .field input::placeholder { color: inherit; opacity: .45; }
+  .field select option { color: var(--encre); }
+  .chip[aria-pressed="true"] { background: var(--encre); color: var(--ivoire); border-color: var(--encre); }
+  .tab[aria-selected="true"] { color: var(--encre); border-color: var(--encre); }
+  .drawer { position: fixed; inset: 0; z-index: 70; }
+  .drawer .veil { position: absolute; inset: 0; background: rgba(12,17,29,.55); }
+  .drawer .panel { position: absolute; top: 0; right: 0; bottom: 0; width: min(460px, 100%); background: var(--ivoire); display: flex; flex-direction: column; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); padding-right: env(safe-area-inset-right, 0px); animation: slidein .45s cubic-bezier(.2,.7,.2,1); }
+  .modal .panel { left: 50%; top: 50%; right: auto; bottom: auto; transform: translate(-50%, -50%); width: min(980px, calc(100% - 32px)); max-height: calc(100% - 32px); overflow-y: auto; animation: rise .45s cubic-bezier(.2,.7,.2,1); }
+  @keyframes slidein { from { transform: translateX(30px); opacity: .5; } }
+  @keyframes rise { from { transform: translate(-50%, calc(-50% + 16px)); opacity: .5; } }
+  .toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 80; }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
+</style>
+
+<div id="site">
+
+  <!-- Bandeau -->
+  <div class="bg-roi text-ivoire/90 gut">
+    <p class="wrap py-2.5 text-center text-[10.5px] tracking-[0.24em] uppercase flex flex-wrap justify-center gap-x-6 gap-y-1">
+      <span>Livraison au Sénégal et dans la diaspora</span><span class="hidden md:inline text-or">✦</span><span class="hidden md:inline">Sur-mesure à distance</span><span class="hidden md:inline text-or">✦</span><span class="hidden md:inline">Retrait en boutique, Sicap Foire</span>
+    </p>
+  </div>
+
+  <!-- ================= HERO ================= -->
+  <section class="relative bg-nuit text-ivoire">
+    <header class="relative z-20 gut">
+      <div class="wrap grid grid-cols-[1fr_auto_1fr] items-center py-6">
+        <nav class="hidden lg:flex gap-9 text-[11.5px] tracking-[0.22em] uppercase">
+          <a href="#collection" class="hover:text-or transition-colors">Collection</a>
+          <a href="#univers" class="hover:text-or transition-colors">Univers</a>
+          <a href="#sur-mesure" class="hover:text-or transition-colors">Sur-mesure</a>
+          <a href="#boutique" class="hover:text-or transition-colors">La boutique</a>
+        </nav>
+        <a href="#collection" class="lg:hidden text-[11px] tracking-[0.22em] uppercase">Collection</a>
+        <a href="#" class="flex flex-col items-center gap-1" aria-label="Saadikh, accueil">
+          <img src="images/logo-mark.png" alt="" class="w-9 h-9 object-contain">
+          <span class="font-serif text-[1.9rem] leading-none tracking-[0.12em] uppercase">Saadikh</span>
+          <span class="text-[8.5px] tracking-[0.42em] uppercase text-ivoire/60">STAM by Fall · Dakar</span>
+        </a>
+        <div class="flex justify-end items-center gap-6">
+          <a href="#rendez-vous" class="hidden lg:inline text-[11.5px] tracking-[0.22em] uppercase hover:text-or transition-colors">Rendez-vous</a>
+          <button id="openCart" class="relative flex items-center gap-2" aria-label="Ouvrir le panier">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M5 8h14l-1.2 12H6.2L5 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+            <span id="cartCount" class="absolute -top-1.5 -right-2 min-w-[18px] h-[18px] px-1 rounded-full bg-or text-nuit text-[10px] font-medium grid place-items-center">0</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="relative lg:min-h-[680px]">
+      <!-- photo -->
+      <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-[62%] relative aspect-[4/4.6] sm:aspect-[4/3.4] lg:aspect-auto max-w-full">
+        <img class="img" src="images/hero-saadikh.webp" alt="Homme en grand boubou bleu roi à plastron brodé, sur une terrasse à Dakar" style="object-position:50% 16%">
+        <div class="absolute inset-0 fade-l hidden lg:block"></div>
+        <div class="absolute inset-0 fade-b lg:hidden"></div>
+        <div class="hidden lg:flex absolute right-[max(56px,env(safe-area-inset-right,0px))] top-10 flex-col items-end gap-3 text-right">
+          <span class="rule-or"></span>
+          <span class="ey text-ivoire shadow-t leading-[2]">Coupé<br>et brodé<br>à Dakar</span>
+        </div>
+        <div class="hidden lg:flex absolute right-[max(56px,env(safe-area-inset-right,0px))] bottom-28 flex-col items-end gap-3 text-right">
+          <span class="rule-or"></span>
+          <span class="ey text-ivoire shadow-t leading-[2]">N° 006<br>Thiaya Bleu Roi</span>
+        </div>
+      </div>
+
+      <div class="relative z-10 gut -mt-24 lg:mt-0">
+        <div class="wrap lg:min-h-[680px] flex flex-col justify-center pb-14 lg:pb-32 lg:pt-6">
+          <p class="ey text-or mb-6 flex items-center gap-4"><span class="rule-or"></span>Maison de couture · Dakar</p>
+          <h1 class="font-serif font-normal text-[clamp(3rem,6.6vw,6.4rem)] leading-[0.95] max-w-[11ch]">
+            Quand c’est élégant, <em class="text-or/95">c’est Saadikh.</em>
+          </h1>
+          <p class="mt-7 text-[16.5px] leading-[1.75] text-ivoire/75 max-w-[44ch]">Grands boubous, deux pièces et trois pièces pour homme. Coupés amples, brodés à la main, portés pour les jours qui comptent.</p>
+          <div class="mt-10 flex flex-wrap gap-4">
+            <a href="#collection" class="btn bg-ivoire text-nuit hover:bg-or">Découvrir la collection <span aria-hidden="true">→</span></a>
+            <a href="#rendez-vous" class="btn border border-ivoire/40 hover:border-or hover:text-or">Prendre rendez-vous</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- garanties -->
+      <div class="relative z-10 lg:absolute lg:bottom-0 lg:inset-x-0 gut border-t border-ivoire/10 bg-nuit/70 lg:backdrop-blur-sm">
+        <ul class="wrap grid grid-cols-2 lg:grid-cols-4 gap-y-6 py-7 text-[12.5px]">
+          <li class="flex items-center gap-4 pr-4">
+            <svg class="shrink-0 text-or" width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1"><circle cx="9" cy="24" r="4"/><circle cx="23" cy="24" r="4"/><path d="M11.5 21 24 4M20.5 21 8 4"/></svg>
+            <span><span class="block tracking-[0.16em] uppercase text-[11px]">Coupé à Dakar</span><span class="text-ivoire/55">Atelier de Sicap Foire</span></span>
+          </li>
+          <li class="flex items-center gap-4 pr-4">
+            <svg class="shrink-0 text-or" width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="11" width="26" height="10"/><path d="M8 11v4M13 11v6M18 11v4M23 11v6"/></svg>
+            <span><span class="block tracking-[0.16em] uppercase text-[11px]">Sur-mesure</span><span class="text-ivoire/55">Mesures prises à distance</span></span>
+          </li>
+          <li class="flex items-center gap-4 pr-4">
+            <svg class="shrink-0 text-or" width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1"><circle cx="16" cy="16" r="12"/><path d="M4 16h24M16 4c4 4 4 20 0 24M16 4c-4 4-4 20 0 24"/></svg>
+            <span><span class="block tracking-[0.16em] uppercase text-[11px]">Diaspora</span><span class="text-ivoire/55">Paris, Milan, New York…</span></span>
+          </li>
+          <li class="flex items-center gap-4 pr-4">
+            <svg class="shrink-0 text-or" width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1"><path d="M6 26 24 8"/><ellipse cx="25.5" cy="6.5" rx="1.6" ry="3" transform="rotate(45 25.5 6.5)"/><path d="M4 20c4-2 6 2 10 0s6-6 10-4"/></svg>
+            <span><span class="block tracking-[0.16em] uppercase text-[11px]">Brodé main</span><span class="text-ivoire/55">Fil à fil, sans raccourci</span></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= UNIVERS ================= -->
+  <section id="univers" class="gut py-20 lg:py-28 bg-ivoire">
+    <div class="wrap">
+      <div class="flex flex-wrap items-end justify-between gap-6 mb-12">
+        <div>
+          <p class="ey text-pierre mb-3">Trouvez votre tenue</p>
+          <h2 class="font-serif text-[clamp(2.4rem,4.4vw,3.8rem)] leading-[1]">Nos univers</h2>
+        </div>
+        <p class="ey text-pierre text-right leading-[2] hidden md:block">Une même exigence,<br>quatre façons de la porter</p>
+      </div>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
+        <a href="#collection" data-goto="trois" class="group block">
+          <div class="zoom aspect-[3/4] bg-sable"><img class="img" src="images/tenues/trois-pieces-thiaya-bleu-roi.webp" alt="Trois pièces bleu roi avec thiaya" style="object-position:50% 20%"></div>
+          <h3 class="ey mt-5 text-encre">Trois pièces</h3>
+          <p class="font-serif italic text-[1.15rem] text-pierre mt-1">Ample. Brodé. Cérémonial.</p>
+        </a>
+        <a href="#collection" data-goto="deux" class="group block">
+          <div class="zoom aspect-[3/4] bg-sable"><img class="img" src="images/tenues/tenue-vert-foret.webp" alt="Deux pièces vert forêt" style="object-position:50% 20%"></div>
+          <h3 class="ey mt-5 text-encre">Deux pièces</h3>
+          <p class="font-serif italic text-[1.15rem] text-pierre mt-1">Sobre. Net. Quotidien.</p>
+        </a>
+        <a href="#collection" data-goto="events" class="group block">
+          <div class="zoom aspect-[3/4] bg-sable"><img class="img" src="images/tenues/boubou-blanc-brode.webp" alt="Boubou blanc à galon doré" style="object-position:50% 18%"></div>
+          <h3 class="ey mt-5 text-encre">Grands événements</h3>
+          <p class="font-serif italic text-[1.15rem] text-pierre mt-1">Korité. Tabaski. Mariages.</p>
+        </a>
+        <a href="#sur-mesure" class="group block">
+          <div class="zoom aspect-[3/4] bg-sable"><img class="img" src="images/saadikh-atelier-or.webp" alt="Logo Saadikh doré, ciseaux et mètre ruban" style="object-position:40% 50%"></div>
+          <h3 class="ey mt-5 text-encre">Sur-mesure</h3>
+          <p class="font-serif italic text-[1.15rem] text-pierre mt-1">À vos mesures, où que vous soyez.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= INCONTOURNABLES ================= -->
+  <section class="bg-nuit text-ivoire">
+    <div class="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)] xl:grid-cols-[minmax(0,1fr)_minmax(0,430px)]">
+      <div class="gut py-20 lg:py-24 lg:pr-12 min-w-0">
+        <div class="flex flex-wrap items-end justify-between gap-6 mb-12">
+          <div>
+            <p class="ey text-or mb-3">La collection</p>
+            <h2 class="font-serif text-[clamp(2.4rem,4.4vw,3.8rem)] leading-[1]">Les incontournables</h2>
+          </div>
+          <a href="#collection" class="lk text-ivoire/85 hover:text-or">Tout voir <span aria-hidden="true">→</span></a>
+        </div>
+        <div id="featured" class="grid grid-cols-2 xl:grid-cols-4 gap-4"></div>
+      </div>
+      <div class="relative min-h-[460px] lg:min-h-0">
+        <img class="img absolute inset-0" src="images/tenues/boubou-satin-argent.webp" alt="Boubou en satin argenté" style="object-position:50% 25%">
+        <div class="absolute inset-0 fade-b"></div>
+        <div class="absolute inset-x-0 bottom-0 gut pb-12">
+          <p class="font-serif italic text-[clamp(2rem,3vw,2.7rem)] leading-[1.1]">Plus qu’une tenue.<br>Une présence.</p>
+          <span class="rule-or block mt-6"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LA BRODERIE ================= -->
+  <section id="savoir-faire" class="bg-ivoire gut py-20 lg:py-28 overflow-hidden">
+    <div class="wrap grid lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+      <div class="lg:col-span-4 order-2 lg:order-1">
+        <p class="ey text-pierre mb-4">Le savoir-faire</p>
+        <h2 class="font-serif text-[clamp(2.6rem,4.6vw,4.2rem)] leading-[0.98]">Le détail<br><em>fait l’homme.</em></h2>
+        <p class="mt-6 text-[15.5px] leading-[1.8] text-encre/75 max-w-[40ch]">Un vêtement d’apparat se reconnaît à trois choses : la noblesse du tissu, l’ampleur de la coupe et la finesse de ce qui est cousu. Chez Saadikh, chacune prend son temps.</p>
+        <a href="#rendez-vous" class="lk mt-9">Rencontrer l’atelier <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="lg:col-span-5 order-1 lg:order-2 relative">
+        <div class="aspect-[4/5] max-w-full bg-sable"><img class="img" src="images/detail-broderie.webp" alt="Rosace brodée bleu et ivoire sur le plastron d’un grand boubou"></div>
+        <p class="absolute -bottom-5 left-5 bg-nuit text-ivoire px-5 py-3 ey">Plastron N° 006 · rosace brodée</p>
+      </div>
+      <ol class="lg:col-span-3 order-3 grid gap-8 lg:pl-6">
+        <li class="grid grid-cols-[auto_1fr] gap-x-5 gap-y-1">
+          <span class="rule-or mt-3"></span><span class="ey">Le tissu</span>
+          <span></span><span class="font-serif italic text-[1.15rem] text-pierre">Bazin, lin, satin, coton fin.</span>
+        </li>
+        <li class="grid grid-cols-[auto_1fr] gap-x-5 gap-y-1">
+          <span class="rule-or mt-3"></span><span class="ey">La coupe</span>
+          <span></span><span class="font-serif italic text-[1.15rem] text-pierre">Ample, pensée pour le mouvement et la prière.</span>
+        </li>
+        <li class="grid grid-cols-[auto_1fr] gap-x-5 gap-y-1">
+          <span class="rule-or mt-3"></span><span class="ey">La broderie</span>
+          <span></span><span class="font-serif italic text-[1.15rem] text-pierre">Liserés, galons et rosaces, à la main.</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= EN TROIS GESTES (bande sombre) ================= -->
+  <section class="bg-encre text-ivoire gut py-20 lg:py-24">
+    <div class="wrap grid lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-3">
+        <p class="ey text-or mb-4">L’atelier</p>
+        <h2 class="font-serif text-[clamp(2.3rem,3.6vw,3.2rem)] leading-[1.02]">Une tenue,<br><em>trois gestes.</em></h2>
+        <p class="mt-5 text-[14.5px] leading-[1.8] text-ivoire/65 max-w-[34ch]">De la pièce de tissu à la tenue livrée, rien n’est confié au hasard.</p>
+      </div>
+      <div class="lg:col-span-9 grid sm:grid-cols-3 gap-8">
+        <figure>
+          <div class="zoom aspect-[4/4.4] bg-nuit2"><img class="img" src="images/splash-metre.webp" alt="Mètre ruban, fil d’or et épingles sur un tissu noir"></div>
+          <figcaption class="pt-5 border-b border-ivoire/15 pb-5">
+            <span class="ey text-or">I · Choisir</span>
+            <span class="block font-serif text-[1.6rem] mt-1">Le tissu</span>
+            <span class="block text-[13.5px] text-ivoire/60 mt-1">Choisi pour sa tenue et sa lumière.</span>
+          </figcaption>
+        </figure>
+        <figure>
+          <div class="zoom aspect-[4/4.4] bg-nuit2"><img class="img" src="images/detail-machine-blanche.webp" alt="Pied de biche doré cousant un lin blanc" style="object-position:50% 40%"></div>
+          <figcaption class="pt-5 border-b border-ivoire/15 pb-5">
+            <span class="ey text-or">II · Couper</span>
+            <span class="block font-serif text-[1.6rem] mt-1">La coupe</span>
+            <span class="block text-[13.5px] text-ivoire/60 mt-1">À la mesure de celui qui la portera.</span>
+          </figcaption>
+        </figure>
+        <figure>
+          <div class="zoom aspect-[4/4.4] bg-nuit2"><img class="img" src="images/detail-lisere.webp" alt="Tunique en lin blanc à liseré noir et or"></div>
+          <figcaption class="pt-5 border-b border-ivoire/15 pb-5">
+            <span class="ey text-or">III · Finir</span>
+            <span class="block font-serif text-[1.6rem] mt-1">Le détail</span>
+            <span class="block text-[13.5px] text-ivoire/60 mt-1">Liserés, surpiqûres, boutons de manchette.</span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= COLLECTION COMPLÈTE ================= -->
+  <section id="collection" class="bg-ivoire gut py-20 lg:py-28">
+    <div class="wrap">
+      <div class="text-center mb-12">
+        <p class="ey text-pierre mb-3">Collection MMXXVI</p>
+        <h2 class="font-serif text-[clamp(2.4rem,4.4vw,3.8rem)] leading-[1]">Toute la collection</h2>
+        <div class="flex justify-center mt-5"><span class="rule-or"></span></div>
+      </div>
+      <div class="flex flex-wrap items-center justify-between gap-6 border-y border-encre/10 py-4 mb-10">
+        <div class="flex flex-wrap gap-x-7 gap-y-2" role="tablist" aria-label="Filtrer la collection">
+          <button class="tab ey text-pierre border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="all" aria-selected="true">Toutes</button>
+          <button class="tab ey text-pierre border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="trois" aria-selected="false">Trois pièces</button>
+          <button class="tab ey text-pierre border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="deux" aria-selected="false">Deux pièces</button>
+          <button class="tab ey text-pierre border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="events" aria-selected="false">Grands événements</button>
+        </div>
+        <label class="flex items-center gap-3 text-[12px] tracking-[0.12em] uppercase text-pierre" for="cur">Devise
+          <select id="cur" class="bg-transparent border border-encre/20 px-3 py-2 text-encre text-[12px]">
+            <option value="XOF">F CFA</option><option value="EUR">€ Euro</option><option value="USD">$ Dollar</option>
+          </select>
+        </label>
+      </div>
+      <div id="all" class="grid grid-cols-2 md:grid-cols-3 gap-x-4 lg:gap-x-6 gap-y-12"></div>
+      <p class="mt-10 text-[12.5px] text-pierre text-center">Prix indicatifs. L’euro suit la parité fixe du franc CFA, le dollar un taux de 600 F CFA. Prix confirmés par la maison sur WhatsApp.</p>
+    </div>
+  </section>
+
+  <!-- ================= SUR-MESURE (diaspora) ================= -->
+  <section id="sur-mesure" class="bg-sable">
+    <div class="grid lg:grid-cols-2">
+      <div class="relative min-h-[420px] lg:min-h-[640px]">
+        <img class="img absolute inset-0" src="images/saadikh-atelier-or.webp" alt="Logo Saadikh doré avec ciseaux et mètre ruban de tailleur">
+      </div>
+      <div class="gut py-20 lg:py-24 lg:pl-20 flex flex-col justify-center">
+        <p class="ey text-pierre mb-4">Sur-mesure à distance</p>
+        <h2 class="font-serif text-[clamp(2.5rem,4.4vw,4rem)] leading-[0.98] max-w-[13ch]">À Paris ou à New York, <em>à vos mesures.</em></h2>
+        <p class="mt-6 text-[15.5px] leading-[1.8] text-encre/75 max-w-[44ch]">La maison confectionne votre tenue sans que vous ayez à passer en boutique. Tout se fait par WhatsApp, avec un simple mètre ruban.</p>
+        <ol class="mt-10 grid sm:grid-cols-2 gap-x-10 gap-y-7 max-w-[560px]">
+          <li class="border-t border-encre/15 pt-4"><span class="font-serif text-or text-[1.5rem]">1</span><span class="block ey mt-1">Vous choisissez</span><span class="block text-[13.5px] text-pierre mt-1.5">Un modèle, ou votre idée : tissu, couleur, broderie.</span></li>
+          <li class="border-t border-encre/15 pt-4"><span class="font-serif text-or text-[1.5rem]">2</span><span class="block ey mt-1">Vous envoyez vos mesures</span><span class="block text-[13.5px] text-pierre mt-1.5">Votre conseiller vous guide, mesure par mesure.</span></li>
+          <li class="border-t border-encre/15 pt-4"><span class="font-serif text-or text-[1.5rem]">3</span><span class="block ey mt-1">L’atelier confectionne</span><span class="block text-[13.5px] text-pierre mt-1.5">Vous suivez l’avancée de votre tenue.</span></li>
+          <li class="border-t border-encre/15 pt-4"><span class="font-serif text-or text-[1.5rem]">4</span><span class="block ey mt-1">Vous recevez</span><span class="block text-[13.5px] text-pierre mt-1.5">À Dakar, dans les régions et à l’étranger.</span></li>
+        </ol>
+        <div class="mt-11"><a id="smLink" href="#" target="_blank" rel="noopener" class="btn bg-encre text-ivoire hover:bg-roi">Demander un sur-mesure <span aria-hidden="true">→</span></a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SALON PRIVÉ + BOUTIQUE ================= -->
+  <section id="rendez-vous" class="grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+    <div class="bg-roi text-ivoire gut py-20 lg:py-24 flex flex-col items-center text-center justify-center">
+      <img src="images/logo-mark.png" alt="" class="w-14 h-14 object-contain opacity-90">
+      <p class="ey text-or mt-6">Salon privé</p>
+      <h2 class="font-serif text-[clamp(2.2rem,3.6vw,3.2rem)] leading-[1.02] mt-3">Un conseiller,<br><em>rien que pour vous.</em></h2>
+      <p class="mt-5 text-[14.5px] leading-[1.8] text-ivoire/70 max-w-[38ch]">En boutique à Sicap Foire ou en visio WhatsApp, on choisit ensemble le tissu, la coupe et la broderie.</p>
+      <form id="rdv" class="mt-9 w-full max-w-[400px] grid gap-6 text-left" novalidate>
+        <label class="field" for="r-nom"><span class="ey text-ivoire/60">Votre nom</span><input id="r-nom" autocomplete="name" placeholder="Ibrahima Fall"></label>
+        <div class="grid grid-cols-2 gap-6">
+          <label class="field" for="r-occ"><span class="ey text-ivoire/60">Occasion</span>
+            <select id="r-occ" class="bg-transparent"><option>Tabaski</option><option>Korité</option><option>Mariage</option><option>Baptême</option><option>Magal</option><option>Autre</option></select>
+          </label>
+          <label class="field" for="r-lieu"><span class="ey text-ivoire/60">Où</span>
+            <select id="r-lieu" class="bg-transparent"><option value="en boutique, à Sicap Foire">En boutique</option><option value="en visio WhatsApp">En visio</option></select>
+          </label>
+        </div>
+        <p id="r-err" class="text-[13px] text-or" hidden>Indiquez votre nom pour que le conseiller sache qui recevoir.</p>
+        <button class="btn border border-ivoire/50 hover:bg-ivoire hover:text-roi mt-2">Réserver un rendez-vous</button>
+        <p id="r-ok" class="text-[13px] text-ivoire/80 text-center" hidden>Votre message est prêt dans WhatsApp. Il ne reste qu’à l’envoyer au <span class="select-all">78 895 25 55</span>.</p>
+      </form>
+    </div>
+    <div id="boutique" class="relative min-h-[520px] bg-nuit text-ivoire">
+      <img class="img absolute inset-0" src="images/saadikh-mannequin.webp" alt="Tenue en satin blanc sur un buste de couture, devant l’enseigne Saadikh en boutique" style="object-position:50% 30%">
+      <div class="absolute inset-0 fade-b"></div>
+      <div class="absolute inset-x-0 bottom-0 gut pb-10 lg:pb-14">
+        <div class="flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <p class="ey text-or mb-3">La boutique</p>
+            <p class="font-serif text-[clamp(2rem,3vw,2.8rem)] leading-[1.05]">Sicap Foire,<br><em>Jardin Boussoura</em></p>
+          </div>
+          <div class="text-[13.5px] leading-[1.9] text-ivoire/80">
+            <p>Dakar, Sénégal</p>
+            <p class="select-all">WhatsApp · 78 895 25 55</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LISTE PRIVÉE ================= -->
+  <section class="relative bg-nuit2 text-ivoire overflow-hidden">
+    <img class="absolute left-0 top-0 h-full w-[38%] object-cover opacity-40 hidden md:block" src="images/tenues/trois-pieces-vert-bouteille.webp" alt="" style="object-position:50% 30%">
+    <div class="absolute inset-y-0 left-0 w-[38%] hidden md:block" style="background:linear-gradient(90deg,rgba(18,26,43,0) 30%,#121A2B 100%)"></div>
+    <div class="relative gut py-16 lg:py-20">
+      <div class="wrap md:pl-[34%] grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-10 items-center">
+        <div>
+          <h2 class="font-serif text-[clamp(2rem,3.2vw,2.8rem)] leading-[1.05]">Avant Korité et Tabaski, <em>soyez le premier.</em></h2>
+          <p class="mt-3 text-[14.5px] text-ivoire/65 max-w-[44ch]">Nouvelles pièces, tissus rares et créneaux d’atelier, envoyés en avant-première sur WhatsApp.</p>
+        </div>
+        <form id="liste" class="flex border border-ivoire/30 min-w-0" novalidate>
+          <label for="l-tel" class="sr-only">Votre numéro WhatsApp</label>
+          <input id="l-tel" inputmode="tel" placeholder="Votre numéro WhatsApp" class="flex-1 min-w-0 bg-transparent px-5 py-4 text-[14px] placeholder:text-ivoire/40 focus:outline-none">
+          <button class="btn bg-ivoire text-nuit hover:bg-or px-6">S’inscrire</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PIED ================= -->
+  <footer class="bg-nuit text-ivoire gut pt-16 pb-10">
+    <div class="wrap grid sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1.3fr] gap-10">
+      <div>
+        <img src="images/logo-mark.png" alt="" class="w-10 h-10 object-contain">
+        <p class="font-serif text-[1.9rem] tracking-[0.12em] uppercase mt-3 leading-none">Saadikh</p>
+        <p class="text-[9px] tracking-[0.42em] uppercase text-ivoire/55 mt-2">STAM by Fall</p>
+      </div>
+      <div><p class="ey text-ivoire/50 mb-4">Collection</p><ul class="grid gap-2 text-[14px] text-ivoire/85"><li><a href="#collection" data-goto="trois" class="hover:text-or">Trois pièces</a></li><li><a href="#collection" data-goto="deux" class="hover:text-or">Deux pièces</a></li><li><a href="#collection" data-goto="events" class="hover:text-or">Grands événements</a></li></ul></div>
+      <div><p class="ey text-ivoire/50 mb-4">Services</p><ul class="grid gap-2 text-[14px] text-ivoire/85"><li><a href="#sur-mesure" class="hover:text-or">Sur-mesure à distance</a></li><li><a href="#rendez-vous" class="hover:text-or">Salon privé</a></li><li>Livraison diaspora</li></ul></div>
+      <div><p class="ey text-ivoire/50 mb-4">Boutique</p><p class="text-[14px] leading-[1.8] text-ivoire/85">Sicap Foire<br>Jardin Boussoura<br>Dakar, Sénégal</p></div>
+      <div class="lg:border-l lg:border-ivoire/15 lg:pl-10">
+        <p class="ey text-or mb-4">Traditionnellement vôtre</p>
+        <p class="text-[14px] text-ivoire/85 select-all">+221 78 895 25 55</p>
+        <p class="text-[14px] text-ivoire/60 mt-2">TikTok · Instagram · Facebook</p>
+      </div>
+    </div>
+    <div class="wrap mt-14 pt-6 border-t border-ivoire/10 flex flex-wrap justify-between gap-4 text-[12px] text-ivoire/50">
+      <span>© 2026 Saadikh · STAM by Fall</span><span class="font-serif italic text-[15px] text-ivoire/70">Quand c’est élégant, c’est Saadikh.</span>
+    </div>
+  </footer>
+
+  <!-- ================= FICHE PRODUIT ================= -->
+  <div id="pModal" class="drawer modal" hidden role="dialog" aria-modal="true" aria-labelledby="pName">
+    <div class="veil" data-close></div>
+    <div class="panel">
+      <button class="absolute top-3 right-3 z-10 w-10 h-10 grid place-items-center bg-ivoire/90 text-[20px]" data-close aria-label="Fermer">×</button>
+      <div class="grid md:grid-cols-2">
+        <div class="bg-sable aspect-[3/4] md:aspect-auto md:min-h-[600px] relative"><img id="pImg" class="img md:absolute md:inset-0" src="" alt="" style="object-position:50% 18%"></div>
+        <div class="p-7 md:p-10 grid content-start gap-6 min-w-0">
+          <div>
+            <p id="pFam" class="ey text-pierre"></p>
+            <h3 id="pName" class="font-serif text-[2.6rem] leading-[1] mt-2"></h3>
+            <p id="pPrice" class="text-[18px] mt-3 tabular-nums"></p>
+          </div>
+          <p id="pDetail" class="text-[15px] leading-[1.8] text-encre/75"></p>
+          <dl class="grid grid-cols-2 gap-4 border-y border-encre/10 py-4 text-[13.5px]">
+            <div><dt class="ey text-pierre">Tissu</dt><dd id="pFab" class="mt-1"></dd></div>
+            <div><dt class="ey text-pierre">Couleur</dt><dd id="pCol" class="mt-1 flex items-center gap-2"></dd></div>
+          </dl>
+          <div>
+            <p class="ey text-pierre mb-3">Taille</p>
+            <div id="pSizes" class="flex flex-wrap gap-2"></div>
+          </div>
+          <div class="flex items-stretch gap-3">
+            <div class="flex items-center border border-encre/20">
+              <button id="qMinus" class="w-11 h-full text-lg" aria-label="Retirer un">−</button>
+              <span id="qVal" class="w-8 text-center tabular-nums">1</span>
+              <button id="qPlus" class="w-11 h-full text-lg" aria-label="Ajouter un">+</button>
+            </div>
+            <button id="addBtn" class="btn bg-encre text-ivoire hover:bg-roi flex-1">Ajouter au panier</button>
+          </div>
+          <p class="text-[12.5px] text-pierre">Retrait en boutique, livraison à Dakar, dans les régions et à l’étranger. Tarif confirmé sur WhatsApp.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= PANIER ================= -->
+  <div id="cart" class="drawer" hidden role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+    <div class="veil" data-close></div>
+    <div class="panel">
+      <div class="flex items-center justify-between px-6 py-5 border-b border-encre/10">
+        <h3 id="cartTitle" class="font-serif text-[1.9rem]">Votre panier</h3>
+        <button class="w-10 h-10 grid place-items-center text-[22px]" data-close aria-label="Fermer le panier">×</button>
+      </div>
+      <div id="cartItems" class="flex-1 overflow-y-auto px-6"></div>
+      <div id="cartFoot" class="border-t border-encre/10 px-6 py-6 grid gap-5">
+        <div class="grid grid-cols-2 gap-4">
+          <label class="field text-encre" for="c-nom"><span class="ey text-pierre">Nom</span><input id="c-nom" autocomplete="name" placeholder="Votre nom"></label>
+          <label class="field text-encre" for="c-zone"><span class="ey text-pierre">Livraison</span>
+            <select id="c-zone"><option>Retrait à Sicap Foire</option><option>Dakar</option><option>Régions du Sénégal</option><option>France</option><option>Italie</option><option>Espagne</option><option>États-Unis</option><option>Autre pays</option></select>
+          </label>
+        </div>
+        <div class="flex justify-between items-baseline"><span class="ey text-pierre">Total indicatif</span><span id="cartTotal" class="font-serif text-[1.8rem] tabular-nums"></span></div>
+        <a id="cartWa" href="#" target="_blank" rel="noopener" class="btn bg-encre text-ivoire hover:bg-roi w-full">Commander sur WhatsApp</a>
+        <p class="text-[12px] text-pierre text-center">La commande part rédigée. La maison confirme disponibilité, livraison et paiement.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast bg-encre text-ivoire px-6 py-3.5 text-[13px] tracking-[0.06em]" hidden role="status"></div>
+</div>
+
+<script>
+(() => {
+  const WA = '221788952555';
+  const PRODUCTS = [
+    { ref: '006', name: 'Thiaya Bleu Roi', family: 'trois', events: true, price: 120000, color: 'Bleu roi', hex: '#22346f', fabric: 'Bazin rayé', img: 'images/tenues/trois-pieces-thiaya-bleu-roi.webp', detail: 'Grand boubou à plastron brodé en rosace, porté sur sa thiaya assortie.' },
+    { ref: '005', name: 'Blanc & Or', family: 'trois', events: true, price: 95000, color: 'Blanc', hex: '#efeae0', fabric: 'Bazin blanc', img: 'images/tenues/boubou-blanc-brode.webp', detail: 'Blanc lumineux, galon doré au col et le long de la patte, broderie aux poignets.' },
+    { ref: '004', name: 'Satin Argent', family: 'trois', events: true, price: 90000, color: 'Argent', hex: '#bfc1c3', fabric: 'Satin', img: 'images/tenues/boubou-satin-argent.webp', detail: 'Satin argenté, patte brodée de fins motifs, fentes latérales.' },
+    { ref: '007', name: 'Vert Bouteille', family: 'trois', events: true, price: 75000, color: 'Vert bouteille', hex: '#1e4a40', fabric: 'Tissu satiné', img: 'images/tenues/trois-pieces-vert-bouteille.webp', detail: 'Col rond passepoilé d’argent, patte brodée de petits épis.' },
+    { ref: '003', name: 'Bleu Nuit Brodé', family: 'trois', events: false, price: 70000, color: 'Bleu nuit', hex: '#1c2340', fabric: 'Coton fin', img: 'images/tenues/ensemble-bleu-nuit.webp', detail: 'Tunique à broderie argentée au plastron, avec son sarouel assorti.' },
+    { ref: '008', name: 'Gris Lilas', family: 'deux', events: false, price: 55000, color: 'Gris lilas', hex: '#aaa3b9', fabric: 'Coton fin', img: 'images/tenues/trois-pieces-gris-lilas.webp', detail: 'Col rond, galon doré le long de la patte, fentes latérales.' },
+    { ref: '001', name: 'Vert Forêt', family: 'deux', events: false, price: 55000, color: 'Vert forêt', hex: '#1f4a3c', fabric: 'Tissu satiné', img: 'images/tenues/tenue-vert-foret.webp', detail: 'Col rond bordé, patte brodée, poche poitrine, manches amples.' },
+    { ref: '009', name: 'Bleu Ciel', family: 'deux', events: false, price: 50000, color: 'Bleu ciel', hex: '#aebfd0', fabric: 'Coton fin', img: 'images/tenues/trois-pieces-bleu-ciel.webp', detail: 'Col rond, patte surpiquée, coupe droite et fentes latérales.' },
+    { ref: '002', name: 'Moka', family: 'deux', events: false, price: 50000, color: 'Moka', hex: '#7b6652', fabric: 'Coton fin', img: 'images/tenues/tenue-moka.webp', detail: 'Col rond, patte courte, fentes latérales, pantalon assorti.' },
+  ];
+  const FEATURED = ['006', '005', '007', '003'];
+  const FAM = { trois: 'Trois pièces', deux: 'Deux pièces' };
+  const SIZES = ['S', 'M', 'L', 'XL', 'XXL', 'Sur-mesure'];
+  const CUR = { XOF: { per: 1, f: v => v.toLocaleString('fr-FR') + ' F CFA' }, EUR: { per: 655.957, f: v => v.toLocaleString('fr-FR') + ' €' }, USD: { per: 600, f: v => '$' + v.toLocaleString('en-US') } };
+  let cur = 'XOF';
+  const $ = s => document.querySelector(s);
+  const byRef = r => PRODUCTS.find(p => p.ref === r);
+  const money = xof => { const c = CUR[cur]; const v = cur === 'XOF' ? xof : Math.round(xof / c.per); return c.f(v).replace(/ | /g, ' '); };
+  const wa = t => `https://wa.me/${WA}?text=${encodeURIComponent(t)}`;
+  const toast = msg => { const t = $('#toast'); t.textContent = msg; t.hidden = false; clearTimeout(toast.h); toast.h = setTimeout(() => t.hidden = true, 2600); };
+
+  // ---- Cartes produit ----
+  const card = (p, dark) => `
+    <button class="text-left group block w-full" data-open="${p.ref}" aria-label="Voir ${p.name}">
+      <div class="zoom relative aspect-[3/4] ${dark ? 'bg-nuit2' : 'bg-sable'}">
+        <img class="img" src="${p.img}" alt="${p.name}, ${FAM[p.family].toLowerCase()} en ${p.fabric.toLowerCase()}" style="object-position:50% 18%">
+        ${p.events ? `<span class="absolute top-3 left-3 bg-ivoire/90 text-encre text-[9.5px] tracking-[0.2em] uppercase px-2.5 py-1">Cérémonie</span>` : ''}
+      </div>
+      <div class="pt-4 flex justify-between items-start gap-3 ${dark ? '' : ''}">
+        <div class="min-w-0">
+          <p class="text-[11px] tracking-[0.22em] uppercase ${dark ? 'text-ivoire' : 'text-encre'}">${p.name}</p>
+          <p class="font-serif italic text-[1.05rem] ${dark ? 'text-ivoire/60' : 'text-pierre'}">${FAM[p.family]} · ${p.fabric}</p>
+          <p class="price text-[14px] mt-1 tabular-nums ${dark ? 'text-ivoire/90' : ''}" data-xof="${p.price}">${money(p.price)}</p>
+        </div>
+        <svg class="shrink-0 mt-1 ${dark ? 'text-ivoire/70 group-hover:text-or' : 'text-encre/60 group-hover:text-encre'}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M5 8h14l-1.2 12H6.2L5 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+      </div>
+    </button>`;
+  $('#featured').innerHTML = FEATURED.map(r => card(byRef(r), true)).join('');
+  $('#all').innerHTML = PRODUCTS.map(p => `<div data-family="${p.family}" data-events="${p.events}">${card(p, false)}</div>`).join('');
+
+  const filter = f => {
+    document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.f === f)));
+    [...$('#all').children].forEach(el => el.hidden = !(f === 'all' || (f === 'events' ? el.dataset.events === 'true' : el.dataset.family === f)));
+  };
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => filter(t.dataset.f)));
+  document.querySelectorAll('[data-goto]').forEach(a => a.addEventListener('click', () => filter(a.dataset.goto)));
+  $('#cur').addEventListener('change', e => { cur = e.target.value; document.querySelectorAll('.price').forEach(el => el.textContent = money(+el.dataset.xof)); renderCart(); });
+
+  // ---- Fenêtres ----
+  let lastFocus = null;
+  const open = el => { lastFocus = document.activeElement; el.hidden = false; document.body.style.overflow = 'hidden'; el.querySelector('[data-close]:not(.veil)')?.focus(); };
+  const close = el => { el.hidden = true; if ([...document.querySelectorAll('.drawer')].every(d => d.hidden)) document.body.style.overflow = ''; lastFocus?.focus(); };
+  document.querySelectorAll('.drawer').forEach(d => d.addEventListener('click', e => { if (e.target.closest('[data-close]')) close(d); }));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.drawer:not([hidden])').forEach(close); });
+
+  // ---- Fiche ----
+  let cur_p = null, size = 'L', qty = 1;
+  const renderSizes = () => $('#pSizes').innerHTML = SIZES.map(s => `<button type="button" class="chip border border-encre/20 px-4 py-2.5 text-[13px] hover:border-encre" data-size="${s}" aria-pressed="${s === size}">${s}</button>`).join('');
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-open]'); if (!b) return;
+    cur_p = byRef(b.dataset.open); size = 'L'; qty = 1;
+    $('#pImg').src = cur_p.img; $('#pImg').alt = cur_p.name;
+    $('#pFam').textContent = `N° ${cur_p.ref} · ${FAM[cur_p.family]}`;
+    $('#pName').textContent = cur_p.name;
+    $('#pPrice').textContent = money(cur_p.price);
+    $('#pDetail').textContent = cur_p.detail;
+    $('#pFab').textContent = cur_p.fabric;
+    $('#pCol').innerHTML = `<span class="inline-block w-3.5 h-3.5 rounded-full border border-encre/15" style="background:${cur_p.hex}"></span>${cur_p.color}`;
+    $('#qVal').textContent = qty; renderSizes(); open($('#pModal'));
+  });
+  $('#pSizes').addEventListener('click', e => { const s = e.target.closest('[data-size]'); if (s) { size = s.dataset.size; renderSizes(); } });
+  $('#qMinus').addEventListener('click', () => { qty = Math.max(1, qty - 1); $('#qVal').textContent = qty; });
+  $('#qPlus').addEventListener('click', () => { qty = Math.min(9, qty + 1); $('#qVal').textContent = qty; });
+
+  // ---- Panier ----
+  let cart = [];
+  try { cart = JSON.parse(localStorage.getItem('saadikh-cart') || '[]').filter(l => byRef(l.ref)); } catch (_) { cart = []; }
+  const save = () => { try { localStorage.setItem('saadikh-cart', JSON.stringify(cart)); } catch (_) {} };
+  const renderCart = () => {
+    const n = cart.reduce((s, l) => s + l.qty, 0);
+    $('#cartCount').textContent = n;
+    const total = cart.reduce((s, l) => s + byRef(l.ref).price * l.qty, 0);
+    $('#cartTotal').textContent = money(total);
+    $('#cartFoot').hidden = !cart.length;
+    $('#cartItems').innerHTML = cart.length ? cart.map((l, i) => { const p = byRef(l.ref); return `
+      <div class="flex gap-4 py-5 border-b border-encre/10">
+        <div class="w-20 shrink-0 aspect-[3/4] bg-sable"><img class="img" src="${p.img}" alt="" style="object-position:50% 18%"></div>
+        <div class="flex-1 min-w-0 grid content-between">
+          <div><p class="text-[11px] tracking-[0.2em] uppercase">${p.name}</p><p class="text-[13px] text-pierre">Taille ${l.size} · N° ${p.ref}</p></div>
+          <div class="flex items-center justify-between gap-3">
+            <div class="flex items-center border border-encre/15 text-[14px]"><button class="w-8 h-8" data-dq="${i}" data-d="-1" aria-label="Retirer un">−</button><span class="w-6 text-center tabular-nums">${l.qty}</span><button class="w-8 h-8" data-dq="${i}" data-d="1" aria-label="Ajouter un">+</button></div>
+            <span class="tabular-nums text-[14px]">${money(p.price * l.qty)}</span>
+          </div>
+        </div>
+      </div>`; }).join('') : `
+      <div class="py-16 text-center">
+        <p class="font-serif italic text-[1.5rem] text-pierre">Votre panier est vide.</p>
+        <button class="lk mt-6" data-close>Voir la collection</button>
+      </div>`;
+    const lines = cart.map(l => { const p = byRef(l.ref); return `• ${l.qty} × N° ${p.ref} ${p.name}, taille ${l.size} (${money(p.price * l.qty)})`; }).join('\n');
+    const nom = ($('#c-nom').value || '').trim();
+    $('#cartWa').href = wa(`Bonjour Saadikh,${nom ? ' je suis ' + nom + '.' : ''} je souhaite commander :\n${lines}\nTotal indicatif : ${money(total)}\nLivraison : ${$('#c-zone').value}`);
+  };
+  $('#cartItems').addEventListener('click', e => {
+    const b = e.target.closest('[data-dq]'); if (!b) return;
+    const l = cart[+b.dataset.dq]; l.qty += +b.dataset.d; if (l.qty < 1) cart.splice(+b.dataset.dq, 1);
+    save(); renderCart();
+  });
+  $('#c-nom').addEventListener('input', renderCart); $('#c-zone').addEventListener('change', renderCart);
+  $('#addBtn').addEventListener('click', () => {
+    const l = cart.find(x => x.ref === cur_p.ref && x.size === size);
+    l ? l.qty += qty : cart.push({ ref: cur_p.ref, size, qty });
+    save(); renderCart(); close($('#pModal')); toast(`${cur_p.name}, taille ${size}, ajouté au panier`);
+  });
+  $('#openCart').addEventListener('click', () => open($('#cart')));
+  renderCart();
+
+  // ---- Rendez-vous, sur-mesure, liste ----
+  $('#smLink').href = wa('Bonjour Saadikh, je souhaite une tenue sur mesure. Pouvez-vous me guider pour les mesures ?');
+  $('#rdv').addEventListener('submit', e => {
+    e.preventDefault();
+    const nom = $('#r-nom').value.trim();
+    $('#r-err').hidden = !!nom; if (!nom) return $('#r-nom').focus();
+    const a = document.createElement('a');
+    a.href = wa(`Bonjour Saadikh, je suis ${nom}. Je souhaite un rendez-vous ${$('#r-lieu').value} avec un conseiller, pour une tenue de ${$('#r-occ').value}.`);
+    a.target = '_blank'; a.rel = 'noopener'; a.click();
+    $('#r-ok').hidden = false;
+  });
+  $('#liste').addEventListener('submit', e => {
+    e.preventDefault();
+    const tel = $('#l-tel').value.trim();
+    if (!tel) return $('#l-tel').focus();
+    const a = document.createElement('a');
+    a.href = wa(`Bonjour Saadikh, je souhaite recevoir vos nouveautés en avant-première sur ce numéro : ${tel}.`);
+    a.target = '_blank'; a.rel = 'noopener'; a.click();
+    toast('Votre demande est prête dans WhatsApp');
+  });
+})();
+</script>
