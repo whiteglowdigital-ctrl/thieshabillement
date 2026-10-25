@@ -1,0 +1,409 @@
+<title>Saadikh Directions</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&family=Gilda+Display&family=Manrope:wght@300;400;500&family=Marcellus&family=Montserrat:wght@300;400;500&display=swap">
+<style>
+  /* Trois directions complètes, chacune avec sa palette, ses polices et son traitement photo.
+     Un sélecteur fixe en bas permet de passer de l'une à l'autre. */
+  :root {
+    /* A · Nuit & or */
+    --a-bg: #0A1128; --a-bg2: #111B38; --a-ink: #F3EEE4; --a-mute: #A9A59B; --a-or: #C2A05F; --a-card: #F4EFE6;
+    /* B · Lumière & sable */
+    --b-bg: #EFE6D9; --b-bg2: #E4D7C5; --b-ink: #1E1A16; --b-mute: #75695C; --b-terre: #9A5B3C; --b-noir: #1B1916;
+    /* C · Bordeaux & ivoire */
+    --c-bg: #F6F1EA; --c-ink: #1A1416; --c-bx: #5C1A26; --c-bx2: #4A1420; --c-or: #B48C4E; --c-noir: #0E0C0C; --c-beige: #E9DFD2;
+    --ui: #0A1128;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #0A1128; -webkit-font-smoothing: antialiased; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+  #site { overflow-x: clip; }
+  .gut { padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+  @media (min-width: 1024px) { .gut { padding-left: max(64px, env(safe-area-inset-left, 0px)); padding-right: max(64px, env(safe-area-inset-right, 0px)); } }
+  .wrap { max-width: 1320px; margin-inline: auto; }
+  .cover { width: 100%; height: 100%; object-fit: cover; }
+  h1, h2, h3 { margin: 0; font-weight: 400; text-wrap: balance; }
+  p { margin: 0; }
+  .dir[hidden] { display: none !important; }
+  a:focus-visible, button:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
+
+  /* ---------------- Sélecteur ---------------- */
+  #switch { position: fixed; z-index: 50; left: 50%; transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: flex; gap: 4px; padding: 5px; background: rgba(10,17,40,.92); backdrop-filter: blur(10px); border: 1px solid rgba(194,160,95,.35); border-radius: 999px; font-family: Jost, system-ui, sans-serif; max-width: calc(100% - 24px); }
+  #switch button { color: #F3EEE4; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; padding: 10px 16px; border-radius: 999px; white-space: nowrap; display: flex; gap: 8px; align-items: center; }
+  #switch button b { font-weight: 500; color: #C2A05F; }
+  #switch button[aria-pressed="true"] { background: #F3EEE4; color: #0A1128; }
+  #switch button[aria-pressed="true"] b { color: #0A1128; }
+  @media (max-width: 560px) { #switch button span { display: none; } #switch button { padding: 10px 18px; font-size: 12px; } }
+
+  /* =================================================================
+     A · NUIT & OR
+     ================================================================= */
+  .dA { background: var(--a-bg); color: var(--a-ink); font-family: Jost, "Century Gothic", system-ui, sans-serif; font-weight: 300; }
+  .dA .serif { font-family: "Cormorant Garamond", Garamond, Georgia, serif; }
+  .dA .ey { font-size: 11px; letter-spacing: .32em; text-transform: uppercase; }
+  .dA .photo { filter: saturate(.78) contrast(1.06) brightness(.9) sepia(.08); }
+  .dA header .wrap { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding-block: 26px; }
+  .dA nav { display: flex; gap: 34px; font-size: 11.5px; letter-spacing: .22em; text-transform: uppercase; }
+  .dA .logo { text-align: center; }
+  .dA .logo b { display: block; font-family: "Cormorant Garamond", serif; font-weight: 400; font-size: 30px; letter-spacing: .3em; padding-left: .3em; }
+  .dA .logo small { display: block; font-size: 9px; letter-spacing: .5em; color: var(--a-mute); margin-top: 4px; }
+  .dA .icons { display: flex; justify-content: flex-end; gap: 22px; }
+  .dA .hero { position: relative; min-height: 700px; display: flex; align-items: center; }
+  .dA .hero .pic { position: absolute; inset: 0 0 0 34%; }
+  .dA .hero .pic::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, var(--a-bg) 0%, rgba(10,17,40,.75) 22%, rgba(10,17,40,0) 55%), linear-gradient(0deg, var(--a-bg) 0%, rgba(10,17,40,0) 30%); }
+  .dA .hero .txt { position: relative; z-index: 2; max-width: 600px; padding-block: 60px 90px; }
+  .dA .hero h1 { font-size: clamp(3.2rem, 7vw, 6.6rem); line-height: .96; margin-top: 26px; }
+  .dA .hero h1 em { color: var(--a-or); }
+  .dA .hero p.lead { font-family: "Cormorant Garamond", serif; font-size: 1.45rem; color: rgba(243,238,228,.8); margin-top: 22px; max-width: 30ch; }
+  .dA .cta { display: inline-flex; gap: 14px; align-items: center; margin-top: 38px; background: var(--a-card); color: var(--a-bg); padding: 17px 30px; font-size: 11px; letter-spacing: .26em; text-transform: uppercase; font-weight: 500; transition: background .3s; }
+  .dA .cta:hover { background: var(--a-or); }
+  .dA .side { position: absolute; z-index: 2; right: max(64px, env(safe-area-inset-right, 0px)); text-align: right; font-size: 10.5px; letter-spacing: .32em; text-transform: uppercase; line-height: 2.1; }
+  .dA .side::before { content: ""; display: block; width: 40px; height: 1px; background: var(--a-ink); margin: 0 0 14px auto; opacity: .6; }
+  .dA .band { background: var(--a-bg2); border-top: 1px solid rgba(194,160,95,.18); }
+  .dA .band .wrap { display: grid; grid-template-columns: minmax(0,1fr) 340px; gap: 0; }
+  .dA .band .main { padding-block: 80px; padding-right: 48px; }
+  .dA .head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: 40px; }
+  .dA .head h2 { font-size: clamp(2.4rem, 4vw, 3.6rem); margin-top: 12px; }
+  .dA .more { font-size: 11px; letter-spacing: .26em; text-transform: uppercase; border-bottom: 1px solid currentColor; padding-bottom: 6px; }
+  .dA .cards { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
+  .dA .card { background: var(--a-card); color: #121626; }
+  .dA .card .im { aspect-ratio: 3/3.6; overflow: hidden; }
+  .dA .card .im img { transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+  .dA .card:hover .im img { transform: scale(1.05); }
+  .dA .card .meta { padding: 18px 20px 20px; display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; align-items: end; }
+  .dA .card .meta b { font-weight: 400; font-size: 11px; letter-spacing: .28em; text-transform: uppercase; grid-column: 1 / -1; }
+  .dA .card .meta i { font-family: "Cormorant Garamond", serif; font-size: 1.1rem; color: #6b6a72; }
+  .dA .card .meta span { font-size: 14px; }
+  .dA .quote { position: relative; overflow: hidden; }
+  .dA .quote p { position: absolute; left: 32px; right: 32px; bottom: 48px; font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 2.2rem; line-height: 1.12; }
+  .dA .quote p::after { content: ""; display: block; width: 46px; height: 1px; background: var(--a-ink); margin-top: 22px; }
+  .dA .quote::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(10,17,40,.92), rgba(10,17,40,.1) 60%); }
+  .dA .quote p { z-index: 2; }
+  @media (max-width: 1023px) {
+    .dA header nav, .dA .side { display: none; }
+    .dA .hero { min-height: 0; flex-direction: column; align-items: stretch; }
+    .dA .hero .pic { position: relative; inset: auto; aspect-ratio: 4/4.4; margin-inline: calc(-1 * max(20px, env(safe-area-inset-left, 0px))); }
+    .dA .hero .pic::after { background: linear-gradient(0deg, var(--a-bg) 0%, rgba(10,17,40,0) 45%); }
+    .dA .hero .txt { padding-block: 0 64px; margin-top: -40px; }
+    .dA .band .wrap { grid-template-columns: 1fr; }
+    .dA .card .meta { grid-template-columns: 1fr; }
+    .dA .band .main { padding-right: 0; padding-block: 64px 40px; }
+    .dA .quote { min-height: 420px; margin-inline: calc(-1 * max(20px, env(safe-area-inset-left, 0px))); }
+  }
+  @media (max-width: 700px) { .dA .cards { grid-template-columns: 1fr 1fr; } .dA .cards .card:nth-child(3) { display: none; } }
+
+  /* =================================================================
+     B · LUMIÈRE & SABLE
+     ================================================================= */
+  .dB { background: var(--b-bg); color: var(--b-ink); font-family: Manrope, "Helvetica Neue", system-ui, sans-serif; font-weight: 300; }
+  .dB .serif { font-family: "Gilda Display", "Didot", Georgia, serif; }
+  .dB .photo { filter: saturate(.72) sepia(.16) contrast(1.02) brightness(1.02); }
+  .dB .ey { font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase; }
+  .dB header .wrap { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding-block: 26px; font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; }
+  .dB header .wrap > div { display: flex; gap: 32px; }
+  .dB header .wrap > div:last-child { justify-content: flex-end; }
+  .dB .logo { font-family: "Gilda Display", serif; font-size: 26px; letter-spacing: .34em; padding-left: .34em; text-transform: uppercase; }
+  .dB .hero { display: grid; grid-template-columns: minmax(0,5fr) minmax(0,7fr); min-height: 680px; }
+  .dB .hero .txt { padding: 70px 56px 56px 0; display: flex; flex-direction: column; justify-content: space-between; gap: 48px; }
+  .dB .hero h1 { font-size: clamp(3.2rem, 6.4vw, 6.2rem); line-height: 1; margin-top: 22px; }
+  .dB .hero .sub { font-family: "Gilda Display", serif; font-size: 1.5rem; margin-top: 10px; }
+  .dB .hero .sub em { font-style: italic; }
+  .dB .hero .lead { font-size: 13.5px; line-height: 1.8; color: var(--b-mute); max-width: 34ch; margin-top: 28px; }
+  .dB .lnk { display: flex; justify-content: space-between; align-items: center; gap: 30px; width: min(260px, 100%); border-bottom: 1px solid var(--b-ink); padding-bottom: 10px; font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; margin-top: 36px; }
+  .dB .specs { display: flex; gap: 0; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--b-mute); }
+  .dB .specs div { padding-right: 22px; margin-right: 22px; border-right: 1px solid rgba(30,26,22,.25); line-height: 1.7; }
+  .dB .specs div:last-child { border: 0; }
+  .dB .hero .pic { position: relative; overflow: hidden; background: var(--b-bg2); }
+  .dB .hero .pic > img, .dC .hero .pic > img { position: absolute; inset: 0; }
+  .dB .notes { position: absolute; right: 36px; top: 50%; transform: translateY(-50%); display: grid; gap: 34px; color: #fff; text-shadow: 0 1px 10px rgba(0,0,0,.35); }
+  .dB .notes::before { content: ""; position: absolute; left: 10px; top: 10px; bottom: 10px; width: 1px; background: rgba(255,255,255,.6); }
+  .dB .note { display: grid; grid-template-columns: 21px auto; gap: 14px; align-items: center; position: relative; }
+  .dB .note i { width: 21px; height: 21px; border: 1px solid rgba(255,255,255,.85); border-radius: 50%; background: rgba(30,26,22,.25); display: grid; place-items: center; font-style: normal; font-size: 12px; line-height: 1; }
+  .dB .note small { display: block; font-size: 9.5px; letter-spacing: .2em; text-transform: uppercase; opacity: .8; }
+  .dB .note span { font-size: 13px; }
+  .dB .sec { padding-block: 90px; display: grid; grid-template-columns: minmax(0,4fr) minmax(0,8fr); gap: 56px; align-items: end; }
+  .dB .sec h2 { font-size: clamp(2.3rem, 3.8vw, 3.4rem); line-height: 1.05; margin-top: 18px; }
+  .dB .sec h2 em { font-style: italic; }
+  .dB .sec .lead { font-size: 13.5px; line-height: 1.8; color: var(--b-mute); margin-top: 20px; max-width: 32ch; }
+  .dB .trio { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; align-items: end; }
+  .dB .trio figure { margin: 0; }
+  .dB .trio .im { overflow: hidden; background: var(--b-bg2); }
+  .dB .trio figure:nth-child(1) .im { aspect-ratio: 3/4.3; }
+  .dB .trio figure:nth-child(2) .im { aspect-ratio: 3/4.3; }
+  .dB .trio figure:nth-child(3) .im { aspect-ratio: 3/3.4; }
+  .dB .trio img { transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+  .dB .trio figure:hover img { transform: scale(1.05); }
+  .dB .trio figcaption { padding-top: 14px; display: flex; justify-content: space-between; gap: 10px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+  .dB .trio figcaption span:last-child { color: var(--b-mute); }
+  .dB .dark { background: var(--b-noir); color: #EFE6D9; }
+  .dB .dark .wrap { padding-block: 64px; display: grid; grid-template-columns: minmax(0,4fr) repeat(3, minmax(0,2.6fr)); gap: 40px; align-items: start; }
+  .dB .dark h2 { font-size: 2.1rem; line-height: 1.1; margin-top: 14px; }
+  .dB .dark h2 em { font-style: italic; }
+  .dB .act { border-top: 1px solid rgba(239,230,217,.25); padding-top: 18px; }
+  .dB .act small { font-size: 9.5px; letter-spacing: .22em; text-transform: uppercase; opacity: .65; }
+  .dB .act b { display: block; font-family: "Gilda Display", serif; font-weight: 400; font-size: 1.4rem; margin-top: 6px; }
+  .dB .act p { font-size: 12.5px; opacity: .6; margin-top: 6px; line-height: 1.6; }
+  @media (max-width: 1023px) {
+    .dB header .wrap > div:not(.logo) { display: none; }
+    .dB header .wrap { grid-template-columns: 1fr; justify-items: center; }
+    .dB .hero { grid-template-columns: 1fr; }
+    .dB .hero .txt { padding: 30px 0 48px; }
+    .dB .hero .pic { aspect-ratio: 4/4.6; margin-inline: calc(-1 * max(20px, env(safe-area-inset-left, 0px))); order: -1; }
+    .dB .sec { grid-template-columns: 1fr; padding-block: 64px; gap: 36px; }
+    .dB .dark .wrap { grid-template-columns: 1fr; gap: 26px; }
+  }
+  @media (max-width: 600px) { .dB .trio { grid-template-columns: 1fr 1fr; } .dB .trio figure:nth-child(3) { display: none; } .dB .notes { right: 20px; } .dB .specs { flex-wrap: wrap; row-gap: 10px; } }
+
+  /* =================================================================
+     C · BORDEAUX & IVOIRE
+     ================================================================= */
+  .dC { background: var(--c-bg); color: var(--c-ink); font-family: Montserrat, "Helvetica Neue", system-ui, sans-serif; font-weight: 300; }
+  .dC .serif { font-family: Marcellus, "Trajan Pro", Georgia, serif; }
+  .dC .photo { filter: saturate(.85) sepia(.12) contrast(1.05) brightness(.96); }
+  .dC header { background: var(--c-noir); color: #F6F1EA; }
+  .dC header .wrap { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding-block: 22px; }
+  .dC header .logo { text-align: center; font-family: Marcellus, serif; }
+  .dC header .logo b { display: block; font-weight: 400; font-size: 28px; letter-spacing: .26em; padding-left: .26em; }
+  .dC header .logo small { display: block; font-size: 9px; letter-spacing: .5em; color: var(--c-or); margin-top: 3px; }
+  .dC .burger { width: 26px; height: 12px; border-top: 1px solid currentColor; border-bottom: 1px solid currentColor; }
+  .dC .hero { position: relative; display: grid; grid-template-columns: minmax(0,5fr) minmax(0,7fr); min-height: 620px; background: var(--c-noir); }
+  .dC .hero .txt { position: relative; z-index: 2; background: var(--c-bg); padding: 80px 64px 64px max(64px, env(safe-area-inset-left, 0px)); border-top-right-radius: 0 0; clip-path: ellipse(120% 140% at 0% 60%); display: flex; flex-direction: column; justify-content: center; }
+  .dC .hero h1 { font-size: clamp(3.2rem, 6.2vw, 6rem); line-height: 1.02; color: var(--c-bx); }
+  .dC .hero h1 em { font-family: "Cormorant Garamond", serif; font-style: italic; color: var(--c-ink); display: block; font-size: 1.04em; }
+  .dC .rule { width: 46px; height: 1px; background: var(--c-or); margin-top: 28px; }
+  .dC .hero .lead { font-size: 15px; line-height: 1.75; margin-top: 24px; max-width: 30ch; }
+  .dC .btn { display: inline-flex; align-self: flex-start; margin-top: 34px; background: var(--c-bx); color: #F6F1EA; padding: 17px 30px; font-size: 11px; letter-spacing: .24em; text-transform: uppercase; font-weight: 500; transition: background .3s; }
+  .dC .btn:hover { background: var(--c-bx2); }
+  .dC .hero .pic { position: relative; overflow: hidden; margin-left: -12%; }
+  .dC .assur { display: flex; gap: 14px; align-items: center; margin-top: 30px; font-size: 12px; line-height: 1.5; }
+  .dC .assur svg { color: var(--c-or); flex-shrink: 0; }
+  .dC .strip { background: var(--c-noir); color: #F6F1EA; }
+  .dC .strip .wrap { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 30px; padding-block: 34px; }
+  .dC .strip li { display: flex; gap: 16px; align-items: center; list-style: none; }
+  .dC .strip ul { display: contents; }
+  .dC .strip svg { color: var(--c-or); flex-shrink: 0; }
+  .dC .strip b { display: block; font-family: Marcellus, serif; font-weight: 400; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; }
+  .dC .strip span span { font-size: 12px; opacity: .65; }
+  .dC .coll { display: grid; grid-template-columns: minmax(0,3.2fr) repeat(3, minmax(0,2.6fr)); }
+  .dC .coll .intro { padding: 56px 40px 56px max(64px, env(safe-area-inset-left, 0px)); display: flex; flex-direction: column; justify-content: center; }
+  .dC .coll h2 { font-size: clamp(1.9rem, 2.6vw, 2.5rem); line-height: 1.1; color: var(--c-bx); text-transform: uppercase; letter-spacing: .04em; }
+  .dC .coll .intro p { font-size: 14px; line-height: 1.7; margin-top: 22px; }
+  .dC .coll .intro a { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--c-bx); margin-top: 30px; font-weight: 500; }
+  .dC .tile { position: relative; background: linear-gradient(180deg, var(--c-beige), #DCCFBE); border-left: 1px solid rgba(26,20,22,.08); overflow: hidden; display: flex; flex-direction: column; }
+  .dC .tile .im { aspect-ratio: 3/3.7; overflow: hidden; }
+  .dC .tile img { transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+  .dC .tile:hover img { transform: scale(1.05); }
+  .dC .tile .cap { text-align: center; padding: 20px 14px 24px; }
+  .dC .tile .cap b { display: block; font-family: Marcellus, serif; font-weight: 400; font-size: 15px; letter-spacing: .14em; text-transform: uppercase; }
+  .dC .tile .cap span { display: block; font-size: 12.5px; margin-top: 6px; color: #6d5f55; }
+  .dC .rdv { display: grid; grid-template-columns: minmax(0,5fr) minmax(0,7fr); }
+  .dC .rdv .box { background: var(--c-bx); color: #F6F1EA; text-align: center; padding: 64px 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .dC .rdv .box img { width: 52px; height: 52px; object-fit: contain; }
+  .dC .rdv h2 { font-size: 1.7rem; letter-spacing: .1em; text-transform: uppercase; margin-top: 22px; line-height: 1.25; }
+  .dC .rdv .box p { font-size: 14px; opacity: .8; margin-top: 14px; max-width: 30ch; line-height: 1.7; }
+  .dC .rdv .ghost { margin-top: 30px; border: 1px solid rgba(180,140,78,.8); padding: 15px 28px; font-size: 11px; letter-spacing: .24em; text-transform: uppercase; transition: background .3s, color .3s; }
+  .dC .rdv .ghost:hover { background: #F6F1EA; color: var(--c-bx); }
+  .dC .rdv .pic { min-height: 380px; overflow: hidden; position: relative; }
+  .dC .rdv .pic p { position: absolute; left: 40px; bottom: 36px; right: 40px; color: #F6F1EA; font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 2rem; line-height: 1.15; z-index: 2; }
+  .dC .rdv .pic::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(14,12,12,.75), rgba(14,12,12,0) 55%); }
+  @media (max-width: 1023px) {
+    .dC .hero { grid-template-columns: 1fr; }
+    .dC .hero .txt { clip-path: none; padding: 48px max(20px, env(safe-area-inset-right, 0px)) 56px max(20px, env(safe-area-inset-left, 0px)); }
+    .dC .hero .pic { margin-left: 0; aspect-ratio: 4/4.2; order: -1; }
+    .dC .strip .wrap { grid-template-columns: 1fr 1fr; }
+    .dC .coll { grid-template-columns: 1fr 1fr; }
+    .dC .coll .intro { grid-column: 1 / -1; padding: 56px max(20px, env(safe-area-inset-right, 0px)) 40px max(20px, env(safe-area-inset-left, 0px)); }
+    .dC .coll .tile:nth-child(4) { display: none; }
+    .dC .rdv { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) { .dC .strip .wrap { grid-template-columns: 1fr; gap: 20px; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+</style>
+
+<div id="site">
+
+  <!-- ======================= A · NUIT & OR ======================= -->
+  <div class="dir dA" id="nuit">
+    <header class="gut">
+      <div class="wrap">
+        <nav><a href="#">Collection</a><a href="#">L’atelier</a><a href="#">Sur-mesure</a></nav>
+        <div class="logo"><b>SAADIKH</b><small>MAISON DE COUTURE · DAKAR</small></div>
+        <div class="icons">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M5 8h14l-1.2 12H6.2L5 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+        </div>
+      </div>
+    </header>
+    <section class="hero gut">
+      <div class="pic"><img class="cover photo" src="images/hero-saadikh.webp" alt="Homme en grand boubou bleu roi à plastron brodé" style="object-position:50% 18%"></div>
+      <div class="side" style="top:40px">Coupé<br>et brodé<br>à Dakar</div>
+      <div class="side" style="bottom:70px">Collection<br>Tabaski<br>MMXXVI</div>
+      <div class="wrap" style="width:100%">
+        <div class="txt">
+          <p class="ey" style="color:var(--a-or)">Traditionnellement vôtre</p>
+          <h1 class="serif">Quand c’est élégant, <em>c’est Saadikh.</em></h1>
+          <p class="lead">Grands boubous et trois pièces, brodés à la main pour les jours qui comptent.</p>
+          <a href="#" class="cta">Découvrir la collection <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+    <section class="band">
+      <div class="wrap gut" style="padding-right:0">
+        <div class="main">
+          <div class="head">
+            <div><p class="ey" style="color:var(--a-mute)">La collection</p><h2 class="serif">Les pièces de cérémonie</h2></div>
+            <a href="#" class="more">Tout voir →</a>
+          </div>
+          <div class="cards">
+            <a href="#" class="card"><div class="im"><img class="cover photo" src="images/tenues/boubou-blanc-brode.webp" alt="Blanc & Or" style="object-position:50% 18%"></div><div class="meta"><b>Blanc & Or</b><i>Bazin blanc</i><span>95 000 F CFA</span></div></a>
+            <a href="#" class="card"><div class="im"><img class="cover photo" src="images/tenues/trois-pieces-vert-bouteille.webp" alt="Vert Bouteille" style="object-position:50% 18%"></div><div class="meta"><b>Vert Bouteille</b><i>Tissu satiné</i><span>75 000 F CFA</span></div></a>
+            <a href="#" class="card"><div class="im"><img class="cover photo" src="images/tenues/ensemble-bleu-nuit.webp" alt="Bleu Nuit Brodé" style="object-position:50% 18%"></div><div class="meta"><b>Bleu Nuit Brodé</b><i>Coton fin</i><span>70 000 F CFA</span></div></a>
+          </div>
+        </div>
+        <div class="quote">
+          <img class="cover photo" src="images/tenues/boubou-satin-argent.webp" alt="Boubou en satin argenté" style="position:absolute;inset:0;object-position:50% 25%">
+          <p>Plus qu’une tenue.<br>Une présence.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ======================= B · LUMIÈRE & SABLE ======================= -->
+  <div class="dir dB" id="sable" hidden>
+    <header class="gut">
+      <div class="wrap">
+        <div><a href="#">Collection</a><a href="#">Maison</a></div>
+        <div class="logo">Saadikh</div>
+        <div><a href="#">Sur-mesure</a><a href="#">Panier (0)</a></div>
+      </div>
+    </header>
+    <section class="gut">
+      <div class="wrap hero">
+        <div class="txt">
+          <div>
+            <p class="ey">Grand boubou · Bazin blanc</p>
+            <h1 class="serif">L’élégance<br>du blanc.</h1>
+            <p class="sub serif">Brodé d’or, <em>porté pour les grands jours.</em></p>
+            <p class="lead">Un bazin lumineux, un galon doré au col et le long de la patte, une broderie fine aux poignets. Taillé à Dakar.</p>
+            <a href="#" class="lnk">Découvrir la pièce <span>⟶</span></a>
+          </div>
+          <div class="specs"><div>N° 005<br>Trois pièces</div><div>Bazin<br>blanc</div><div>Sur-mesure<br>possible</div></div>
+        </div>
+        <div class="pic">
+          <img class="cover photo" src="images/tenues/boubou-blanc-brode.webp" alt="Homme en grand boubou blanc à galon doré" style="object-position:50% 20%">
+          <div class="notes">
+            <div class="note"><i>+</i><span><small>Tissu</small>Bazin riche</span></div>
+            <div class="note"><i>+</i><span><small>Coupe</small>Ample et droite</span></div>
+            <div class="note"><i>+</i><span><small>Finition</small>Galon doré</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="gut">
+      <div class="wrap sec">
+        <div>
+          <p class="ey">/ 02 · La collection</p>
+          <h2 class="serif">Né à Dakar,<br><em>porté partout.</em></h2>
+          <p class="lead">Des teintes douces pour le vendredi et les jours de fête, en coton fin et en lin.</p>
+          <a href="#" class="lnk">Voir toute la collection <span>⟶</span></a>
+        </div>
+        <div class="trio">
+          <figure><div class="im"><img class="cover photo" src="images/tenues/tenue-moka.webp" alt="Ensemble moka" style="object-position:50% 18%"></div><figcaption><span>Moka</span><span>50 000 F</span></figcaption></figure>
+          <figure><div class="im"><img class="cover photo" src="images/tenues/trois-pieces-bleu-ciel.webp" alt="Ensemble bleu ciel" style="object-position:50% 18%"></div><figcaption><span>Bleu Ciel</span><span>50 000 F</span></figcaption></figure>
+          <figure><div class="im"><img class="cover photo" src="images/tenues/trois-pieces-gris-lilas.webp" alt="Ensemble gris lilas" style="object-position:50% 14%"></div><figcaption><span>Gris Lilas</span><span>55 000 F</span></figcaption></figure>
+        </div>
+      </div>
+    </section>
+    <section class="dark gut">
+      <div class="wrap">
+        <div><p class="ey" style="opacity:.6">/ 03 · L’atelier</p><h2 class="serif">Une tenue<br><em>en trois gestes.</em></h2></div>
+        <div class="act"><small>I · Choisir</small><b>Le tissu</b><p>Bazin, lin, satin, coton fin.</p></div>
+        <div class="act"><small>II · Couper</small><b>La coupe</b><p>À la mesure de celui qui la portera.</p></div>
+        <div class="act"><small>III · Finir</small><b>La broderie</b><p>Galons, liserés et rosaces, à la main.</p></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ======================= C · BORDEAUX & IVOIRE ======================= -->
+  <div class="dir dC" id="bordeaux" hidden>
+    <header class="gut">
+      <div class="wrap">
+        <span class="burger" aria-hidden="true"></span>
+        <div class="logo"><b>SAADIKH</b><small>STAM BY FALL</small></div>
+        <div style="display:flex;justify-content:flex-end;gap:20px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M5 8h14l-1.2 12H6.2L5 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+        </div>
+      </div>
+    </header>
+    <section class="hero">
+      <div class="txt">
+        <h1 class="serif">L’apparat<em>se porte haut.</em></h1>
+        <div class="rule"></div>
+        <p class="lead">Satin, bazin et broderies. Des tenues de cérémonie taillées à Dakar, faites pour durer.</p>
+        <a href="#" class="btn">Découvrir la collection</a>
+        <div class="assur">
+          <svg width="34" height="34" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1"><circle cx="16" cy="16" r="13"/><path d="M4 16h24M16 3c4 4 4 22 0 26M16 3c-4 4-4 22 0 26"/></svg>
+          <span>Livraison au Sénégal<br>et dans la diaspora</span>
+        </div>
+      </div>
+      <div class="pic"><img class="cover photo" src="images/tenues/boubou-satin-argent.webp" alt="Homme en boubou de satin argenté" style="object-position:50% 6%"></div>
+    </section>
+    <section class="strip gut">
+      <div class="wrap">
+        <ul>
+          <li><svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1"><circle cx="9" cy="24" r="4"/><circle cx="23" cy="24" r="4"/><path d="M11.5 21 24 4M20.5 21 8 4"/></svg><span><b>Coupé main</b><span>Atelier de Sicap Foire</span></span></li>
+          <li><svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1"><path d="M6 26 24 8"/><path d="M4 20c4-2 6 2 10 0s6-6 10-4"/></svg><span><b>Brodé fil à fil</b><span>Galons, liserés, rosaces</span></span></li>
+          <li><svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="11" width="26" height="10"/><path d="M8 11v4M13 11v6M18 11v4M23 11v6"/></svg><span><b>Sur-mesure</b><span>Mesures prises à distance</span></span></li>
+          <li><svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 11h22v16H5zM11 11V7h10v4"/></svg><span><b>Livré soigné</b><span>Housse et emballage</span></span></li>
+        </ul>
+      </div>
+    </section>
+    <section class="coll">
+      <div class="intro">
+        <h2 class="serif">Pièces<br>de cérémonie</h2>
+        <div class="rule"></div>
+        <p>Pour Korité, Tabaski et les mariages : la tenue qui se remarque.</p>
+        <a href="#">Tout voir →</a>
+      </div>
+      <a href="#" class="tile"><div class="im"><img class="cover photo" src="images/tenues/trois-pieces-thiaya-bleu-roi.webp" alt="Thiaya Bleu Roi" style="object-position:50% 18%"></div><div class="cap"><b>Thiaya Bleu Roi</b><span>120 000 F CFA</span></div></a>
+      <a href="#" class="tile"><div class="im"><img class="cover photo" src="images/tenues/boubou-blanc-brode.webp" alt="Blanc & Or" style="object-position:50% 18%"></div><div class="cap"><b>Blanc & Or</b><span>95 000 F CFA</span></div></a>
+      <a href="#" class="tile"><div class="im"><img class="cover photo" src="images/tenues/trois-pieces-vert-bouteille.webp" alt="Vert Bouteille" style="object-position:50% 18%"></div><div class="cap"><b>Vert Bouteille</b><span>75 000 F CFA</span></div></a>
+    </section>
+    <section class="rdv">
+      <div class="box">
+        <img src="images/logo-mark.png" alt="">
+        <h2 class="serif">Salon privé<br>sur rendez-vous</h2>
+        <p>Un conseiller vous reçoit à Sicap Foire ou en visio, du choix du tissu à la livraison.</p>
+        <a href="#" class="ghost">Prendre rendez-vous</a>
+      </div>
+      <div class="pic"><img class="cover photo" src="images/saadikh-mannequin.webp" alt="Tunique en satin sur buste à la boutique" style="position:absolute;inset:0;object-position:50% 35%"><p>Traditionnellement<br>vôtre.</p></div>
+    </section>
+  </div>
+
+  <div id="switch" role="group" aria-label="Choisir une direction">
+    <button data-d="nuit" aria-pressed="true"><b>A</b><span>Nuit & or</span></button>
+    <button data-d="sable" aria-pressed="false"><b>B</b><span>Lumière & sable</span></button>
+    <button data-d="bordeaux" aria-pressed="false"><b>C</b><span>Bordeaux & ivoire</span></button>
+  </div>
+</div>
+
+<script>
+(() => {
+  const dirs = [...document.querySelectorAll('.dir')];
+  const btns = [...document.querySelectorAll('#switch button')];
+  const show = id => {
+    if (!dirs.some(d => d.id === id)) id = 'nuit';
+    dirs.forEach(d => d.hidden = d.id !== id);
+    btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.d === id)));
+    window.scrollTo(0, 0);
+  };
+  btns.forEach(b => b.addEventListener('click', () => { show(b.dataset.d); try { history.replaceState(null, '', '#' + b.dataset.d); } catch (_) {} }));
+  document.querySelectorAll('.dir a[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+  show(location.hash.slice(1));
+})();
+</script>
