@@ -55,7 +55,7 @@
   .field input::placeholder { color: inherit; opacity: .45; }
   .field select option { color: var(--encre); }
   .chip[aria-pressed="true"] { background: var(--encre); color: var(--ivoire); border-color: var(--encre); }
-  .tab[aria-selected="true"] { color: var(--encre); border-color: var(--encre); }
+  .tab[aria-selected="true"] { color: var(--ivoire); background: var(--encre); border-color: var(--encre); }
   .curb[aria-pressed="true"] { color: var(--encre); }
   .look { min-width: 0; }
   .look .zoom { aspect-ratio: 3/4; }
@@ -232,36 +232,68 @@
     </div>
   </section>
 
-  <!-- ================= COLLECTION ================= -->
-  <section id="collection" class="bg-sable pt-20 lg:pt-28 pb-28 lg:pb-40">
-    <div class="mq-wrap mb-20 lg:mb-28" aria-hidden="true">
-      <div class="mq font-serif italic text-[clamp(2.6rem,6vw,5.4rem)] leading-none text-encre/[0.13] whitespace-nowrap">
-        <span class="px-6">Korité <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span> Tabaski <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span> Mariages <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span> Baptêmes <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span> Magal <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span> Vendredi <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span></span>
-        <span class="px-6">Korité <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span> Tabaski <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span> Mariages <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span> Baptêmes <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span> Magal <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span> Vendredi <span class="not-italic text-or/70 mx-6 text-[0.5em] align-middle">✦</span></span>
+  <!-- ================= BANDE DES VALEURS ================= -->
+  <div class="bg-nuit border-y border-or/20 py-6 lg:py-8" aria-hidden="true">
+    <div class="mq-wrap">
+      <div class="mq font-serif italic text-[clamp(1.9rem,4vw,3.2rem)] leading-none text-or whitespace-nowrap">
+        <span class="px-7">Tradition <span class="not-italic text-or/60 mx-7 text-[0.45em] align-middle">✦</span> Modernité <span class="not-italic text-or/60 mx-7 text-[0.45em] align-middle">✦</span> Élégance <span class="not-italic text-or/60 mx-7 text-[0.45em] align-middle">✦</span> Savoir-faire <span class="not-italic text-or/60 mx-7 text-[0.45em] align-middle">✦</span> Héritage <span class="not-italic text-or/60 mx-7 text-[0.45em] align-middle">✦</span> Prestige <span class="not-italic text-or/60 mx-7 text-[0.45em] align-middle">✦</span></span>
+        <span class="px-7">Tradition <span class="not-italic text-or/60 mx-7 text-[0.45em] align-middle">✦</span> Modernité <span class="not-italic text-or/60 mx-7 text-[0.45em] align-middle">✦</span> Élégance <span class="not-italic text-or/60 mx-7 text-[0.45em] align-middle">✦</span> Savoir-faire <span class="not-italic text-or/60 mx-7 text-[0.45em] align-middle">✦</span> Héritage <span class="not-italic text-or/60 mx-7 text-[0.45em] align-middle">✦</span> Prestige <span class="not-italic text-or/60 mx-7 text-[0.45em] align-middle">✦</span></span>
       </div>
     </div>
+  </div>
+
+  <!-- ================= COLLECTION ================= -->
+  <section id="collection" class="bg-sable pt-20 lg:pt-28 pb-24 lg:pb-32">
     <div class="wrap gut">
-      <div class="grid lg:grid-cols-12 gap-8 items-end mb-16 lg:mb-24">
-        <div class="lg:col-span-7">
+      <div class="grid lg:grid-cols-12 gap-8 items-end mb-12 lg:mb-14">
+        <div class="lg:col-span-6">
           <p class="ey text-pierre mb-4">Collection MMXXVI</p>
           <h2 class="font-serif text-[clamp(3rem,6.4vw,6rem)] leading-[0.92]">La Collection</h2>
         </div>
-        <div class="lg:col-span-5 lg:justify-self-end flex flex-wrap items-center gap-x-6 gap-y-3">
-          <div class="flex flex-wrap gap-x-6 gap-y-2" role="tablist" aria-label="Filtrer la collection">
-            <button class="tab text-[10px] tracking-[0.26em] uppercase text-pierre/70 border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="all" aria-selected="true">Tout</button>
-            <button class="tab text-[10px] tracking-[0.26em] uppercase text-pierre/70 border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="trois" aria-selected="false">Trois pièces</button>
-            <button class="tab text-[10px] tracking-[0.26em] uppercase text-pierre/70 border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="deux" aria-selected="false">Deux pièces</button>
-            <button class="tab text-[10px] tracking-[0.26em] uppercase text-pierre/70 border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="events" aria-selected="false">Cérémonie</button>
+        <p class="lg:col-span-6 text-[15.5px] leading-[1.8] text-encre/75 max-w-[46ch] lg:justify-self-end">Neuf pièces taillées à Dakar, du deux pièces du vendredi au grand boubou de cérémonie. Chacune existe aussi sur mesure.</p>
+      </div>
+
+      <!-- pièce signature -->
+      <article class="rv grid lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] bg-nuit text-ivoire mb-16 lg:mb-20">
+        <div class="relative order-2 lg:order-1 p-8 sm:p-12 lg:p-16 flex flex-col justify-center gap-7">
+          <p class="ey text-or flex items-center gap-4"><span class="rule-or"></span>La pièce signature</p>
+          <div>
+            <h3 class="font-serif font-normal text-[clamp(3rem,5.6vw,5.4rem)] leading-[0.92]">Satin <em class="text-or">Argent</em></h3>
+            <p class="font-serif italic text-[1.35rem] text-ivoire/70 mt-4 max-w-[30ch]">Un satin qui capte la lumière, une patte brodée de fins motifs. Pour les soirs de fête.</p>
           </div>
-          <div class="flex gap-3 text-[10px] tracking-[0.2em] uppercase text-pierre/60" role="group" aria-label="Devise">
-            <button class="curb hover:text-encre" data-cur="XOF" aria-pressed="true">F CFA</button><span aria-hidden="true">/</span>
-            <button class="curb hover:text-encre" data-cur="EUR" aria-pressed="false">€</button><span aria-hidden="true">/</span>
-            <button class="curb hover:text-encre" data-cur="USD" aria-pressed="false">$</button>
+          <dl class="grid grid-cols-3 gap-4 border-y border-ivoire/15 py-5 max-w-[460px] text-[13px]">
+            <div><dt class="ey text-ivoire/45 text-[9.5px]">N°</dt><dd class="mt-1.5">004</dd></div>
+            <div><dt class="ey text-ivoire/45 text-[9.5px]">Ensemble</dt><dd class="mt-1.5">Trois pièces</dd></div>
+            <div><dt class="ey text-ivoire/45 text-[9.5px]">À partir de</dt><dd class="mt-1.5 price tabular-nums" data-xof="90000">90 000 F CFA</dd></div>
+          </dl>
+          <div class="flex flex-wrap items-center gap-x-8 gap-y-4">
+            <button class="btn bg-ivoire text-nuit hover:bg-or" data-open="004">Voir la pièce <span aria-hidden="true">→</span></button>
+            <a href="#" data-wa target="_blank" rel="noopener" class="lk text-ivoire/85 hover:text-or">Essayer en salon</a>
           </div>
         </div>
+        <div class="relative order-1 lg:order-2 min-h-[420px] sm:min-h-[520px] lg:min-h-[640px] overflow-hidden">
+          <img class="img absolute inset-0" src="images/tenues/boubou-satin-argent.webp" alt="Boubou trois pièces en satin argenté" style="object-position:50% 22%">
+          <div class="absolute bottom-5 left-5 w-[34%] max-w-[180px] border-4 border-nuit hidden sm:block">
+            <div class="aspect-[3/4]"><img class="img" src="images/saadikh-mannequin.webp" alt="Tunique en satin sur buste de couture, à la boutique Saadikh" style="object-position:50% 40%"></div>
+          </div>
+        </div>
+      </article>
+
+      <div class="flex flex-wrap items-center justify-between gap-5 mb-10">
+        <div class="flex flex-wrap gap-2" role="tablist" aria-label="Filtrer la collection">
+          <button class="tab text-[11px] tracking-[0.2em] uppercase text-encre/70 border border-encre/20 px-4 py-2.5 hover:border-encre" role="tab" data-f="all" aria-selected="true">Toute la collection</button>
+          <button class="tab text-[11px] tracking-[0.2em] uppercase text-encre/70 border border-encre/20 px-4 py-2.5 hover:border-encre" role="tab" data-f="trois" aria-selected="false">Trois pièces</button>
+          <button class="tab text-[11px] tracking-[0.2em] uppercase text-encre/70 border border-encre/20 px-4 py-2.5 hover:border-encre" role="tab" data-f="deux" aria-selected="false">Deux pièces</button>
+          <button class="tab text-[11px] tracking-[0.2em] uppercase text-encre/70 border border-encre/20 px-4 py-2.5 hover:border-encre" role="tab" data-f="events" aria-selected="false">Cérémonie</button>
+        </div>
+        <div class="flex gap-3 text-[11px] tracking-[0.2em] uppercase text-pierre" role="group" aria-label="Devise">
+          <button class="curb hover:text-encre" data-cur="XOF" aria-pressed="true">F CFA</button><span aria-hidden="true">/</span>
+          <button class="curb hover:text-encre" data-cur="EUR" aria-pressed="false">€</button><span aria-hidden="true">/</span>
+          <button class="curb hover:text-encre" data-cur="USD" aria-pressed="false">$</button>
+        </div>
       </div>
-      <div id="all" class="grid grid-cols-2 lg:grid-cols-3 gap-x-5 sm:gap-x-8 lg:gap-x-14 gap-y-14 lg:gap-y-24 lg:max-w-[1180px] lg:mx-auto"></div>
-      <p class="mt-14 text-[10.5px] tracking-[0.08em] text-pierre/60 text-center">Prix indicatifs, confirmés par la maison. € à parité fixe, $ à 600 F CFA.</p>
+      <div id="all" class="grid grid-cols-2 lg:grid-cols-3 gap-x-4 sm:gap-x-6 lg:gap-x-10 gap-y-12 lg:gap-y-16"></div>
+      <p class="mt-12 text-[11px] tracking-[0.06em] text-pierre text-center">Prix indicatifs, confirmés par la maison. € à parité fixe, $ à 600 F CFA.</p>
     </div>
   </section>
 
@@ -439,9 +471,11 @@
           <img class="img" src="${p.img}" alt="${p.name}, ${FAM[p.family].toLowerCase()} en ${p.fabric.toLowerCase()}" style="object-position:50% 18%">
           <span class="veil-card"><span class="font-serif italic text-[1.35rem] leading-none">${p.fabric}</span><span class="text-[10px] tracking-[0.24em] uppercase">Voir la pièce +</span></span>
         </div>
-        <p class="pt-4 flex justify-between gap-3 text-[11.5px] tracking-[0.18em] uppercase text-encre/80 group-hover:text-encre transition-colors">
-          <span class="min-w-0 truncate">${p.name}</span><span class="price tabular-nums shrink-0 text-pierre normal-case tracking-[0.04em]" data-xof="${p.price}">${money(p.price)}</span>
-        </p>
+        <div class="pt-4 border-b border-encre/15 pb-4">
+          <p class="flex justify-between gap-3 text-[10px] tracking-[0.22em] uppercase"><span class="text-or">N° ${p.ref}</span><span class="text-pierre">${FAM[p.family]}</span></p>
+          <h3 class="font-serif text-[1.35rem] lg:text-[1.6rem] leading-tight mt-1.5 group-hover:text-roi transition-colors">${p.name}</h3>
+          <p class="flex justify-between items-baseline gap-3 mt-1"><span class="font-serif italic text-[1.02rem] text-pierre min-w-0 truncate">${p.fabric}</span><span class="price tabular-nums shrink-0 text-[13px] text-encre" data-xof="${p.price}">${money(p.price)}</span></p>
+        </div>
       </button>
     </article>`;
   $('#all').innerHTML = PRODUCTS.map(look).join('');
