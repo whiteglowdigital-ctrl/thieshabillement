@@ -8,7 +8,7 @@
   tailwind.config = {
     theme: {
       extend: {
-        colors: { nuit: '#0C111D', nuit2: '#121A2B', roi: '#1D2A5A', ivoire: '#F4EFE7', sable: '#E8DFD1', or: '#B9965B', encre: '#16171B', pierre: '#6F6A62' },
+        colors: { nuit: '#0C111D', nuit2: '#121A2B', roi: '#1D2A5A', ivoire: '#F4EFE7', sable: '#E8DFD1', or: '#B9965B', encre: '#16171B', pierre: '#6F6A62', noir: '#07080B' },
         fontFamily: {
           serif: ['"Cormorant Garamond"', '"Cormorant"', 'Garamond', 'Georgia', 'serif'],
           sans: ['Jost', 'Futura', '"Century Gothic"', 'system-ui', 'sans-serif'],
@@ -56,6 +56,15 @@
   .field select option { color: var(--encre); }
   .chip[aria-pressed="true"] { background: var(--encre); color: var(--ivoire); border-color: var(--encre); }
   .tab[aria-selected="true"] { color: var(--encre); border-color: var(--encre); }
+  .curb[aria-pressed="true"] { color: var(--encre); }
+  .look { min-width: 0; }
+  .look .zoom { aspect-ratio: var(--ar, 3/4); max-width: 100%; }
+  .look.off { margin-top: 4.5rem; }
+  .look.wide { grid-column: span 2; }
+  @media (min-width: 1024px) {
+    .look { grid-column: var(--cs) / span var(--sp); margin-top: var(--mt); }
+    .look.off, .look.wide { margin-top: var(--mt); grid-column: var(--cs) / span var(--sp); }
+  }
   .drawer { position: fixed; inset: 0; z-index: 70; }
   .drawer .veil { position: absolute; inset: 0; background: rgba(12,17,29,.55); }
   .drawer .panel { position: absolute; top: 0; right: 0; bottom: 0; width: min(460px, 100%); background: var(--ivoire); display: flex; flex-direction: column; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); padding-right: env(safe-area-inset-right, 0px); animation: slidein .45s cubic-bezier(.2,.7,.2,1); }
@@ -281,29 +290,30 @@
     </div>
   </section>
 
-  <!-- ================= COLLECTION COMPLÈTE ================= -->
-  <section id="collection" class="bg-ivoire gut py-20 lg:py-28">
+  <!-- ================= COLLECTION : LOOKBOOK ================= -->
+  <section id="collection" class="bg-ivoire gut pt-24 lg:pt-36 pb-28 lg:pb-44">
     <div class="wrap">
-      <div class="text-center mb-12">
-        <p class="ey text-pierre mb-3">Collection MMXXVI</p>
-        <h2 class="font-serif text-[clamp(2.4rem,4.4vw,3.8rem)] leading-[1]">Toute la collection</h2>
-        <div class="flex justify-center mt-5"><span class="rule-or"></span></div>
-      </div>
-      <div class="flex flex-wrap items-center justify-between gap-6 border-y border-encre/10 py-4 mb-10">
-        <div class="flex flex-wrap gap-x-7 gap-y-2" role="tablist" aria-label="Filtrer la collection">
-          <button class="tab ey text-pierre border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="all" aria-selected="true">Toutes</button>
-          <button class="tab ey text-pierre border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="trois" aria-selected="false">Trois pièces</button>
-          <button class="tab ey text-pierre border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="deux" aria-selected="false">Deux pièces</button>
-          <button class="tab ey text-pierre border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="events" aria-selected="false">Grands événements</button>
+      <div class="grid lg:grid-cols-12 gap-8 items-end mb-20 lg:mb-28">
+        <div class="lg:col-span-7">
+          <p class="ey text-pierre mb-4">Lookbook · Collection MMXXVI</p>
+          <h2 class="font-serif text-[clamp(3rem,6.4vw,6rem)] leading-[0.92]">La Collection</h2>
         </div>
-        <label class="flex items-center gap-3 text-[12px] tracking-[0.12em] uppercase text-pierre" for="cur">Devise
-          <select id="cur" class="bg-transparent border border-encre/20 px-3 py-2 text-encre text-[12px]">
-            <option value="XOF">F CFA</option><option value="EUR">€ Euro</option><option value="USD">$ Dollar</option>
-          </select>
-        </label>
+        <div class="lg:col-span-5 lg:justify-self-end flex flex-wrap items-center gap-x-6 gap-y-3">
+          <div class="flex flex-wrap gap-x-6 gap-y-2" role="tablist" aria-label="Filtrer la collection">
+            <button class="tab text-[10px] tracking-[0.26em] uppercase text-pierre/70 border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="all" aria-selected="true">Tout</button>
+            <button class="tab text-[10px] tracking-[0.26em] uppercase text-pierre/70 border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="trois" aria-selected="false">Trois pièces</button>
+            <button class="tab text-[10px] tracking-[0.26em] uppercase text-pierre/70 border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="deux" aria-selected="false">Deux pièces</button>
+            <button class="tab text-[10px] tracking-[0.26em] uppercase text-pierre/70 border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="events" aria-selected="false">Cérémonie</button>
+          </div>
+          <div class="flex gap-3 text-[10px] tracking-[0.2em] uppercase text-pierre/60" role="group" aria-label="Devise">
+            <button class="curb hover:text-encre" data-cur="XOF" aria-pressed="true">F CFA</button><span aria-hidden="true">/</span>
+            <button class="curb hover:text-encre" data-cur="EUR" aria-pressed="false">€</button><span aria-hidden="true">/</span>
+            <button class="curb hover:text-encre" data-cur="USD" aria-pressed="false">$</button>
+          </div>
+        </div>
       </div>
-      <div id="all" class="grid grid-cols-2 md:grid-cols-3 gap-x-4 lg:gap-x-6 gap-y-12"></div>
-      <p class="mt-10 text-[12.5px] text-pierre text-center">Prix indicatifs. L’euro suit la parité fixe du franc CFA, le dollar un taux de 600 F CFA. Prix confirmés par la maison sur WhatsApp.</p>
+      <div id="all" class="grid grid-cols-2 lg:grid-cols-12 gap-x-5 lg:gap-x-10 gap-y-16 lg:gap-y-28 items-start"></div>
+      <p class="mt-20 text-[10.5px] tracking-[0.08em] text-pierre/60 text-center">Prix indicatifs, confirmés par la maison. € à parité fixe, $ à 600 F CFA.</p>
     </div>
   </section>
 
@@ -328,62 +338,29 @@
     </div>
   </section>
 
-  <!-- ================= SALON PRIVÉ + BOUTIQUE ================= -->
-  <section id="rendez-vous" class="grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
-    <div class="bg-roi text-ivoire gut py-20 lg:py-24 flex flex-col items-center text-center justify-center">
-      <img src="images/logo-mark.png" alt="" class="w-14 h-14 object-contain opacity-90">
-      <p class="ey text-or mt-6">Salon privé</p>
-      <h2 class="font-serif text-[clamp(2.2rem,3.6vw,3.2rem)] leading-[1.02] mt-3">Un conseiller,<br><em>rien que pour vous.</em></h2>
-      <p class="mt-5 text-[14.5px] leading-[1.8] text-ivoire/70 max-w-[38ch]">En boutique à Sicap Foire ou en visio WhatsApp, on choisit ensemble le tissu, la coupe et la broderie.</p>
-      <form id="rdv" class="mt-9 w-full max-w-[400px] grid gap-6 text-left" novalidate>
-        <label class="field" for="r-nom"><span class="ey text-ivoire/60">Votre nom</span><input id="r-nom" autocomplete="name" placeholder="Ibrahima Fall"></label>
-        <div class="grid grid-cols-2 gap-6">
-          <label class="field" for="r-occ"><span class="ey text-ivoire/60">Occasion</span>
-            <select id="r-occ" class="bg-transparent"><option>Tabaski</option><option>Korité</option><option>Mariage</option><option>Baptême</option><option>Magal</option><option>Autre</option></select>
-          </label>
-          <label class="field" for="r-lieu"><span class="ey text-ivoire/60">Où</span>
-            <select id="r-lieu" class="bg-transparent"><option value="en boutique, à Sicap Foire">En boutique</option><option value="en visio WhatsApp">En visio</option></select>
-          </label>
-        </div>
-        <p id="r-err" class="text-[13px] text-or" hidden>Indiquez votre nom pour que le conseiller sache qui recevoir.</p>
-        <button class="btn border border-ivoire/50 hover:bg-ivoire hover:text-roi mt-2">Réserver un rendez-vous</button>
-        <p id="r-ok" class="text-[13px] text-ivoire/80 text-center" hidden>Votre message est prêt dans WhatsApp. Il ne reste qu’à l’envoyer au <span class="select-all">78 895 25 55</span>.</p>
-      </form>
-    </div>
-    <div id="boutique" class="relative min-h-[520px] bg-nuit text-ivoire">
-      <img class="img absolute inset-0" src="images/saadikh-mannequin.webp" alt="Tenue en satin blanc sur un buste de couture, devant l’enseigne Saadikh en boutique" style="object-position:50% 30%">
-      <div class="absolute inset-0 fade-b"></div>
-      <div class="absolute inset-x-0 bottom-0 gut pb-10 lg:pb-14">
-        <div class="flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <p class="ey text-or mb-3">La boutique</p>
-            <p class="font-serif text-[clamp(2rem,3vw,2.8rem)] leading-[1.05]">Sicap Foire,<br><em>Jardin Boussoura</em></p>
-          </div>
-          <div class="text-[13.5px] leading-[1.9] text-ivoire/80">
-            <p>Dakar, Sénégal</p>
-            <p class="select-all">WhatsApp · 78 895 25 55</p>
-          </div>
-        </div>
+  <!-- ================= L'EXPÉRIENCE DE LA MESURE ================= -->
+  <section id="rendez-vous" class="grid lg:grid-cols-2 bg-ivoire">
+    <div id="boutique" class="gut py-28 lg:py-0 lg:min-h-[860px] flex flex-col justify-between lg:pl-[max(56px,env(safe-area-inset-left,0px))] lg:pr-20">
+      <p class="ey text-pierre/70 lg:pt-16">Salon privé · Sicap Foire</p>
+      <div class="my-24 lg:my-0">
+        <h2 class="font-serif font-normal text-[clamp(2.8rem,5.4vw,5.4rem)] leading-[0.98] max-w-[12ch]">L’expérience de la mesure.<br><em class="text-pierre">Sur rendez-vous uniquement.</em></h2>
+        <a id="rdvLink" href="#" target="_blank" rel="noopener" class="inline-flex items-center gap-5 mt-14 text-[10.5px] tracking-[0.34em] uppercase text-encre group">
+          <span class="block w-12 h-px bg-encre transition-all duration-500 group-hover:w-20"></span>Solliciter un rendez-vous
+        </a>
       </div>
+      <p class="text-[11px] tracking-[0.14em] text-pierre/70 lg:pb-16">Jardin Boussoura, Dakar · <span class="select-all">+221 78 895 25 55</span></p>
+    </div>
+    <div class="relative min-h-[560px] lg:min-h-[860px]">
+      <img class="img absolute inset-0" src="images/saadikh-mannequin.webp" alt="Tenue en satin blanc sur un buste de couture, à l’atelier Saadikh" style="object-position:50% 30%">
     </div>
   </section>
 
-  <!-- ================= LISTE PRIVÉE ================= -->
-  <section class="relative bg-nuit2 text-ivoire overflow-hidden">
-    <img class="absolute left-0 top-0 h-full w-[38%] object-cover opacity-40 hidden md:block" src="images/tenues/trois-pieces-vert-bouteille.webp" alt="" style="object-position:50% 30%">
-    <div class="absolute inset-y-0 left-0 w-[38%] hidden md:block" style="background:linear-gradient(90deg,rgba(18,26,43,0) 30%,#121A2B 100%)"></div>
-    <div class="relative gut py-16 lg:py-20">
-      <div class="wrap md:pl-[34%] grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-10 items-center">
-        <div>
-          <h2 class="font-serif text-[clamp(2rem,3.2vw,2.8rem)] leading-[1.05]">Avant Korité et Tabaski, <em>soyez le premier.</em></h2>
-          <p class="mt-3 text-[14.5px] text-ivoire/65 max-w-[44ch]">Nouvelles pièces, tissus rares et créneaux d’atelier, envoyés en avant-première sur WhatsApp.</p>
-        </div>
-        <form id="liste" class="flex border border-ivoire/30 min-w-0" novalidate>
-          <label for="l-tel" class="sr-only">Votre numéro WhatsApp</label>
-          <input id="l-tel" inputmode="tel" placeholder="Votre numéro WhatsApp" class="flex-1 min-w-0 bg-transparent px-5 py-4 text-[14px] placeholder:text-ivoire/40 focus:outline-none">
-          <button class="btn bg-ivoire text-nuit hover:bg-or px-6">S’inscrire</button>
-        </form>
-      </div>
+  <!-- ================= SIGNATURE ================= -->
+  <section class="bg-noir text-ivoire gut py-36 lg:py-56">
+    <div class="wrap flex flex-col items-center text-center">
+      <span class="block w-px h-16 bg-or/70"></span>
+      <p class="font-serif font-normal text-[clamp(2.4rem,6vw,5.6rem)] leading-[1.02] mt-14 max-w-[16ch]">Quand c’est élégant, <em class="text-or">c’est Saadikh.</em></p>
+      <p class="mt-12 text-[10px] tracking-[0.42em] uppercase text-ivoire/40">STAM by Fall · Dakar</p>
     </div>
   </section>
 
@@ -405,7 +382,7 @@
       </div>
     </div>
     <div class="wrap mt-14 pt-6 border-t border-ivoire/10 flex flex-wrap justify-between gap-4 text-[12px] text-ivoire/50">
-      <span>© 2026 Saadikh · STAM by Fall</span><span class="font-serif italic text-[15px] text-ivoire/70">Quand c’est élégant, c’est Saadikh.</span>
+      <span>© 2026 Saadikh · STAM by Fall</span><span>Sicap Foire · Jardin Boussoura · Dakar</span>
     </div>
   </footer>
 
@@ -501,27 +478,61 @@
     <button class="text-left group block w-full" data-open="${p.ref}" aria-label="Voir ${p.name}">
       <div class="zoom relative aspect-[3/4] ${dark ? 'bg-nuit2' : 'bg-sable'}">
         <img class="img" src="${p.img}" alt="${p.name}, ${FAM[p.family].toLowerCase()} en ${p.fabric.toLowerCase()}" style="object-position:50% 18%">
-        ${p.events ? `<span class="absolute top-3 left-3 bg-ivoire/90 text-encre text-[9.5px] tracking-[0.2em] uppercase px-2.5 py-1">Cérémonie</span>` : ''}
       </div>
-      <div class="pt-4 flex justify-between items-start gap-3 ${dark ? '' : ''}">
-        <div class="min-w-0">
-          <p class="text-[11px] tracking-[0.22em] uppercase ${dark ? 'text-ivoire' : 'text-encre'}">${p.name}</p>
-          <p class="font-serif italic text-[1.05rem] ${dark ? 'text-ivoire/60' : 'text-pierre'}">${FAM[p.family]} · ${p.fabric}</p>
-          <p class="price text-[14px] mt-1 tabular-nums ${dark ? 'text-ivoire/90' : ''}" data-xof="${p.price}">${money(p.price)}</p>
-        </div>
-        <svg class="shrink-0 mt-1 ${dark ? 'text-ivoire/70 group-hover:text-or' : 'text-encre/60 group-hover:text-encre'}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M5 8h14l-1.2 12H6.2L5 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-      </div>
+      <p class="pt-4 flex justify-between gap-3 text-[10px] tracking-[0.24em] uppercase ${dark ? 'text-ivoire/70' : 'text-encre/60'}">
+        <span class="min-w-0 truncate">${p.name}</span><span class="price tabular-nums shrink-0 ${dark ? 'text-ivoire/45' : 'text-pierre/70'}" data-xof="${p.price}">${money(p.price)}</span>
+      </p>
     </button>`;
+  // Lookbook : un modèle phare géant, puis des tailles et des hauteurs qui ne se répètent pas.
+  const LOOK_ORDER = ['007', '006', '005', '004', '003', '001', '008', '009', '002'];
+  const PATTERN = [
+    { cs: 1, sp: 6, mt: '0rem', ar: '3/4.5' },
+    { cs: 8, sp: 3, mt: '5rem', ar: '3/4.1' },
+    { cs: 11, sp: 2, mt: '17rem', ar: '2/3.3' },
+    { cs: 2, sp: 3, mt: '3rem', ar: '3/4' },
+    { cs: 7, sp: 5, mt: '0rem', ar: '4/5' },
+    { cs: 1, sp: 2, mt: '8rem', ar: '2/3.2' },
+    { cs: 4, sp: 4, mt: '0rem', ar: '3/4.3' },
+    { cs: 10, sp: 3, mt: '11rem', ar: '3/4' },
+    { cs: 3, sp: 5, mt: '2rem', ar: '4/4.8' },
+  ];
+  const look = p => `
+    <article class="look" data-family="${p.family}" data-events="${p.events}">
+      <button class="group block w-full text-left" data-open="${p.ref}" aria-label="Voir ${p.name}">
+        <div class="zoom relative bg-sable">
+          <img class="img" src="${p.img}" alt="${p.name}, ${FAM[p.family].toLowerCase()} en ${p.fabric.toLowerCase()}" style="object-position:50% 18%">
+        </div>
+        <p class="pt-3 flex justify-between gap-3 text-[9.5px] tracking-[0.26em] uppercase text-encre/45 group-hover:text-encre/80 transition-colors">
+          <span class="min-w-0 truncate">${p.name}</span><span class="price tabular-nums shrink-0" data-xof="${p.price}">${money(p.price)}</span>
+        </p>
+      </button>
+    </article>`;
   $('#featured').innerHTML = FEATURED.map(r => card(byRef(r), true)).join('');
-  $('#all').innerHTML = PRODUCTS.map(p => `<div data-family="${p.family}" data-events="${p.events}">${card(p, false)}</div>`).join('');
+  $('#all').innerHTML = LOOK_ORDER.map(r => look(byRef(r))).join('');
+  const layout = () => {
+    [...$('#all').children].filter(el => !el.hidden).forEach((el, i) => {
+      const L = PATTERN[i % PATTERN.length];
+      el.style.setProperty('--cs', L.cs); el.style.setProperty('--sp', L.sp);
+      el.style.setProperty('--mt', L.mt); el.style.setProperty('--ar', L.ar);
+      el.classList.toggle('wide', i === 0);
+      el.classList.toggle('off', i > 0 && i % 2 === 0);
+    });
+  };
 
   const filter = f => {
     document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.f === f)));
     [...$('#all').children].forEach(el => el.hidden = !(f === 'all' || (f === 'events' ? el.dataset.events === 'true' : el.dataset.family === f)));
+    layout();
   };
+  layout();
   document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => filter(t.dataset.f)));
   document.querySelectorAll('[data-goto]').forEach(a => a.addEventListener('click', () => filter(a.dataset.goto)));
-  $('#cur').addEventListener('change', e => { cur = e.target.value; document.querySelectorAll('.price').forEach(el => el.textContent = money(+el.dataset.xof)); renderCart(); });
+  document.querySelectorAll('.curb').forEach(b => b.addEventListener('click', () => {
+    cur = b.dataset.cur;
+    document.querySelectorAll('.curb').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    document.querySelectorAll('.price').forEach(el => el.textContent = money(+el.dataset.xof));
+    renderCart();
+  }));
 
   // ---- Fenêtres ----
   let lastFocus = null;
@@ -594,23 +605,6 @@
 
   // ---- Rendez-vous, sur-mesure, liste ----
   $('#smLink').href = wa('Bonjour Saadikh, je souhaite une tenue sur mesure. Pouvez-vous me guider pour les mesures ?');
-  $('#rdv').addEventListener('submit', e => {
-    e.preventDefault();
-    const nom = $('#r-nom').value.trim();
-    $('#r-err').hidden = !!nom; if (!nom) return $('#r-nom').focus();
-    const a = document.createElement('a');
-    a.href = wa(`Bonjour Saadikh, je suis ${nom}. Je souhaite un rendez-vous ${$('#r-lieu').value} avec un conseiller, pour une tenue de ${$('#r-occ').value}.`);
-    a.target = '_blank'; a.rel = 'noopener'; a.click();
-    $('#r-ok').hidden = false;
-  });
-  $('#liste').addEventListener('submit', e => {
-    e.preventDefault();
-    const tel = $('#l-tel').value.trim();
-    if (!tel) return $('#l-tel').focus();
-    const a = document.createElement('a');
-    a.href = wa(`Bonjour Saadikh, je souhaite recevoir vos nouveautés en avant-première sur ce numéro : ${tel}.`);
-    a.target = '_blank'; a.rel = 'noopener'; a.click();
-    toast('Votre demande est prête dans WhatsApp');
-  });
+  $('#rdvLink').href = wa('Bonjour Saadikh, je souhaite convenir d’un rendez-vous pour une prise de mesures.');
 })();
 </script>
