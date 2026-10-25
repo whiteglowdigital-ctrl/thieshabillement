@@ -30,6 +30,7 @@
     --pierre: #6F6A62;
     color-scheme: light;
   }
+  [hidden] { display: none !important; }
   html { scroll-behavior: smooth; }
   body { background: var(--ivoire); color: var(--encre); font-family: Jost, Futura, system-ui, sans-serif; font-weight: 300; -webkit-font-smoothing: antialiased; }
   #site { overflow-x: clip; }
@@ -55,14 +56,10 @@
   .field input::placeholder { color: inherit; opacity: .45; }
   .field select option { color: var(--encre); }
   .chip[aria-pressed="true"] { background: var(--encre); color: var(--ivoire); border-color: var(--encre); }
-  .tab { display: flex; justify-content: space-between; align-items: center; gap: 1rem; width: 100%; padding: .95rem 0; border-bottom: 1px solid rgba(22,23,27,.15); font-size: 11.5px; letter-spacing: .2em; text-transform: uppercase; color: rgba(22,23,27,.55); text-align: left; transition: color .3s, padding .4s; }
-  .tab i { font-family: "Cormorant Garamond", Georgia, serif; font-style: normal; font-size: 14px; letter-spacing: .08em; color: #8C6D3A; opacity: .6; }
-  .tab:hover { color: var(--encre); }
-  .tab[aria-selected="true"] { color: var(--encre); padding-left: .9rem; box-shadow: inset 1px 0 0 #8C6D3A; }
-  .tab[aria-selected="true"] i { opacity: 1; }
+  .tab[aria-selected="true"] { color: var(--ivoire); background: var(--encre); border-color: var(--encre); }
   .curb[aria-pressed="true"] { color: var(--encre); }
   .look { min-width: 0; }
-  .look .zoom { aspect-ratio: 4/5; }
+  .look .zoom { aspect-ratio: 3/4; }
   .bagb { position: absolute; top: .8rem; right: .8rem; z-index: 3; width: 38px; height: 38px; display: grid; place-items: center; border-radius: 999px; background: rgba(244,239,231,.88); color: var(--encre); backdrop-filter: blur(4px); transition: background .3s, color .3s, transform .3s; }
   .bagb:hover, .look.picking .bagb { background: var(--encre); color: var(--ivoire); transform: scale(1.06); }
   .quick { position: absolute; left: 0; right: 0; bottom: 0; background: rgba(244,239,231,.96); backdrop-filter: blur(6px); padding: .7rem .6rem .75rem; transform: translateY(101%); transition: transform .45s cubic-bezier(.2,.7,.2,1); z-index: 2; }
@@ -153,7 +150,24 @@
   .look .zoom:hover .veil-card, .look [data-open]:focus-visible .veil-card { opacity: 1; }
   .hero-par { will-change: transform; }
 
-  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } #intro { display: none; } .js .rv { transform: none; opacity: 1; } }
+  /* ---- Reflet doré sur la signature du hero ---- */
+  .shimmer { background: linear-gradient(100deg, var(--or) 0%, var(--or) 40%, #F6E3B4 50%, var(--or) 60%, var(--or) 100%); background-size: 250% 100%; background-position: 100% 0; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shimmer 2.4s ease-in-out calc(var(--d0) + 1.4s) both; padding-right: .06em; }
+  @keyframes shimmer { to { background-position: 0% 0; } }
+  .ln > .shimmer { animation: lineUp 1.3s cubic-bezier(.2,.8,.2,1) calc(var(--d0) + .45s) both, shimmer 2.4s ease-in-out calc(var(--d0) + 1.5s) both; }
+
+  /* ---- Fil doré de progression ---- */
+  #prog { position: absolute; left: 0; bottom: -1px; height: 1px; width: 100%; background: var(--or); transform-origin: left; transform: scaleX(0); }
+
+  /* ---- Cadre doré intérieur (rappel de l'ouverture) ---- */
+  .gilt::after { content: ""; position: absolute; inset: 16px; border: 1px solid rgba(185,150,91,.55); pointer-events: none; transition: inset .8s cubic-bezier(.2,.7,.2,1); }
+  .gilt:hover::after { inset: 22px; }
+
+  /* ---- Menu mobile ---- */
+  #menu { position: fixed; inset: 0; z-index: 75; background: var(--nuit); color: var(--ivoire); display: flex; flex-direction: column; padding: calc(24px + env(safe-area-inset-top, 0px)) max(24px, env(safe-area-inset-right, 0px)) calc(32px + env(safe-area-inset-bottom, 0px)) max(24px, env(safe-area-inset-left, 0px)); }
+  #menu nav a { display: block; font-family: "Cormorant Garamond", Garamond, Georgia, serif; font-size: clamp(2.4rem, 11vw, 3.4rem); line-height: 1.15; padding-block: .35rem; border-bottom: 1px solid rgba(244,239,231,.1); animation: fadeUp .7s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--k) * .07s + .05s); }
+  #menu nav a em { color: var(--or); font-size: .45em; font-style: normal; letter-spacing: .2em; margin-right: .9rem; vertical-align: middle; font-family: Jost, system-ui, sans-serif; }
+
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } #intro { display: none; } .js .rv { transform: none; opacity: 1; } .shimmer { color: var(--or); background: none; } }
 </style>
 
 <div id="site">
@@ -180,7 +194,7 @@
   </div>
 
   <!-- Barre fixe -->
-  <div id="bar" class="text-ivoire">
+  <div id="bar" class="text-ivoire"><span id="prog"></span>
     <div class="gut">
       <div class="wrap flex items-center justify-between py-3.5">
         <a href="#" class="flex items-center gap-3" aria-label="Saadikh, haut de page">
@@ -191,13 +205,35 @@
           <a href="#collection" class="hover:text-or transition-colors">Collection</a>
           <a href="#savoir-faire" class="hover:text-or transition-colors">L’atelier</a>
           <a href="#sur-mesure" class="hover:text-or transition-colors">Sur-mesure</a>
-          <a href="#" data-wa target="_blank" rel="noopener" class="hover:text-or transition-colors">Rendez-vous</a>
+          <a href="#boutique" class="hover:text-or transition-colors">La boutique</a>
+          <a href="#" data-wa target="_blank" rel="noopener" class="text-or hover:text-ivoire transition-colors">Rendez-vous</a>
         </nav>
+        <div class="flex items-center gap-6">
+        <button class="openMenu md:hidden text-[11px] tracking-[0.22em] uppercase" aria-label="Ouvrir le menu">Menu</button>
         <button class="openCart relative" aria-label="Ouvrir le panier">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M5 8h14l-1.2 12H6.2L5 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
           <span class="cartCount absolute -top-1.5 -right-2 min-w-[18px] h-[18px] px-1 rounded-full bg-or text-nuit text-[10px] font-medium grid place-items-center">0</span>
         </button>
+        </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Menu mobile -->
+  <div id="menu" hidden role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="flex items-center justify-between">
+      <span class="flex items-center gap-3"><img src="images/logo-mark.png" alt="" class="w-8 h-8 object-contain"><span class="font-serif text-[1.4rem] tracking-[0.14em] uppercase">Saadikh</span></span>
+      <button class="closeMenu w-10 h-10 grid place-items-center text-[26px]" aria-label="Fermer le menu">×</button>
+    </div>
+    <nav class="mt-12">
+      <a href="#collection" style="--k:0"><em>I</em>La collection</a>
+      <a href="#savoir-faire" style="--k:1"><em>II</em>L’atelier</a>
+      <a href="#sur-mesure" style="--k:2"><em>III</em>Sur-mesure</a>
+      <a href="#boutique" style="--k:3"><em>IV</em>La boutique</a>
+    </nav>
+    <div class="mt-auto grid gap-4">
+      <a href="#" data-wa target="_blank" rel="noopener" class="btn bg-ivoire text-nuit">Prendre rendez-vous</a>
+      <p class="text-[12px] tracking-[0.16em] uppercase text-ivoire/50 text-center">Sicap Foire · Dakar · <span class="select-all">78 895 25 55</span></p>
     </div>
   </div>
 
@@ -214,10 +250,11 @@
       <div class="wrap grid grid-cols-[1fr_auto_1fr] items-center py-6">
         <nav class="hidden lg:flex gap-9 text-[11.5px] tracking-[0.22em] uppercase">
           <a href="#collection" class="hover:text-or transition-colors">Collection</a>
+          <a href="#savoir-faire" class="hover:text-or transition-colors">L’atelier</a>
           <a href="#sur-mesure" class="hover:text-or transition-colors">Sur-mesure</a>
           <a href="#boutique" class="hover:text-or transition-colors">La boutique</a>
         </nav>
-        <a href="#collection" class="lg:hidden text-[11px] tracking-[0.22em] uppercase">Collection</a>
+        <button class="openMenu lg:hidden flex items-center gap-3 text-[11px] tracking-[0.22em] uppercase" aria-label="Ouvrir le menu"><span class="block w-6 h-[7px] border-y border-current"></span>Menu</button>
         <a href="#" class="flex flex-col items-center gap-1" aria-label="Saadikh, accueil">
           <img src="images/logo-mark.png" alt="" class="w-9 h-9 object-contain">
           <span class="font-serif text-[1.9rem] leading-none tracking-[0.12em] uppercase">Saadikh</span>
@@ -244,10 +281,10 @@
           <span class="rule-or"></span>
           <span class="ey text-ivoire shadow-t leading-[2]">Coupé<br>et brodé<br>à Dakar</span>
         </div>
-        <div class="hidden lg:flex absolute right-[max(56px,env(safe-area-inset-right,0px))] bottom-28 flex-col items-end gap-3 text-right">
-          <span class="rule-or"></span>
-          <span class="ey text-ivoire shadow-t leading-[2]">N° 006<br>Thiaya Bleu Roi</span>
-        </div>
+        <button class="hidden lg:flex absolute z-10 right-[max(56px,env(safe-area-inset-right,0px))] bottom-28 flex-col items-end gap-3 text-right group" data-open="006" aria-label="Voir la Thiaya Bleu Roi">
+          <span class="rule-or transition-all duration-500 group-hover:w-16"></span>
+          <span class="ey text-ivoire shadow-t leading-[2] group-hover:text-or transition-colors">N° 006<br>Thiaya Bleu Roi<br><span class="text-or">Voir la pièce +</span></span>
+        </button>
       </div>
 
       <div class="relative z-10 gut -mt-8 lg:mt-0">
@@ -256,7 +293,7 @@
           <h1 class="font-serif font-normal text-[clamp(3rem,6.6vw,6.6rem)] leading-[0.95]">
             <span class="ln"><span>Quand c’est</span></span>
             <span class="ln"><span>élégant,</span></span>
-            <span class="ln"><em class="text-or/95">c’est Saadikh.</em></span>
+            <span class="ln"><em class="shimmer">c’est Saadikh.</em></span>
           </h1>
           <p class="h-in mt-7 text-[16.5px] leading-[1.75] text-ivoire/75 max-w-[44ch]" style="--i:1">Grands boubous, deux pièces et trois pièces pour homme. Coupés amples, brodés à la main, portés pour les jours qui comptent.</p>
           <div class="h-in mt-10 flex flex-wrap gap-4" style="--i:2">
@@ -301,28 +338,57 @@
   </div>
 
   <!-- ================= COLLECTION ================= -->
-  <section id="collection" class="bg-sable text-encre gut py-20 lg:py-28">
-    <div class="wrap grid lg:grid-cols-12 gap-12">
-      <aside class="lg:col-span-3">
-        <div class="lg:sticky lg:top-28">
-          <p class="ey text-[#8C6D3A] mb-4">La collection</p>
-          <h2 class="font-serif text-[clamp(2.3rem,3.6vw,3.2rem)] leading-[1.02]">Neuf pièces,<br><em>taillées à Dakar.</em></h2>
-          <p class="mt-5 text-[14.5px] leading-[1.8] text-encre/65 max-w-[34ch]">Du deux pièces du vendredi au grand boubou de cérémonie. Chacune existe aussi sur mesure.</p>
-          <nav class="mt-9 grid border-t border-encre/15" role="tablist" aria-label="Filtrer la collection">
-            <button class="tab" role="tab" data-f="all" aria-selected="true"><span>Toute la collection</span><i>I</i></button>
-            <button class="tab" role="tab" data-f="trois" aria-selected="false"><span>Trois pièces</span><i>II</i></button>
-            <button class="tab" role="tab" data-f="deux" aria-selected="false"><span>Deux pièces</span><i>III</i></button>
-            <button class="tab" role="tab" data-f="events" aria-selected="false"><span>Cérémonie</span><i>IV</i></button>
-          </nav>
-          <div class="mt-7 flex gap-3 text-[11px] tracking-[0.2em] uppercase text-pierre" role="group" aria-label="Devise">
-            <button class="curb hover:text-encre" data-cur="XOF" aria-pressed="true">F CFA</button><span aria-hidden="true">/</span>
-            <button class="curb hover:text-encre" data-cur="EUR" aria-pressed="false">€</button><span aria-hidden="true">/</span>
-            <button class="curb hover:text-encre" data-cur="USD" aria-pressed="false">$</button>
-          </div>
-          <p class="mt-4 text-[11.5px] leading-[1.6] text-pierre max-w-[30ch]">Prix indicatifs, confirmés par la maison sur WhatsApp.</p>
+  <section id="collection" class="bg-sable pt-20 lg:pt-28 pb-24 lg:pb-32">
+    <div class="wrap gut">
+      <div class="grid lg:grid-cols-12 gap-8 items-end mb-12 lg:mb-14">
+        <div class="lg:col-span-6">
+          <p class="ey text-pierre mb-4">Collection MMXXVI</p>
+          <h2 class="rv font-serif text-[clamp(3rem,6.4vw,6rem)] leading-[0.92]">La <em>Collection</em></h2>
         </div>
-      </aside>
-      <div id="all" class="lg:col-span-9 grid grid-cols-2 lg:grid-cols-3 gap-x-5 lg:gap-x-8 gap-y-12 min-w-0"></div>
+        <p class="lg:col-span-6 text-[15.5px] leading-[1.8] text-encre/75 max-w-[46ch] lg:justify-self-end">Neuf pièces taillées à Dakar, du deux pièces du vendredi au grand boubou de cérémonie. Chacune existe aussi sur mesure.</p>
+      </div>
+
+      <!-- pièce signature -->
+      <article class="rv grid lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] bg-nuit text-ivoire mb-16 lg:mb-20">
+        <div class="relative order-2 lg:order-1 p-8 sm:p-12 lg:p-16 flex flex-col justify-center gap-7">
+          <p class="ey text-or flex items-center gap-4"><span class="rule-or"></span>La pièce signature</p>
+          <div>
+            <h3 class="font-serif font-normal text-[clamp(3rem,5.6vw,5.4rem)] leading-[0.92]">Satin <em class="text-or">Argent</em></h3>
+            <p class="font-serif italic text-[1.35rem] text-ivoire/70 mt-4 max-w-[30ch]">Un satin qui capte la lumière, une patte brodée de fins motifs. Pour les soirs de fête.</p>
+          </div>
+          <dl class="grid grid-cols-3 gap-4 border-y border-ivoire/15 py-5 max-w-[460px] text-[13px]">
+            <div><dt class="ey text-ivoire/45 text-[9.5px]">N°</dt><dd class="mt-1.5">004</dd></div>
+            <div><dt class="ey text-ivoire/45 text-[9.5px]">Ensemble</dt><dd class="mt-1.5">Trois pièces</dd></div>
+            <div><dt class="ey text-ivoire/45 text-[9.5px]">Prix</dt><dd class="mt-1.5 price tabular-nums" data-xof="90000">90 000 F CFA</dd></div>
+          </dl>
+          <div class="flex flex-wrap items-center gap-x-8 gap-y-4">
+            <button class="btn bg-ivoire text-nuit hover:bg-or" data-open="004">Voir la pièce <span aria-hidden="true">→</span></button>
+            <a href="#" data-wa="Bonjour Saadikh, je souhaite essayer le Satin Argent (N° 004) en salon." target="_blank" rel="noopener" class="lk text-ivoire/85 hover:text-or">Essayer en salon</a>
+          </div>
+        </div>
+        <div class="gilt zoom relative order-1 lg:order-2 min-h-[420px] sm:min-h-[520px] lg:min-h-[640px] overflow-hidden">
+          <img class="img absolute inset-0" src="images/tenues/boubou-satin-argent.webp" alt="Boubou trois pièces en satin argenté" style="object-position:50% 22%">
+          <div class="absolute z-10 bottom-5 left-5 w-[34%] max-w-[180px] border-4 border-nuit hidden sm:block">
+            <div class="aspect-[3/4]"><img class="img" src="images/saadikh-mannequin.webp" alt="Tunique en satin sur buste de couture, à la boutique Saadikh" style="object-position:50% 40%"></div>
+          </div>
+        </div>
+      </article>
+
+      <div class="flex flex-wrap items-center justify-between gap-5 mb-10">
+        <div class="flex flex-wrap gap-2" role="tablist" aria-label="Filtrer la collection">
+          <button class="tab text-[11px] tracking-[0.2em] uppercase text-encre/70 border border-encre/20 px-4 py-2.5 hover:border-encre" role="tab" data-f="all" aria-selected="true">Toute la collection</button>
+          <button class="tab text-[11px] tracking-[0.2em] uppercase text-encre/70 border border-encre/20 px-4 py-2.5 hover:border-encre" role="tab" data-f="trois" aria-selected="false">Trois pièces</button>
+          <button class="tab text-[11px] tracking-[0.2em] uppercase text-encre/70 border border-encre/20 px-4 py-2.5 hover:border-encre" role="tab" data-f="deux" aria-selected="false">Deux pièces</button>
+          <button class="tab text-[11px] tracking-[0.2em] uppercase text-encre/70 border border-encre/20 px-4 py-2.5 hover:border-encre" role="tab" data-f="events" aria-selected="false">Cérémonie</button>
+        </div>
+        <div class="flex gap-3 text-[11px] tracking-[0.2em] uppercase text-pierre" role="group" aria-label="Devise">
+          <button class="curb hover:text-encre" data-cur="XOF" aria-pressed="true">F CFA</button><span aria-hidden="true">/</span>
+          <button class="curb hover:text-encre" data-cur="EUR" aria-pressed="false">€</button><span aria-hidden="true">/</span>
+          <button class="curb hover:text-encre" data-cur="USD" aria-pressed="false">$</button>
+        </div>
+      </div>
+      <div id="all" class="grid grid-cols-2 lg:grid-cols-3 gap-x-4 sm:gap-x-6 lg:gap-x-10 gap-y-12 lg:gap-y-16"></div>
+      <p class="mt-12 text-[11px] tracking-[0.06em] text-pierre text-center">Prix indicatifs, confirmés par la maison. € à parité fixe, $ à 600 F CFA.</p>
     </div>
   </section>
 
@@ -331,7 +397,7 @@
     <div class="wrap grid lg:grid-cols-12 gap-12">
       <div class="lg:col-span-3">
         <p class="ey text-or mb-4">L’atelier</p>
-        <h2 class="font-serif text-[clamp(2.3rem,3.6vw,3.2rem)] leading-[1.02]">Une tenue,<br><em>trois gestes.</em></h2>
+        <h2 class="rv font-serif text-[clamp(2.3rem,3.6vw,3.2rem)] leading-[1.02]">Une tenue,<br><em>trois gestes.</em></h2>
         <p class="mt-5 text-[14.5px] leading-[1.8] text-ivoire/65 max-w-[34ch]">De la pièce de tissu à la tenue livrée, rien n’est confié au hasard.</p>
       </div>
       <div class="lg:col-span-9 grid sm:grid-cols-3 gap-8">
@@ -366,18 +432,18 @@
   <!-- ================= SUR-MESURE (diaspora) ================= -->
   <section id="sur-mesure" class="bg-sable">
     <div class="grid lg:grid-cols-2">
-      <div class="relative min-h-[420px] lg:min-h-[640px]">
+      <div class="gilt zoom relative min-h-[420px] lg:min-h-[640px] overflow-hidden">
         <img class="img absolute inset-0" src="images/saadikh-atelier-or.webp" alt="Logo Saadikh doré avec ciseaux et mètre ruban de tailleur">
       </div>
       <div class="gut py-20 lg:py-24 lg:pl-20 flex flex-col justify-center">
         <p class="ey text-pierre mb-4">Sur-mesure à distance</p>
-        <h2 class="font-serif text-[clamp(2.5rem,4.4vw,4rem)] leading-[0.98] max-w-[13ch]">À Paris ou à New York, <em>à vos mesures.</em></h2>
+        <h2 class="rv font-serif text-[clamp(2.5rem,4.4vw,4rem)] leading-[0.98] max-w-[13ch]">À Paris ou à New York, <em>à vos mesures.</em></h2>
         <p class="mt-6 text-[15.5px] leading-[1.8] text-encre/75 max-w-[44ch]">La maison confectionne votre tenue sans que vous ayez à passer en boutique. Tout se fait par WhatsApp, avec un simple mètre ruban.</p>
         <ol class="mt-10 grid sm:grid-cols-2 gap-x-10 gap-y-7 max-w-[560px]">
-          <li class="border-t border-encre/15 pt-4"><span class="font-serif text-or text-[1.5rem]">1</span><span class="block ey mt-1">Vous choisissez</span><span class="block text-[13.5px] text-pierre mt-1.5">Un modèle, ou votre idée : tissu, couleur, broderie.</span></li>
-          <li class="border-t border-encre/15 pt-4"><span class="font-serif text-or text-[1.5rem]">2</span><span class="block ey mt-1">Vous envoyez vos mesures</span><span class="block text-[13.5px] text-pierre mt-1.5">Votre conseiller vous guide, mesure par mesure.</span></li>
-          <li class="border-t border-encre/15 pt-4"><span class="font-serif text-or text-[1.5rem]">3</span><span class="block ey mt-1">L’atelier confectionne</span><span class="block text-[13.5px] text-pierre mt-1.5">Vous suivez l’avancée de votre tenue.</span></li>
-          <li class="border-t border-encre/15 pt-4"><span class="font-serif text-or text-[1.5rem]">4</span><span class="block ey mt-1">Vous recevez</span><span class="block text-[13.5px] text-pierre mt-1.5">À Dakar, dans les régions et à l’étranger.</span></li>
+          <li class="border-t border-encre/15 pt-4"><span class="font-serif text-[#8C6D3A] text-[1.6rem]">1</span><span class="block ey mt-1">Vous choisissez</span><span class="block text-[13.5px] text-pierre mt-1.5">Un modèle, ou votre idée : tissu, couleur, broderie.</span></li>
+          <li class="border-t border-encre/15 pt-4"><span class="font-serif text-[#8C6D3A] text-[1.6rem]">2</span><span class="block ey mt-1">Vous envoyez vos mesures</span><span class="block text-[13.5px] text-pierre mt-1.5">Votre conseiller vous guide, mesure par mesure.</span></li>
+          <li class="border-t border-encre/15 pt-4"><span class="font-serif text-[#8C6D3A] text-[1.6rem]">3</span><span class="block ey mt-1">L’atelier confectionne</span><span class="block text-[13.5px] text-pierre mt-1.5">Vous suivez l’avancée de votre tenue.</span></li>
+          <li class="border-t border-encre/15 pt-4"><span class="font-serif text-[#8C6D3A] text-[1.6rem]">4</span><span class="block ey mt-1">Vous recevez</span><span class="block text-[13.5px] text-pierre mt-1.5">À Dakar, dans les régions et à l’étranger.</span></li>
         </ol>
         <div class="mt-11"><a id="smLink" href="#" target="_blank" rel="noopener" class="btn bg-encre text-ivoire hover:bg-roi">Demander un sur-mesure <span aria-hidden="true">→</span></a></div>
       </div>
@@ -392,7 +458,7 @@
         <p class="font-serif text-[1.9rem] tracking-[0.12em] uppercase mt-3 leading-none">Saadikh</p>
         <p class="text-[9px] tracking-[0.42em] uppercase text-ivoire/55 mt-2">STAM by Fall</p>
       </div>
-      <div><p class="ey text-ivoire/50 mb-4">Collection</p><ul class="grid gap-2 text-[14px] text-ivoire/85"><li><a href="#collection" data-goto="trois" class="hover:text-or">Trois pièces</a></li><li><a href="#collection" data-goto="deux" class="hover:text-or">Deux pièces</a></li><li><a href="#collection" data-goto="events" class="hover:text-or">Grands événements</a></li></ul></div>
+      <div><p class="ey text-ivoire/50 mb-4">Collection</p><ul class="grid gap-2 text-[14px] text-ivoire/85"><li><a href="#collection" data-goto="trois" class="hover:text-or">Trois pièces</a></li><li><a href="#collection" data-goto="deux" class="hover:text-or">Deux pièces</a></li><li><a href="#collection" data-goto="events" class="hover:text-or">Cérémonie</a></li></ul></div>
       <div><p class="ey text-ivoire/50 mb-4">Services</p><ul class="grid gap-2 text-[14px] text-ivoire/85"><li><a href="#sur-mesure" class="hover:text-or">Sur-mesure à distance</a></li><li><a href="#" data-wa target="_blank" rel="noopener" class="hover:text-or">Rendez-vous</a></li><li>Livraison diaspora</li></ul></div>
       <div><p class="ey text-ivoire/50 mb-4">Boutique</p><p class="text-[14px] leading-[1.8] text-ivoire/85">Sicap Foire<br>Jardin Boussoura<br>Dakar, Sénégal</p></div>
       <div class="lg:border-l lg:border-ivoire/15 lg:pl-10">
@@ -402,7 +468,7 @@
       </div>
     </div>
     <div class="wrap mt-14 pt-6 border-t border-ivoire/10 flex flex-wrap justify-between gap-4 text-[12px] text-ivoire/50">
-      <span>© 2026 Saadikh · STAM by Fall</span><span>Sicap Foire · Jardin Boussoura · Dakar</span>
+      <span>© 2026 Saadikh · STAM by Fall</span><span>Réalisé par Jëfya</span>
     </div>
   </footer>
 
@@ -516,10 +582,10 @@
           <div class="flex flex-wrap gap-1.5">${SIZES.map(sz => `<button class="qs" data-add="${p.ref}" data-size="${sz}">${sz === 'Sur-mesure' ? 'Sur mesure' : sz}</button>`).join('')}</div>
         </div>
       </div>
-      <button class="group block w-full text-left pt-5 border-b border-encre/15 pb-5" data-open="${p.ref}">
-        <span class="ey text-[#8C6D3A] text-[10px]">N° ${p.ref} · ${FAM[p.family]}</span>
-        <span class="block font-serif text-[1.45rem] lg:text-[1.6rem] leading-tight mt-1 group-hover:text-roi transition-colors">${p.name}</span>
-        <span class="flex justify-between gap-3 text-[13px] text-encre/60 mt-1"><span class="min-w-0 truncate">${p.fabric}</span><span class="price tabular-nums shrink-0 text-encre/80" data-xof="${p.price}">${money(p.price)}</span></span>
+      <button class="group block w-full text-left pt-4 border-b border-encre/15 pb-4" data-open="${p.ref}">
+        <p class="flex justify-between gap-3 text-[10px] tracking-[0.22em] uppercase"><span class="text-[#8C6D3A] font-medium">N° ${p.ref}</span><span class="text-pierre">${FAM[p.family]}</span></p>
+        <h3 class="font-serif text-[1.35rem] lg:text-[1.6rem] leading-tight mt-1.5 group-hover:text-roi transition-colors">${p.name}</h3>
+        <p class="flex justify-between items-baseline gap-3 mt-1"><span class="font-serif italic text-[1.02rem] text-pierre min-w-0 truncate">${p.fabric}</span><span class="price tabular-nums shrink-0 text-[13px] text-encre" data-xof="${p.price}">${money(p.price)}</span></p>
       </button>
     </article>`;
   $('#all').innerHTML = PRODUCTS.map(look).join('');
@@ -620,7 +686,18 @@
 
   // ---- Rendez-vous, sur-mesure, liste ----
   $('#smLink').href = wa('Bonjour Saadikh, je souhaite une tenue sur mesure. Pouvez-vous me guider pour les mesures ?');
-  document.querySelectorAll('[data-wa]').forEach(a => a.href = wa('Bonjour Saadikh, je souhaite convenir d’un rendez-vous avec un conseiller.'));
+  document.querySelectorAll('[data-wa]').forEach(a => a.href = wa(a.dataset.wa || 'Bonjour Saadikh, je souhaite convenir d’un rendez-vous avec un conseiller.'));
+
+  // ---- Menu mobile ----
+  const menu = $('#menu');
+  document.querySelectorAll('.openMenu').forEach(b => b.addEventListener('click', () => { menu.hidden = false; document.body.style.overflow = 'hidden'; menu.querySelector('.closeMenu').focus(); }));
+  const closeMenu = () => { menu.hidden = true; document.body.style.overflow = ''; };
+  menu.querySelector('.closeMenu').addEventListener('click', closeMenu);
+  menu.querySelectorAll('nav a').forEach(a => a.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !menu.hidden) closeMenu(); });
+
+  // ---- Panier vide : retour à la collection ----
+  $('#cartItems').addEventListener('click', e => { if (e.target.closest('[data-close]')) { close($('#cart')); $('#collection').scrollIntoView(); } });
 
   // ---- Ouverture (une fois par visite) ----
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -631,7 +708,7 @@
     document.documentElement.classList.add('has-intro');
     intro.hidden = false;
     intro.querySelector('.door.r').addEventListener('animationend', () => intro.remove());
-    intro.addEventListener('click', () => { intro.style.transition = 'opacity .4s'; intro.style.opacity = '0'; setTimeout(() => intro.remove(), 420); });
+    intro.addEventListener('click', () => { document.documentElement.classList.remove('has-intro'); intro.style.transition = 'opacity .4s'; intro.style.opacity = '0'; setTimeout(() => intro.remove(), 420); });
   } else intro.remove();
 
   // ---- Barre fixe ----
@@ -640,6 +717,8 @@
   const onScroll = () => {
     const y = scrollY;
     bar.classList.toggle('on', y > hero.offsetHeight - 80);
+    const max = document.documentElement.scrollHeight - innerHeight;
+    $('#prog').style.transform = `scaleX(${max > 0 ? Math.min(1, y / max) : 0})`;
   };
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
