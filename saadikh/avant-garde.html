@@ -1,0 +1,543 @@
+<title>Saadikh Avant-garde</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500&family=IBM+Plex+Mono:wght@400&display=swap">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: { paper: '#FFFFFF', ink: '#111110', line: '#E5E5E5', mute: '#85827C', roi: '#22346F', bone: '#F7F6F3' },
+        fontFamily: {
+          display: ['"Bodoni Moda"', 'Didot', '"Bodoni 72"', 'Georgia', 'serif'],
+          sans: ['Jost', 'Futura', '"Century Gothic"', 'system-ui', 'sans-serif'],
+          mono: ['"IBM Plex Mono"', 'ui-monospace', 'Menlo', 'monospace'],
+        },
+      },
+    },
+  };
+</script>
+<style>
+  /* Mise en page : un patron de tailleur. Des traits de craie de 1px se croisent et débordent
+     des blocs ; images et textes s'accrochent à des axes décalés, jamais alignés. */
+  :root {
+    --paper: #FFFFFF;   /* écran blanc */
+    --ink: #111110;     /* encre */
+    --line: #E5E5E5;    /* trait de craie, 1px exactement */
+    --mute: #85827C;    /* annotations */
+    --roi: #22346F;     /* bleu roi de la thiaya, accent rare */
+    --bone: #F7F6F3;    /* fond des visuels en attente */
+    --display: "Bodoni Moda", Didot, "Bodoni 72", Georgia, serif;
+    --sans: Jost, Futura, "Century Gothic", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    color-scheme: light;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-weight: 300; -webkit-font-smoothing: antialiased; }
+  #site { overflow-x: clip; }
+  .gut { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  @media (min-width: 1024px) { .gut { padding-left: max(40px, env(safe-area-inset-left, 0px)); padding-right: max(40px, env(safe-area-inset-right, 0px)); } }
+
+  h1, h2, h3 { text-wrap: balance; }
+  .disp { font-family: var(--display); font-weight: 400; letter-spacing: -0.025em; }
+  .mono { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; }
+  .vt { writing-mode: vertical-rl; transform: rotate(180deg); }
+  .vt-down { writing-mode: vertical-rl; }
+  @media (min-width: 1024px) { .vt-lg { writing-mode: vertical-rl; transform: rotate(180deg); } }
+
+  /* Traits de craie */
+  .rv, .rh { position: absolute; background: var(--line); pointer-events: none; z-index: 0; }
+  .rv { width: 1px; }
+  .rh { height: 1px; }
+  .rv { transform-origin: top; animation: drawV 1.4s cubic-bezier(.7,0,.2,1) both; }
+  .rh { transform-origin: left; animation: drawH 1.4s cubic-bezier(.7,0,.2,1) both; }
+  @keyframes drawV { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+  @keyframes drawH { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  /* Repère de patron (croix d'assemblage) */
+  .xmark { position: absolute; width: 11px; height: 11px; pointer-events: none; z-index: 1; }
+  .xmark::before, .xmark::after { content: ""; position: absolute; background: var(--ink); }
+  .xmark::before { left: 5px; top: 0; width: 1px; height: 11px; }
+  .xmark::after { top: 5px; left: 0; height: 1px; width: 11px; }
+  /* Cran de patron */
+  .cran { position: absolute; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 7px solid var(--ink); z-index: 1; }
+
+  .img { display: block; width: 100%; height: 100%; object-fit: cover; background: var(--bone); }
+  .frame { overflow: hidden; background: var(--bone); position: relative; max-width: 100%; }
+  .frame img { transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+
+  .lnk { position: relative; display: inline-flex; align-items: center; gap: .6rem; }
+  .lnk::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 1px; background: currentColor; transform: scaleX(.25); transform-origin: left; transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+  .lnk:hover::after, .lnk:focus-visible::after { transform: scaleX(1); }
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 1px solid var(--roi); outline-offset: 4px; }
+
+  /* Collection déstructurée */
+  .piece { position: relative; min-width: 0; }
+  .piece .frame { aspect-ratio: var(--ar, 3/4); }
+  .piece:hover .frame img { transform: scale(1.035); }
+  .piece .open { opacity: 0; transition: opacity .4s; }
+  .piece:hover .open, .piece:focus-within .open { opacity: 1; }
+  .piece.alt { margin-top: 3.5rem; }
+  @media (min-width: 1024px) {
+    .piece { grid-column: var(--cs) / span var(--sp); margin-top: var(--mt); }
+    .piece.alt { margin-top: var(--mt); }
+  }
+  .filt[aria-pressed="true"] { color: var(--ink); }
+  .filt[aria-pressed="true"] .dot { background: var(--roi); }
+
+  /* Carton d'invitation */
+  .field { display: grid; gap: .45rem; min-width: 0; }
+  .field input, .field select { width: 100%; background: transparent; border: 0; border-bottom: 1px solid var(--line); padding: .45rem 0; font-family: var(--display); font-size: 1.15rem; color: var(--ink); border-radius: 0; -webkit-appearance: none; appearance: none; }
+  .field input::placeholder { color: #B9B6B0; font-style: italic; }
+  .field input:focus, .field select:focus { outline: none; border-bottom-color: var(--ink); }
+  .opt { border: 1px solid var(--line); padding: .7rem .9rem; cursor: pointer; display: flex; gap: .7rem; align-items: center; transition: border-color .3s; }
+  .opt:has(input:checked) { border-color: var(--ink); }
+  .opt input { accent-color: var(--ink); }
+  .crop { position: absolute; width: 22px; height: 22px; border-color: var(--ink); }
+
+  /* Viseur de tailleur dans le hero */
+  .cross { position: absolute; background: var(--roi); opacity: .32; pointer-events: none; z-index: 30; }
+
+  /* Fiche (tiroir) */
+  #fiche { position: fixed; inset: 0; z-index: 60; }
+  #fiche .veil { position: absolute; inset: 0; background: rgba(255,255,255,.82); backdrop-filter: blur(3px); }
+  #fiche .panel { position: absolute; top: 0; right: 0; bottom: 0; width: min(920px, 100%); background: var(--paper); border-left: 1px solid var(--line); overflow-y: auto; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); padding-right: env(safe-area-inset-right, 0px); animation: slide .6s cubic-bezier(.2,.7,.2,1); }
+  @keyframes slide { from { transform: translateX(40px); opacity: .4; } to { transform: none; opacity: 1; } }
+  .size[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+
+<div id="site" class="bg-paper text-ink">
+
+  <!-- ============ EN-TÊTE ============ -->
+  <header class="relative border-b border-line">
+    <div class="gut grid grid-cols-[auto_1fr_auto] lg:grid-cols-[minmax(0,3fr)_minmax(0,3fr)_minmax(0,4fr)_minmax(0,2fr)] items-stretch">
+      <a href="#top" class="py-5 pr-6 flex items-baseline gap-3">
+        <span class="disp text-[1.9rem] leading-none">Saadikh</span>
+        <span class="mono text-mute hidden sm:inline">STAM by Fall</span>
+      </a>
+      <p class="hidden lg:flex items-center border-l border-line pl-6 mono text-mute">Sicap Foire — Jardin Boussoura, Dakar</p>
+      <nav class="hidden lg:flex items-center gap-10 border-l border-line pl-6 text-[13px] tracking-[0.08em]">
+        <a class="lnk" href="#collection">La Collection</a>
+        <a class="lnk" href="#savoir-faire">Savoir-faire</a>
+        <a class="lnk" href="#conciergerie">Conciergerie privée</a>
+      </nav>
+      <a href="https://wa.me/221788952555" target="_blank" rel="noopener" class="col-start-3 lg:col-start-auto flex items-center justify-end lg:justify-start border-l border-line pl-5 lg:pl-6 mono">
+        <span class="lg:hidden">Conciergerie</span><span class="hidden lg:inline">WhatsApp · 78 895 25 55</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section id="top" class="hero relative gut pt-10 lg:pt-16 pb-28 lg:pb-40">
+    <!-- traits de craie -->
+    <span class="rv hidden lg:block" style="left:6.5%;top:-80px;bottom:-60px;animation-delay:.1s"></span>
+    <span class="rv" style="left:57%;top:0;bottom:-140px;animation-delay:.25s"></span>
+    <span class="rv hidden lg:block" style="left:91.5%;top:-80px;bottom:30%;animation-delay:.4s"></span>
+    <span class="rh" style="left:0;right:22%;top:46%;animation-delay:.3s"></span>
+    <span class="rh hidden lg:block" style="left:38%;right:0;bottom:64px;animation-delay:.55s"></span>
+    <span class="xmark hidden lg:block" style="left:calc(57% - 5px);top:calc(46% - 5px)"></span>
+    <span class="cran hidden lg:block" style="left:calc(6.5% - 4px);top:-1px"></span>
+
+    <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-y-14">
+      <!-- axe vertical -->
+      <p class="hidden lg:flex lg:col-start-1 lg:row-span-2 justify-start pl-1">
+        <span class="vt mono text-mute">Maison de haute couture · Dakar · Collection MMXXVI</span>
+      </p>
+
+      <div class="lg:col-start-2 lg:col-span-6 lg:row-start-1 min-w-0">
+        <p class="mono text-mute mb-8 flex items-center gap-3"><span class="inline-block w-10 h-px bg-ink"></span>Korité · Tabaski · Mariages</p>
+        <h1 class="disp leading-[0.86] text-[clamp(3.3rem,8.4vw,8.8rem)]">
+          <span class="block">Quand c’est</span>
+          <span class="block lg:pl-[18%]">élégant,</span>
+          <span class="block italic lg:pl-[6%] text-roi">c’est Saadikh.</span>
+        </h1>
+      </div>
+
+      <div class="lg:col-start-3 lg:col-span-4 lg:row-start-2 grid gap-10 min-w-0 lg:-mt-2">
+        <p class="text-[17px] leading-[1.75] max-w-[36ch] text-ink/80">
+          Grands boubous, deux pièces et trois pièces pour homme, coupés amples et brodés fil à fil à Sicap Foire. En salon à Dakar, ou sur mesure jusque dans la diaspora.
+        </p>
+        <div class="flex flex-wrap gap-x-10 gap-y-4 text-[13px] tracking-[0.1em] uppercase">
+          <a class="lnk" href="#collection">Voir la collection <span aria-hidden="true">→</span></a>
+          <a class="lnk text-mute hover:text-ink" href="#conciergerie">Prendre rendez-vous</a>
+        </div>
+        <!-- fiche de coupe -->
+        <dl class="border-t border-line max-w-[340px] text-[13px]">
+          <div class="flex justify-between items-baseline py-2.5 border-b border-line"><dt class="mono text-mute">Fiche de coupe</dt><dd class="mono">N° 006</dd></div>
+          <div class="flex justify-between items-baseline py-2.5 border-b border-line"><dt>Tour de poitrine</dt><dd class="tabular-nums">112 cm</dd></div>
+          <div class="flex justify-between items-baseline py-2.5 border-b border-line"><dt>Longueur dos</dt><dd class="tabular-nums">148 cm</dd></div>
+          <div class="flex justify-between items-baseline py-2.5 border-b border-line"><dt>Carrure</dt><dd class="tabular-nums">46 cm</dd></div>
+          <div class="flex justify-between items-baseline py-2.5 border-b border-line"><dt>Broderie du plastron</dt><dd class="tabular-nums">14 h, à la main</dd></div>
+        </dl>
+      </div>
+
+      <!-- grand visuel + macro en chevauchement -->
+      <figure class="relative self-start lg:col-start-8 lg:col-span-4 lg:row-start-1 lg:row-span-2 lg:mt-10 ml-[14%] lg:ml-0 mr-7 lg:mr-0 min-w-0">
+        <div class="frame" style="aspect-ratio:3/4.35">
+          <img class="img" src="images/hero-saadikh.webp" alt="Homme en grand boubou bleu roi à plastron brodé, debout sur une terrasse" style="object-position:50% 20%">
+        </div>
+        <figcaption class="absolute top-0 -right-7 lg:-right-10 h-full flex items-start">
+          <span class="vt-down mono text-mute">N° 006 — Thiaya Bleu Roi — Bazin rayé</span>
+        </figcaption>
+        <div class="absolute z-20 w-[46%] lg:w-[44%] -left-[16%] lg:-left-[30%] -bottom-[12%] bg-paper p-2 border border-line">
+          <div class="frame" style="aspect-ratio:4/5">
+            <img class="img" src="images/detail-broderie.webp" alt="Gros plan sur la rosace brodée bleu et ivoire du plastron" style="object-position:50% 45%">
+          </div>
+          <p class="mono text-mute pt-2 flex justify-between gap-2"><span>Macro ×4</span><span>Plastron · rosace</span></p>
+        </div>
+      </figure>
+    </div>
+
+    <!-- viseur -->
+    <span id="cx" class="cross hidden" style="top:0;bottom:0;width:1px"></span>
+    <span id="cy" class="cross hidden" style="left:0;right:0;height:1px"></span>
+    <span id="cr" class="hidden absolute z-30 mono text-roi pointer-events-none bg-paper/90 px-1.5 py-0.5"></span>
+  </section>
+
+  <!-- ============ MANIFESTE ============ -->
+  <section class="relative gut border-t border-line">
+    <span class="rv hidden lg:block" style="left:31%;top:-40px;bottom:-40px"></span>
+    <span class="rv hidden lg:block" style="left:74%;top:0;bottom:-90px"></span>
+    <div class="relative z-10 grid lg:grid-cols-12 gap-8 py-16 lg:py-24">
+      <p class="mono text-mute lg:col-start-1 lg:col-span-3">La maison</p>
+      <p class="disp text-[clamp(1.6rem,3.1vw,2.9rem)] leading-[1.15] lg:col-start-4 lg:col-span-6 max-w-[26ch]">
+        Un vêtement d’apparat se reconnaît à trois choses : la noblesse du tissu, l’ampleur de la coupe, <em class="text-roi">la finesse de ce qui est cousu.</em>
+      </p>
+      <div class="lg:col-start-10 lg:col-span-3 lg:pl-8 lg:pt-28 grid gap-3 text-[14px] leading-[1.7] text-ink/75 max-w-[40ch]">
+        <p>STAM by Fall habille les hommes de Dakar pour les jours qui comptent. Chaque pièce est coupée à la mesure de celui qui la portera.</p>
+        <p class="font-display italic text-[1.15rem] text-ink">Traditionnellement vôtre.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LA COLLECTION ============ -->
+  <section id="collection" class="relative gut border-t border-line pt-16 lg:pt-24 pb-28 lg:pb-40">
+    <span class="rv hidden lg:block" style="left:8.33%;top:0;bottom:0"></span>
+    <span class="rh hidden lg:block" style="left:8.33%;right:0;top:212px"></span>
+    <span class="rv hidden lg:block" style="left:62%;top:-60px;bottom:40%"></span>
+    <span class="xmark hidden lg:block" style="left:calc(8.33% - 5px);top:207px"></span>
+
+    <div class="relative z-10 grid lg:grid-cols-12 gap-y-10">
+      <h2 class="disp lg:col-start-1 lg:col-span-1 lg:row-span-3 text-[clamp(3rem,9vw,7.2rem)] leading-[0.9]">
+        <span class="vt-lg lg:block lg:sticky lg:top-10">La Collection</span>
+      </h2>
+
+      <div class="lg:col-start-2 lg:col-span-11 lg:pl-10 grid lg:grid-cols-11 gap-8 items-end min-w-0">
+        <p class="lg:col-span-4 text-[15px] leading-[1.75] text-ink/75 max-w-[44ch]">
+          Neuf pièces, accrochées comme sur le portant de l’atelier. Les trois pièces se portent avec pantalon ou thiaya ; les deux pièces, du vendredi à tous les jours.
+        </p>
+        <div class="lg:col-start-6 lg:col-span-6 flex flex-wrap border-t border-l border-line" role="group" aria-label="Filtrer la collection">
+          <button class="filt mono text-mute border-r border-b border-line px-4 py-3 flex items-center gap-2.5 hover:text-ink" data-f="all" aria-pressed="true"><span class="dot w-1.5 h-1.5 bg-line"></span>Toutes</button>
+          <button class="filt mono text-mute border-r border-b border-line px-4 py-3 flex items-center gap-2.5 hover:text-ink" data-f="trois" aria-pressed="false"><span class="dot w-1.5 h-1.5 bg-line"></span>Trois pièces</button>
+          <button class="filt mono text-mute border-r border-b border-line px-4 py-3 flex items-center gap-2.5 hover:text-ink" data-f="deux" aria-pressed="false"><span class="dot w-1.5 h-1.5 bg-line"></span>Deux pièces</button>
+          <button class="filt mono text-mute border-r border-b border-line px-4 py-3 flex items-center gap-2.5 hover:text-ink" data-f="events" aria-pressed="false"><span class="dot w-1.5 h-1.5 bg-line"></span>Grands événements</button>
+        </div>
+      </div>
+
+      <div id="grid" class="lg:col-start-2 lg:col-span-11 lg:pl-10 grid grid-cols-2 lg:grid-cols-12 gap-x-5 lg:gap-x-8 gap-y-14 lg:gap-y-20 items-start lg:pt-16 min-w-0"></div>
+      <p class="lg:col-start-2 lg:col-span-11 lg:pl-10 mono text-mute pt-6">Prix indicatifs en F CFA · confirmés par la maison sur WhatsApp</p>
+    </div>
+  </section>
+
+  <!-- ============ SAVOIR-FAIRE ============ -->
+  <section id="savoir-faire" class="relative gut border-t border-line pt-16 lg:pt-24 pb-24 lg:pb-36 overflow-hidden">
+    <span class="rv hidden lg:block" style="left:47%;top:0;bottom:0"></span>
+    <span class="rh" style="left:12%;right:0;top:58%"></span>
+    <span class="rv hidden lg:block" style="left:83%;top:0;bottom:22%"></span>
+    <span class="xmark hidden lg:block" style="left:calc(47% - 5px);top:calc(58% - 5px)"></span>
+    <span class="cran hidden lg:block" style="left:calc(83% - 4px);top:-1px"></span>
+
+    <div class="relative z-10 grid grid-cols-2 lg:grid-cols-12 gap-x-5 lg:gap-x-8 gap-y-12">
+      <h2 class="col-span-2 lg:col-start-6 lg:col-span-7 disp text-[clamp(2.6rem,6.4vw,6.4rem)] leading-[0.92] lg:text-right">
+        De la coupe<br><span class="italic">à la broderie</span>
+      </h2>
+
+      <figure class="col-span-2 lg:col-start-1 lg:col-span-5 lg:row-start-1 lg:row-span-2 grid gap-4 min-w-0">
+        <div class="frame" style="aspect-ratio:3/4.1"><img class="img" src="images/splash-metre.webp" alt="Mètre ruban, fil d’or et épingles sur un tissu noir"></div>
+        <figcaption class="grid grid-cols-[auto_1fr] gap-x-5 gap-y-1 border-t border-line pt-3">
+          <span class="mono">1</span><span class="disp text-xl">Le tissu</span>
+          <span></span><span class="text-[14px] leading-[1.7] text-ink/70 max-w-[40ch]">Bazin, lin, satin, coton fin, choisis pour leur tenue et leur lumière.</span>
+        </figcaption>
+      </figure>
+
+      <figure class="col-span-1 lg:col-start-7 lg:col-span-2 lg:row-start-2 lg:mt-24 grid gap-4 min-w-0">
+        <div class="frame" style="aspect-ratio:1/1.9"><img class="img" src="images/detail-machine-blanche.webp" alt="Pied de biche doré cousant un lin blanc"></div>
+        <figcaption class="grid gap-1 border-t border-line pt-3">
+          <span class="mono">2</span><span class="disp text-xl">La coupe</span>
+          <span class="text-[14px] leading-[1.7] text-ink/70">Ample et droite, pensée pour le mouvement et la prière.</span>
+        </figcaption>
+      </figure>
+
+      <figure class="col-span-1 mt-16 lg:col-start-10 lg:col-span-3 lg:row-start-2 lg:mt-0 grid gap-4 min-w-0">
+        <div class="frame" style="aspect-ratio:4/5"><img class="img" src="images/detail-lisere.webp" alt="Tunique en lin blanc à liseré noir et or"></div>
+        <figcaption class="grid gap-1 border-t border-line pt-3">
+          <span class="mono">3</span><span class="disp text-xl">Le détail</span>
+          <span class="text-[14px] leading-[1.7] text-ink/70">Liserés, surpiqûres, boutons de manchette : la signature.</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ CONCIERGERIE PRIVÉE ============ -->
+  <section id="conciergerie" class="relative gut border-t border-line py-28 lg:py-56 bg-paper">
+    <!-- les bords du carton se prolongent jusqu'aux bords de l'écran -->
+    <span class="rv hidden md:block" style="left:calc(50% - 330px);top:0;bottom:0"></span>
+    <span class="rv hidden md:block" style="left:calc(50% + 329px);top:0;bottom:0"></span>
+    <span class="rh hidden md:block" id="cardTop" style="left:0;right:0"></span>
+    <span class="rh hidden md:block" id="cardBot" style="left:0;right:0"></span>
+    <p class="hidden lg:block absolute left-[max(40px,env(safe-area-inset-left,0px))] top-1/2 -translate-y-1/2 z-10"><span class="vt mono text-mute">Sur-mesure · sur rendez-vous</span></p>
+    <p class="hidden lg:block absolute right-[max(40px,env(safe-area-inset-right,0px))] top-1/2 -translate-y-1/2 z-10"><span class="vt-down mono text-mute">Dakar · Paris · New York</span></p>
+
+    <div id="card" class="relative z-10 mx-auto w-full max-w-[660px] bg-paper border border-ink">
+      <span class="crop border-l border-t -left-[9px] -top-[9px]"></span>
+      <span class="crop border-r border-t -right-[9px] -top-[9px]"></span>
+      <span class="crop border-l border-b -left-[9px] -bottom-[9px]"></span>
+      <span class="crop border-r border-b -right-[9px] -bottom-[9px]"></span>
+
+      <div class="m-2.5 border border-line">
+        <div class="flex justify-between border-b border-line px-5 py-3 mono text-mute">
+          <span>Carton N° 0412</span><span>Sur invitation</span>
+        </div>
+
+        <div class="px-6 sm:px-12 pt-12 pb-10 text-center">
+          <p class="mono text-mute">La Maison Saadikh</p>
+          <h2 class="disp text-[clamp(2.4rem,7vw,3.9rem)] leading-[0.95] mt-5">Conciergerie<br><span class="italic">Privée</span></h2>
+          <div class="mx-auto my-7 w-px h-10 bg-ink"></div>
+          <p class="font-display italic text-[1.2rem] leading-[1.5] max-w-[34ch] mx-auto">a l’honneur de vous recevoir pour la création de votre tenue sur mesure.</p>
+          <p class="text-[14px] leading-[1.7] text-ink/70 max-w-[46ch] mx-auto mt-4">Un conseiller vous accompagne en personne, du choix du tissu jusqu’à la livraison. Un mètre ruban suffit : il vous guide pour chaque mesure.</p>
+        </div>
+
+        <form id="rsvp" class="px-6 sm:px-12 pb-10 grid sm:grid-cols-2 gap-x-8 gap-y-7 text-left" novalidate>
+          <label class="field sm:col-span-2" for="f-nom"><span class="mono text-mute">Au nom de</span><input id="f-nom" name="nom" autocomplete="name" placeholder="Monsieur Ibrahima Fall" required></label>
+          <label class="field" for="f-ville"><span class="mono text-mute">Ville de résidence</span><input id="f-ville" name="ville" placeholder="Dakar" value="Dakar"></label>
+          <label class="field" for="f-occ"><span class="mono text-mute">Occasion</span>
+            <select id="f-occ" name="occasion">
+              <option>Korité</option><option selected>Tabaski</option><option>Mariage</option><option>Baptême</option><option>Magal</option><option>Sans occasion particulière</option>
+            </select>
+          </label>
+          <fieldset class="sm:col-span-2 grid sm:grid-cols-2 gap-3">
+            <legend class="mono text-mute mb-3">Rendez-vous</legend>
+            <label class="opt" for="f-salon"><input type="radio" id="f-salon" name="lieu" value="en salon, à Sicap Foire" checked><span><span class="block disp text-[1.05rem]">En salon</span><span class="block text-[12.5px] text-mute">Sicap Foire, Jardin Boussoura</span></span></label>
+            <label class="opt" for="f-dist"><input type="radio" id="f-dist" name="lieu" value="à distance, par visio WhatsApp"><span><span class="block disp text-[1.05rem]">À distance</span><span class="block text-[12.5px] text-mute">Visio WhatsApp, partout</span></span></label>
+          </fieldset>
+          <p id="err" class="sm:col-span-2 text-[13px] text-roi" hidden>Indiquez votre nom pour que le conseiller sache qui recevoir.</p>
+          <div class="sm:col-span-2 flex justify-center pt-2">
+            <button type="submit" class="bg-ink text-paper px-9 py-4 text-[12px] tracking-[0.22em] uppercase hover:bg-roi transition-colors">Solliciter un rendez-vous</button>
+          </div>
+        </form>
+
+        <div id="done" class="px-6 sm:px-12 pb-10 text-center" hidden>
+          <p class="mono text-mute">Votre demande est prête</p>
+          <blockquote id="msg" class="mt-5 mx-auto max-w-[44ch] border border-line px-5 py-4 text-left text-[14px] leading-[1.7]"></blockquote>
+          <div class="mt-6 flex flex-col items-center gap-4">
+            <a id="waLink" href="https://wa.me/221788952555" target="_blank" rel="noopener" class="bg-ink text-paper px-9 py-4 text-[12px] tracking-[0.22em] uppercase hover:bg-roi transition-colors">Envoyer sur WhatsApp</a>
+            <p class="text-[13px] text-mute">Ou écrivez directement au <span class="text-ink select-all tabular-nums">+221 78 895 25 55</span></p>
+            <button id="again" type="button" class="lnk mono">Modifier la demande</button>
+          </div>
+        </div>
+
+        <ol class="grid grid-cols-2 sm:grid-cols-4 border-t border-line text-left">
+          <li class="p-4 border-r border-line"><span class="mono text-mute">I</span><span class="block text-[13px] mt-2 leading-snug">Une conversation</span></li>
+          <li class="p-4 sm:border-r border-line"><span class="mono text-mute">II</span><span class="block text-[13px] mt-2 leading-snug">Vos mesures, à distance</span></li>
+          <li class="p-4 border-r border-t sm:border-t-0 border-line"><span class="mono text-mute">III</span><span class="block text-[13px] mt-2 leading-snug">Votre pièce, confectionnée</span></li>
+          <li class="p-4 border-t sm:border-t-0 border-line"><span class="mono text-mute">IV</span><span class="block text-[13px] mt-2 leading-snug">Livrée jusqu’à vous</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PIED DE PAGE ============ -->
+  <footer class="relative gut border-t border-line pt-14 pb-10">
+    <span class="rv hidden lg:block" style="left:58%;top:-70px;bottom:0"></span>
+    <div class="relative z-10 grid lg:grid-cols-12 gap-10">
+      <p class="lg:col-span-7 disp text-[clamp(4rem,15vw,13rem)] leading-[0.8] -ml-1">Saadikh</p>
+      <div class="lg:col-start-9 lg:col-span-4 grid sm:grid-cols-2 gap-8 text-[13.5px] leading-[1.8] self-end">
+        <div><p class="mono text-mute mb-2">Boutique</p><p>Sicap Foire<br>Jardin Boussoura<br>Dakar, Sénégal</p></div>
+        <div><p class="mono text-mute mb-2">Contact</p><p class="tabular-nums select-all">+221 78 895 25 55</p><p>TikTok · Instagram · Facebook</p></div>
+      </div>
+    </div>
+    <div class="relative z-10 mt-12 pt-5 border-t border-line flex flex-wrap justify-between gap-4 mono text-mute">
+      <span>STAM by Fall · Traditionnellement vôtre</span><span>Maquette · Jëfya</span>
+    </div>
+  </footer>
+
+  <!-- ============ FICHE PRODUIT ============ -->
+  <div id="fiche" hidden role="dialog" aria-modal="true" aria-labelledby="fTitle">
+    <div class="veil" data-close></div>
+    <div class="panel">
+      <div class="flex justify-between items-center border-b border-line px-6 py-4">
+        <span class="mono text-mute" id="fRef">Fiche de coupe</span>
+        <button class="mono lnk" data-close>Fermer ✕</button>
+      </div>
+      <div class="grid md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
+        <div class="relative md:border-r border-line p-6">
+          <div class="frame" style="aspect-ratio:3/4.4"><img id="fImg" class="img" src="" alt=""></div>
+        </div>
+        <div class="p-6 md:p-10 grid content-start gap-7 min-w-0">
+          <div>
+            <p class="mono text-mute" id="fFam"></p>
+            <h3 id="fTitle" class="disp text-[clamp(2.2rem,5vw,3.6rem)] leading-[0.95] mt-3"></h3>
+            <p id="fDetail" class="text-[15px] leading-[1.75] text-ink/75 mt-4 max-w-[42ch]"></p>
+          </div>
+          <dl class="border-t border-line text-[14px]">
+            <div class="flex justify-between py-2.5 border-b border-line"><dt class="text-mute">Tissu</dt><dd id="fFab"></dd></div>
+            <div class="flex justify-between py-2.5 border-b border-line"><dt class="text-mute">Couleur</dt><dd id="fCol" class="flex items-center gap-2"></dd></div>
+            <div class="flex justify-between py-2.5 border-b border-line"><dt class="text-mute">Prix indicatif</dt><dd id="fPrice" class="tabular-nums"></dd></div>
+          </dl>
+          <div>
+            <p class="mono text-mute mb-3">Taille</p>
+            <div id="fSizes" class="flex flex-wrap gap-2"></div>
+          </div>
+          <a id="fWa" href="#" target="_blank" rel="noopener" class="justify-self-start bg-ink text-paper px-8 py-4 text-[12px] tracking-[0.22em] uppercase hover:bg-roi transition-colors">Commander sur WhatsApp</a>
+          <p class="text-[13px] text-mute">La commande part rédigée. La maison confirme disponibilité, livraison et paiement.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const WA = '221788952555';
+  const PRODUCTS = [
+    { ref: '006', name: 'Thiaya Bleu Roi', family: 'trois', events: true, price: 120000, color: 'Bleu roi', hex: '#22346f', fabric: 'Bazin rayé', img: 'images/tenues/trois-pieces-thiaya-bleu-roi.webp', detail: 'Grand boubou à plastron brodé en rosace, porté sur sa thiaya assortie.' },
+    { ref: '005', name: 'Blanc & Or', family: 'trois', events: true, price: 95000, color: 'Blanc', hex: '#efeae0', fabric: 'Bazin blanc', img: 'images/tenues/boubou-blanc-brode.webp', detail: 'Blanc lumineux, galon doré au col et le long de la patte, broderie aux poignets.' },
+    { ref: '004', name: 'Satin Argent', family: 'trois', events: true, price: 90000, color: 'Argent', hex: '#bfc1c3', fabric: 'Satin', img: 'images/tenues/boubou-satin-argent.webp', detail: 'Satin argenté, patte brodée de fins motifs, fentes latérales.' },
+    { ref: '007', name: 'Vert Bouteille', family: 'trois', events: true, price: 75000, color: 'Vert bouteille', hex: '#1e4a40', fabric: 'Tissu satiné', img: 'images/tenues/trois-pieces-vert-bouteille.webp', detail: 'Col rond passepoilé d’argent, patte brodée de petits épis.' },
+    { ref: '003', name: 'Bleu Nuit Brodé', family: 'trois', events: false, price: 70000, color: 'Bleu nuit', hex: '#1c2340', fabric: 'Coton fin', img: 'images/tenues/ensemble-bleu-nuit.webp', detail: 'Tunique à broderie argentée au plastron, avec son sarouel assorti.' },
+    { ref: '008', name: 'Gris Lilas', family: 'deux', events: false, price: 55000, color: 'Gris lilas', hex: '#aaa3b9', fabric: 'Coton fin', img: 'images/tenues/trois-pieces-gris-lilas.webp', detail: 'Col rond, galon doré le long de la patte, fentes latérales.' },
+    { ref: '001', name: 'Vert Forêt', family: 'deux', events: false, price: 55000, color: 'Vert forêt', hex: '#1f4a3c', fabric: 'Tissu satiné', img: 'images/tenues/tenue-vert-foret.webp', detail: 'Col rond bordé, patte brodée, poche poitrine, manches amples.' },
+    { ref: '009', name: 'Bleu Ciel', family: 'deux', events: false, price: 50000, color: 'Bleu ciel', hex: '#aebfd0', fabric: 'Coton fin', img: 'images/tenues/trois-pieces-bleu-ciel.webp', detail: 'Col rond, patte surpiquée, coupe droite et fentes latérales.' },
+    { ref: '002', name: 'Moka', family: 'deux', events: false, price: 50000, color: 'Moka', hex: '#7b6652', fabric: 'Coton fin', img: 'images/tenues/tenue-moka.webp', detail: 'Col rond, patte courte, fentes latérales, pantalon assorti.' },
+  ];
+  const FAM = { trois: 'Trois pièces', deux: 'Deux pièces' };
+  const SIZES = ['S', 'M', 'L', 'XL', 'XXL', 'Sur-mesure'];
+  // Motif de placement : colonnes, largeurs, décalages et proportions jamais identiques.
+  const PATTERN = [
+    { cs: 1, sp: 4, mt: '0rem', ar: '3/4.5' },
+    { cs: 6, sp: 3, mt: '11rem', ar: '3/4' },
+    { cs: 10, sp: 2, mt: '3rem', ar: '2/3.4' },
+    { cs: 2, sp: 3, mt: '2rem', ar: '4/5' },
+    { cs: 6, sp: 5, mt: '7rem', ar: '4/5.4' },
+    { cs: 1, sp: 2, mt: '1rem', ar: '2/3.2' },
+    { cs: 4, sp: 4, mt: '9rem', ar: '3/4.2' },
+    { cs: 9, sp: 3, mt: '0rem', ar: '3/4.8' },
+  ];
+  const fmt = n => n.toLocaleString('fr-FR').replace(/ | /g, ' ') + ' F CFA';
+  const wa = text => `https://wa.me/${WA}?text=${encodeURIComponent(text)}`;
+  const $ = s => document.querySelector(s);
+
+  // ---- Collection ----
+  const grid = $('#grid');
+  grid.innerHTML = PRODUCTS.map(p => `
+    <article class="piece" data-ref="${p.ref}" data-family="${p.family}" data-events="${p.events}">
+      <div class="flex items-stretch gap-3">
+        <span class="vt mono text-mute border-r border-line pr-2 hidden sm:block">${p.fabric}</span>
+        <button class="frame block w-full text-left" data-open="${p.ref}" aria-label="Voir la fiche ${p.name}">
+          <img class="img" src="${p.img}" alt="${p.name}, ${FAM[p.family].toLowerCase()} en ${p.fabric.toLowerCase()}" style="object-position:50% 18%">
+          <span class="open absolute left-0 bottom-0 bg-paper px-3 py-2 mono">Voir la fiche →</span>
+        </button>
+      </div>
+      <div class="sm:pl-7 pt-3 flex justify-between items-baseline gap-3 border-b border-line pb-2">
+        <h3 class="disp italic text-[1.25rem] lg:text-[1.45rem] leading-tight min-w-0">${p.name}</h3>
+        <span class="mono shrink-0">N° ${p.ref}</span>
+      </div>
+      <p class="sm:pl-7 pt-2 text-[13px] text-mute flex justify-between gap-3"><span>${FAM[p.family]}</span><span class="tabular-nums text-ink">${fmt(p.price)}</span></p>
+    </article>`).join('');
+
+  const layout = () => {
+    [...grid.children].filter(el => !el.hidden).forEach((el, i) => {
+      const L = PATTERN[i % PATTERN.length];
+      el.style.setProperty('--cs', L.cs); el.style.setProperty('--sp', L.sp);
+      el.style.setProperty('--mt', L.mt); el.style.setProperty('--ar', L.ar);
+      el.classList.toggle('alt', i % 2 === 1);
+    });
+  };
+  document.querySelectorAll('.filt').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.filt').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    const f = b.dataset.f;
+    [...grid.children].forEach(el => {
+      el.hidden = !(f === 'all' || (f === 'events' ? el.dataset.events === 'true' : el.dataset.family === f));
+    });
+    layout();
+  }));
+  layout();
+
+  // ---- Fiche ----
+  const fiche = $('#fiche');
+  let current = null, size = 'L', lastFocus = null;
+  const updateWa = () => {
+    $('#fWa').href = wa(`Bonjour Saadikh, je souhaite commander le modèle N° ${current.ref} « ${current.name} » (${current.fabric}), taille ${size}.`);
+  };
+  const openFiche = ref => {
+    current = PRODUCTS.find(p => p.ref === ref); size = 'L'; lastFocus = document.activeElement;
+    $('#fRef').textContent = `Fiche de coupe · N° ${current.ref}`;
+    $('#fImg').src = current.img; $('#fImg').alt = current.name;
+    $('#fFam').textContent = FAM[current.family] + (current.events ? ' · Grands événements' : '');
+    $('#fTitle').textContent = current.name;
+    $('#fDetail').textContent = current.detail;
+    $('#fFab').textContent = current.fabric;
+    $('#fCol').innerHTML = `<span class="inline-block w-3 h-3 border border-line" style="background:${current.hex}"></span>${current.color}`;
+    $('#fPrice').textContent = fmt(current.price);
+    $('#fSizes').innerHTML = SIZES.map(s => `<button type="button" class="size border border-line px-4 py-2 text-[13px] hover:border-ink" aria-pressed="${s === size}" data-size="${s}">${s}</button>`).join('');
+    updateWa();
+    fiche.hidden = false; document.body.style.overflow = 'hidden';
+    fiche.querySelector('[data-close].mono').focus();
+  };
+  const closeFiche = () => { fiche.hidden = true; document.body.style.overflow = ''; lastFocus && lastFocus.focus(); };
+  grid.addEventListener('click', e => { const b = e.target.closest('[data-open]'); if (b) openFiche(b.dataset.open); });
+  fiche.addEventListener('click', e => {
+    if (e.target.closest('[data-close]')) return closeFiche();
+    const s = e.target.closest('[data-size]');
+    if (s) { size = s.dataset.size; fiche.querySelectorAll('.size').forEach(x => x.setAttribute('aria-pressed', String(x === s))); updateWa(); }
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !fiche.hidden) closeFiche(); });
+
+  // ---- Conciergerie ----
+  const form = $('#rsvp'), done = $('#done');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const d = new FormData(form);
+    const nom = (d.get('nom') || '').trim();
+    $('#err').hidden = !!nom;
+    if (!nom) { $('#f-nom').focus(); return; }
+    const text = `Bonjour Saadikh, je suis ${nom}, à ${(d.get('ville') || 'Dakar').trim()}. Je souhaite un rendez-vous ${d.get('lieu')} avec un conseiller de la Conciergerie Privée, pour une tenue sur mesure (${d.get('occasion')}).`;
+    $('#msg').textContent = text;
+    $('#waLink').href = wa(text);
+    form.hidden = true; done.hidden = false; placeCardLines();
+  });
+  $('#again').addEventListener('click', () => { done.hidden = true; form.hidden = false; placeCardLines(); $('#f-nom').focus(); });
+
+  // Lignes horizontales qui prolongent le haut et le bas du carton
+  const placeCardLines = () => {
+    const card = $('#card'), sec = $('#conciergerie');
+    $('#cardTop').style.top = card.offsetTop + 'px';
+    $('#cardBot').style.top = (card.offsetTop + card.offsetHeight - 1) + 'px';
+  };
+  addEventListener('resize', placeCardLines);
+  addEventListener('load', placeCardLines);
+  placeCardLines();
+
+  // ---- Viseur de tailleur (souris uniquement) ----
+  const hero = document.querySelector('.hero');
+  if (matchMedia('(pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const cx = $('#cx'), cy = $('#cy'), cr = $('#cr');
+    const CM = 2.54 / 96;
+    hero.addEventListener('pointermove', e => {
+      const r = hero.getBoundingClientRect();
+      const x = e.clientX - r.left, y = e.clientY - r.top;
+      cx.style.left = x + 'px'; cy.style.top = y + 'px';
+      cr.style.left = (x + 12) + 'px'; cr.style.top = (y + 10) + 'px';
+      cr.textContent = `x ${(x * CM).toFixed(1).replace('.', ',')} cm · y ${(y * CM).toFixed(1).replace('.', ',')} cm`;
+      cx.hidden = cy.hidden = cr.hidden = false;
+      cx.classList.remove('hidden'); cy.classList.remove('hidden'); cr.classList.remove('hidden');
+    });
+    hero.addEventListener('pointerleave', () => { [cx, cy, cr].forEach(el => el.classList.add('hidden')); });
+  }
+})();
+</script>
