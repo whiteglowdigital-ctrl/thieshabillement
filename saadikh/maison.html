@@ -58,13 +58,7 @@
   .tab[aria-selected="true"] { color: var(--encre); border-color: var(--encre); }
   .curb[aria-pressed="true"] { color: var(--encre); }
   .look { min-width: 0; }
-  .look .zoom { aspect-ratio: var(--ar, 3/4); max-width: 100%; }
-  .look.off { margin-top: 4.5rem; }
-  .look.wide { grid-column: span 2; }
-  @media (min-width: 1024px) {
-    .look { grid-column: var(--cs) / span var(--sp); margin-top: var(--mt); }
-    .look.off, .look.wide { margin-top: var(--mt); grid-column: var(--cs) / span var(--sp); }
-  }
+  .look .zoom { aspect-ratio: 3/4; }
   .drawer { position: fixed; inset: 0; z-index: 70; }
   .drawer .veil { position: absolute; inset: 0; background: rgba(12,17,29,.55); }
   .drawer .panel { position: absolute; top: 0; right: 0; bottom: 0; width: min(460px, 100%); background: var(--ivoire); display: flex; flex-direction: column; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); padding-right: env(safe-area-inset-right, 0px); animation: slidein .45s cubic-bezier(.2,.7,.2,1); }
@@ -90,7 +84,6 @@
       <div class="wrap grid grid-cols-[1fr_auto_1fr] items-center py-6">
         <nav class="hidden lg:flex gap-9 text-[11.5px] tracking-[0.22em] uppercase">
           <a href="#collection" class="hover:text-or transition-colors">Collection</a>
-          <a href="#univers" class="hover:text-or transition-colors">Univers</a>
           <a href="#sur-mesure" class="hover:text-or transition-colors">Sur-mesure</a>
           <a href="#boutique" class="hover:text-or transition-colors">La boutique</a>
         </nav>
@@ -164,62 +157,30 @@
     </div>
   </section>
 
-  <!-- ================= UNIVERS ================= -->
-  <section id="univers" class="gut py-20 lg:py-28 bg-ivoire">
+  <!-- ================= COLLECTION ================= -->
+  <section id="collection" class="bg-ivoire gut pt-20 lg:pt-28 pb-24 lg:pb-32">
     <div class="wrap">
-      <div class="flex flex-wrap items-end justify-between gap-6 mb-12">
-        <div>
-          <p class="ey text-pierre mb-3">Trouvez votre tenue</p>
-          <h2 class="font-serif text-[clamp(2.4rem,4.4vw,3.8rem)] leading-[1]">Nos univers</h2>
+      <div class="grid lg:grid-cols-12 gap-8 items-end mb-14 lg:mb-16">
+        <div class="lg:col-span-7">
+          <p class="ey text-pierre mb-4">Collection MMXXVI</p>
+          <h2 class="font-serif text-[clamp(3rem,6.4vw,6rem)] leading-[0.92]">La Collection</h2>
         </div>
-        <p class="ey text-pierre text-right leading-[2] hidden md:block">Une même exigence,<br>quatre façons de la porter</p>
-      </div>
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
-        <a href="#collection" data-goto="trois" class="group block">
-          <div class="zoom aspect-[3/4] bg-sable"><img class="img" src="images/tenues/trois-pieces-thiaya-bleu-roi.webp" alt="Trois pièces bleu roi avec thiaya" style="object-position:50% 20%"></div>
-          <h3 class="ey mt-5 text-encre">Trois pièces</h3>
-          <p class="font-serif italic text-[1.15rem] text-pierre mt-1">Ample. Brodé. Cérémonial.</p>
-        </a>
-        <a href="#collection" data-goto="deux" class="group block">
-          <div class="zoom aspect-[3/4] bg-sable"><img class="img" src="images/tenues/tenue-vert-foret.webp" alt="Deux pièces vert forêt" style="object-position:50% 20%"></div>
-          <h3 class="ey mt-5 text-encre">Deux pièces</h3>
-          <p class="font-serif italic text-[1.15rem] text-pierre mt-1">Sobre. Net. Quotidien.</p>
-        </a>
-        <a href="#collection" data-goto="events" class="group block">
-          <div class="zoom aspect-[3/4] bg-sable"><img class="img" src="images/tenues/boubou-blanc-brode.webp" alt="Boubou blanc à galon doré" style="object-position:50% 18%"></div>
-          <h3 class="ey mt-5 text-encre">Grands événements</h3>
-          <p class="font-serif italic text-[1.15rem] text-pierre mt-1">Korité. Tabaski. Mariages.</p>
-        </a>
-        <a href="#sur-mesure" class="group block">
-          <div class="zoom aspect-[3/4] bg-sable"><img class="img" src="images/saadikh-atelier-or.webp" alt="Logo Saadikh doré, ciseaux et mètre ruban" style="object-position:40% 50%"></div>
-          <h3 class="ey mt-5 text-encre">Sur-mesure</h3>
-          <p class="font-serif italic text-[1.15rem] text-pierre mt-1">À vos mesures, où que vous soyez.</p>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= INCONTOURNABLES ================= -->
-  <section class="bg-nuit text-ivoire">
-    <div class="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)] xl:grid-cols-[minmax(0,1fr)_minmax(0,430px)]">
-      <div class="gut py-20 lg:py-24 lg:pr-12 min-w-0">
-        <div class="flex flex-wrap items-end justify-between gap-6 mb-12">
-          <div>
-            <p class="ey text-or mb-3">La collection</p>
-            <h2 class="font-serif text-[clamp(2.4rem,4.4vw,3.8rem)] leading-[1]">Les incontournables</h2>
+        <div class="lg:col-span-5 lg:justify-self-end flex flex-wrap items-center gap-x-6 gap-y-3">
+          <div class="flex flex-wrap gap-x-6 gap-y-2" role="tablist" aria-label="Filtrer la collection">
+            <button class="tab text-[10px] tracking-[0.26em] uppercase text-pierre/70 border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="all" aria-selected="true">Tout</button>
+            <button class="tab text-[10px] tracking-[0.26em] uppercase text-pierre/70 border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="trois" aria-selected="false">Trois pièces</button>
+            <button class="tab text-[10px] tracking-[0.26em] uppercase text-pierre/70 border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="deux" aria-selected="false">Deux pièces</button>
+            <button class="tab text-[10px] tracking-[0.26em] uppercase text-pierre/70 border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="events" aria-selected="false">Cérémonie</button>
           </div>
-          <a href="#collection" class="lk text-ivoire/85 hover:text-or">Tout voir <span aria-hidden="true">→</span></a>
-        </div>
-        <div id="featured" class="grid grid-cols-2 xl:grid-cols-4 gap-4"></div>
-      </div>
-      <div class="relative min-h-[460px] lg:min-h-0">
-        <img class="img absolute inset-0" src="images/tenues/boubou-satin-argent.webp" alt="Boubou en satin argenté" style="object-position:50% 25%">
-        <div class="absolute inset-0 fade-b"></div>
-        <div class="absolute inset-x-0 bottom-0 gut pb-12">
-          <p class="font-serif italic text-[clamp(2rem,3vw,2.7rem)] leading-[1.1]">Plus qu’une tenue.<br>Une présence.</p>
-          <span class="rule-or block mt-6"></span>
+          <div class="flex gap-3 text-[10px] tracking-[0.2em] uppercase text-pierre/60" role="group" aria-label="Devise">
+            <button class="curb hover:text-encre" data-cur="XOF" aria-pressed="true">F CFA</button><span aria-hidden="true">/</span>
+            <button class="curb hover:text-encre" data-cur="EUR" aria-pressed="false">€</button><span aria-hidden="true">/</span>
+            <button class="curb hover:text-encre" data-cur="USD" aria-pressed="false">$</button>
+          </div>
         </div>
       </div>
+      <div id="all" class="grid grid-cols-2 lg:grid-cols-3 gap-x-4 lg:gap-x-8 gap-y-12 lg:gap-y-16"></div>
+      <p class="mt-14 text-[10.5px] tracking-[0.08em] text-pierre/60 text-center">Prix indicatifs, confirmés par la maison. € à parité fixe, $ à 600 F CFA.</p>
     </div>
   </section>
 
@@ -250,70 +211,6 @@
           <span></span><span class="font-serif italic text-[1.15rem] text-pierre">Liserés, galons et rosaces, à la main.</span>
         </li>
       </ol>
-    </div>
-  </section>
-
-  <!-- ================= EN TROIS GESTES (bande sombre) ================= -->
-  <section class="bg-encre text-ivoire gut py-20 lg:py-24">
-    <div class="wrap grid lg:grid-cols-12 gap-12">
-      <div class="lg:col-span-3">
-        <p class="ey text-or mb-4">L’atelier</p>
-        <h2 class="font-serif text-[clamp(2.3rem,3.6vw,3.2rem)] leading-[1.02]">Une tenue,<br><em>trois gestes.</em></h2>
-        <p class="mt-5 text-[14.5px] leading-[1.8] text-ivoire/65 max-w-[34ch]">De la pièce de tissu à la tenue livrée, rien n’est confié au hasard.</p>
-      </div>
-      <div class="lg:col-span-9 grid sm:grid-cols-3 gap-8">
-        <figure>
-          <div class="zoom aspect-[4/4.4] bg-nuit2"><img class="img" src="images/splash-metre.webp" alt="Mètre ruban, fil d’or et épingles sur un tissu noir"></div>
-          <figcaption class="pt-5 border-b border-ivoire/15 pb-5">
-            <span class="ey text-or">I · Choisir</span>
-            <span class="block font-serif text-[1.6rem] mt-1">Le tissu</span>
-            <span class="block text-[13.5px] text-ivoire/60 mt-1">Choisi pour sa tenue et sa lumière.</span>
-          </figcaption>
-        </figure>
-        <figure>
-          <div class="zoom aspect-[4/4.4] bg-nuit2"><img class="img" src="images/detail-machine-blanche.webp" alt="Pied de biche doré cousant un lin blanc" style="object-position:50% 40%"></div>
-          <figcaption class="pt-5 border-b border-ivoire/15 pb-5">
-            <span class="ey text-or">II · Couper</span>
-            <span class="block font-serif text-[1.6rem] mt-1">La coupe</span>
-            <span class="block text-[13.5px] text-ivoire/60 mt-1">À la mesure de celui qui la portera.</span>
-          </figcaption>
-        </figure>
-        <figure>
-          <div class="zoom aspect-[4/4.4] bg-nuit2"><img class="img" src="images/detail-lisere.webp" alt="Tunique en lin blanc à liseré noir et or"></div>
-          <figcaption class="pt-5 border-b border-ivoire/15 pb-5">
-            <span class="ey text-or">III · Finir</span>
-            <span class="block font-serif text-[1.6rem] mt-1">Le détail</span>
-            <span class="block text-[13.5px] text-ivoire/60 mt-1">Liserés, surpiqûres, boutons de manchette.</span>
-          </figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= COLLECTION : LOOKBOOK ================= -->
-  <section id="collection" class="bg-ivoire gut pt-24 lg:pt-36 pb-28 lg:pb-44">
-    <div class="wrap">
-      <div class="grid lg:grid-cols-12 gap-8 items-end mb-20 lg:mb-28">
-        <div class="lg:col-span-7">
-          <p class="ey text-pierre mb-4">Lookbook · Collection MMXXVI</p>
-          <h2 class="font-serif text-[clamp(3rem,6.4vw,6rem)] leading-[0.92]">La Collection</h2>
-        </div>
-        <div class="lg:col-span-5 lg:justify-self-end flex flex-wrap items-center gap-x-6 gap-y-3">
-          <div class="flex flex-wrap gap-x-6 gap-y-2" role="tablist" aria-label="Filtrer la collection">
-            <button class="tab text-[10px] tracking-[0.26em] uppercase text-pierre/70 border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="all" aria-selected="true">Tout</button>
-            <button class="tab text-[10px] tracking-[0.26em] uppercase text-pierre/70 border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="trois" aria-selected="false">Trois pièces</button>
-            <button class="tab text-[10px] tracking-[0.26em] uppercase text-pierre/70 border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="deux" aria-selected="false">Deux pièces</button>
-            <button class="tab text-[10px] tracking-[0.26em] uppercase text-pierre/70 border-b border-transparent pb-1 hover:text-encre" role="tab" data-f="events" aria-selected="false">Cérémonie</button>
-          </div>
-          <div class="flex gap-3 text-[10px] tracking-[0.2em] uppercase text-pierre/60" role="group" aria-label="Devise">
-            <button class="curb hover:text-encre" data-cur="XOF" aria-pressed="true">F CFA</button><span aria-hidden="true">/</span>
-            <button class="curb hover:text-encre" data-cur="EUR" aria-pressed="false">€</button><span aria-hidden="true">/</span>
-            <button class="curb hover:text-encre" data-cur="USD" aria-pressed="false">$</button>
-          </div>
-        </div>
-      </div>
-      <div id="all" class="grid grid-cols-2 lg:grid-cols-12 gap-x-5 lg:gap-x-10 gap-y-16 lg:gap-y-28 items-start"></div>
-      <p class="mt-20 text-[10.5px] tracking-[0.08em] text-pierre/60 text-center">Prix indicatifs, confirmés par la maison. € à parité fixe, $ à 600 F CFA.</p>
     </div>
   </section>
 
@@ -462,7 +359,6 @@
     { ref: '009', name: 'Bleu Ciel', family: 'deux', events: false, price: 50000, color: 'Bleu ciel', hex: '#aebfd0', fabric: 'Coton fin', img: 'images/tenues/trois-pieces-bleu-ciel.webp', detail: 'Col rond, patte surpiquée, coupe droite et fentes latérales.' },
     { ref: '002', name: 'Moka', family: 'deux', events: false, price: 50000, color: 'Moka', hex: '#7b6652', fabric: 'Coton fin', img: 'images/tenues/tenue-moka.webp', detail: 'Col rond, patte courte, fentes latérales, pantalon assorti.' },
   ];
-  const FEATURED = ['006', '005', '007', '003'];
   const FAM = { trois: 'Trois pièces', deux: 'Deux pièces' };
   const SIZES = ['S', 'M', 'L', 'XL', 'XXL', 'Sur-mesure'];
   const CUR = { XOF: { per: 1, f: v => v.toLocaleString('fr-FR') + ' F CFA' }, EUR: { per: 655.957, f: v => v.toLocaleString('fr-FR') + ' €' }, USD: { per: 600, f: v => '$' + v.toLocaleString('en-US') } };
@@ -474,57 +370,23 @@
   const toast = msg => { const t = $('#toast'); t.textContent = msg; t.hidden = false; clearTimeout(toast.h); toast.h = setTimeout(() => t.hidden = true, 2600); };
 
   // ---- Cartes produit ----
-  const card = (p, dark) => `
-    <button class="text-left group block w-full" data-open="${p.ref}" aria-label="Voir ${p.name}">
-      <div class="zoom relative aspect-[3/4] ${dark ? 'bg-nuit2' : 'bg-sable'}">
-        <img class="img" src="${p.img}" alt="${p.name}, ${FAM[p.family].toLowerCase()} en ${p.fabric.toLowerCase()}" style="object-position:50% 18%">
-      </div>
-      <p class="pt-4 flex justify-between gap-3 text-[10px] tracking-[0.24em] uppercase ${dark ? 'text-ivoire/70' : 'text-encre/60'}">
-        <span class="min-w-0 truncate">${p.name}</span><span class="price tabular-nums shrink-0 ${dark ? 'text-ivoire/45' : 'text-pierre/70'}" data-xof="${p.price}">${money(p.price)}</span>
-      </p>
-    </button>`;
-  // Lookbook : un modèle phare géant, puis des tailles et des hauteurs qui ne se répètent pas.
-  const LOOK_ORDER = ['007', '006', '005', '004', '003', '001', '008', '009', '002'];
-  const PATTERN = [
-    { cs: 1, sp: 6, mt: '0rem', ar: '3/4.5' },
-    { cs: 8, sp: 3, mt: '5rem', ar: '3/4.1' },
-    { cs: 11, sp: 2, mt: '17rem', ar: '2/3.3' },
-    { cs: 2, sp: 3, mt: '3rem', ar: '3/4' },
-    { cs: 7, sp: 5, mt: '0rem', ar: '4/5' },
-    { cs: 1, sp: 2, mt: '8rem', ar: '2/3.2' },
-    { cs: 4, sp: 4, mt: '0rem', ar: '3/4.3' },
-    { cs: 10, sp: 3, mt: '11rem', ar: '3/4' },
-    { cs: 3, sp: 5, mt: '2rem', ar: '4/4.8' },
-  ];
   const look = p => `
     <article class="look" data-family="${p.family}" data-events="${p.events}">
       <button class="group block w-full text-left" data-open="${p.ref}" aria-label="Voir ${p.name}">
         <div class="zoom relative bg-sable">
           <img class="img" src="${p.img}" alt="${p.name}, ${FAM[p.family].toLowerCase()} en ${p.fabric.toLowerCase()}" style="object-position:50% 18%">
         </div>
-        <p class="pt-3 flex justify-between gap-3 text-[9.5px] tracking-[0.26em] uppercase text-encre/45 group-hover:text-encre/80 transition-colors">
+        <p class="pt-3 flex justify-between gap-3 text-[10px] tracking-[0.24em] uppercase text-encre/55 group-hover:text-encre transition-colors">
           <span class="min-w-0 truncate">${p.name}</span><span class="price tabular-nums shrink-0" data-xof="${p.price}">${money(p.price)}</span>
         </p>
       </button>
     </article>`;
-  $('#featured').innerHTML = FEATURED.map(r => card(byRef(r), true)).join('');
-  $('#all').innerHTML = LOOK_ORDER.map(r => look(byRef(r))).join('');
-  const layout = () => {
-    [...$('#all').children].filter(el => !el.hidden).forEach((el, i) => {
-      const L = PATTERN[i % PATTERN.length];
-      el.style.setProperty('--cs', L.cs); el.style.setProperty('--sp', L.sp);
-      el.style.setProperty('--mt', L.mt); el.style.setProperty('--ar', L.ar);
-      el.classList.toggle('wide', i === 0);
-      el.classList.toggle('off', i > 0 && i % 2 === 0);
-    });
-  };
+  $('#all').innerHTML = PRODUCTS.map(look).join('');
 
   const filter = f => {
     document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.f === f)));
     [...$('#all').children].forEach(el => el.hidden = !(f === 'all' || (f === 'events' ? el.dataset.events === 'true' : el.dataset.family === f)));
-    layout();
   };
-  layout();
   document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => filter(t.dataset.f)));
   document.querySelectorAll('[data-goto]').forEach(a => a.addEventListener('click', () => filter(a.dataset.goto)));
   document.querySelectorAll('.curb').forEach(b => b.addEventListener('click', () => {
